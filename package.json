@@ -1,0 +1,33 @@
+{
+  "name": "raxy",
+  "version": "1.0.1",
+  "description": "raxy",
+  "main": "dist/index.js",
+  "scripts": {
+    "build": "tsc; webpack"
+  },
+  "keywords": [
+    "raxy",
+    "react",
+    "proxy"
+  ],
+  "author": "Chertorylskiy Ilya Sergeevich",
+  "license": "MIT",
+  "devDependencies": {
+    "@babel/core": "7.4.5",
+    "@babel/plugin-proposal-class-properties": "7.4.4",
+    "@babel/plugin-proposal-decorators": "7.4.4",
+    "@babel/preset-react": "7.0.0",
+    "@babel/preset-typescript": "7.3.3",
+    "@types/react": "16.8.19",
+    "babel-loader": "8.0.6",
+    "dts-bundle-webpack": "1.0.2",
+    "react": "16.8.6",
+    "tslint": "5.17.0",
+    "tslint-config-prettier": "1.18.0",
+    "tslint-react": "4.0.0",
+    "typescript": "3.5.1",
+    "webpack": "4.25.1",
+    "webpack-cli": "3.1.2"
+  }
+}

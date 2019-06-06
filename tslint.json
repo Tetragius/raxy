@@ -1,0 +1,45 @@
+{
+  "extends": [
+    "tslint:recommended",
+    "tslint-react",
+    "tslint-config-prettier"
+  ],
+  "linterOptions": {
+    "exclude": [
+      "*.js",
+      "node_modules/**/*",
+      "dist"
+    ],
+    "comment-format": [
+      true,
+      "check-lowercase",
+      {
+        "ignore-words": [
+          "TODO",
+          "HACK"
+        ]
+      }
+    ]
+  },
+  "rules": {
+    "quotemark": [
+      true,
+      "single",
+      "jsx-single"
+    ],
+    "object-literal-sort-keys": false,
+    "ordered-imports": false,
+    "no-var-requires": false,
+    "member-access": false,
+    "jsx-no-lambda": false,
+    "no-console": [true, "warn", "error"],
+    "no-any": false,
+    "jsx-wrap-multiline": false,
+    "no-unused-expression": false,
+    "arrow-parens": [true, "ban-single-arg-parens"],
+    "variable-name":false,
+    "no-empty":false,
+    "only-arrow-functions": false,
+    "no-empty-interface":false
+  }
+}

@@ -1,0 +1,12 @@
+src
+example
+node_modules
+.gitignore
+.npmignore
+package-lock.json
+tslint.json
+tsconfig.json
+webpack.config.js
+.npmrc
+.babelrc
+build
