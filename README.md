@@ -48,6 +48,7 @@ connect(Component, mapper);
 ```
 
 __component__ - reactant component
+
 __mapper__ - map store to component props
 ___
 
@@ -56,6 +57,7 @@ __connect listener to the store:__
 subscribe(callback, mapper);
 ```
 __callback__ - function with an argument containing the value returned by the _mapper_
+
 __mapper__ - map store for _callback_
 
 #### Poxied state
