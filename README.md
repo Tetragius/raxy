@@ -1,4 +1,5 @@
-##Raxy (ReAct + ProXY)
+
+#Raxy (ReAct + ProXY)
 
 Simple react state manager. You can work with state as with a regular object.
 Can be used with redux-devtools-extension and history.
