@@ -9,4 +9,4 @@ deploy:
   provider: npm
   email: $EMAIL
   api_key: $NPM_API_KEY
-  on: master
+  on: release
