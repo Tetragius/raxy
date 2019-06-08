@@ -6,12 +6,12 @@ before_script:
 script: 
   - npm run build
 
-  jobs:
-  include:
-    - stage: npm release
-      node_js: node
-      script: echo "Deploying to npm ..."
-      deploy:
-        provider: npm
-        api_key: $NPM_API_KEY
-        on: deploy-npm-release
+jobs:
+include:
+  - stage: npm release
+    node_js: node
+    script: echo "Deploying to npm ..."
+    deploy:
+      provider: npm
+      api_key: $NPM_API_KEY
+      on: deploy-npm-release
