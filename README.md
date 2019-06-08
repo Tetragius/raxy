@@ -146,7 +146,7 @@ export const {state, connect} = new Raxy({ToDo, AnotherToDo, Another});
     connect(Component, store => ({b: store.Another.ObjectA.b}));
 ```
 
-##Subscribes
+## Subscribes
 
 ```javascript
 const {state, connect, /*!!*/ subscribe /*!!*/} = new Raxy({ToDo, AnotherToDo, Another});
@@ -154,7 +154,7 @@ const {state, connect, /*!!*/ subscribe /*!!*/} = new Raxy({ToDo, AnotherToDo, A
 subscribe((state) => console.log(state), s => ({...s})); // example
 ```
 
-##Dev-tools & history examples
+## Dev-tools & history examples
 
 ```javascript
 const history = createHashHistory({ basename: '/' });
