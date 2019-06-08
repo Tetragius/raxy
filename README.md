@@ -1,3 +1,4 @@
+[![Build Status](https://travis-ci.org/Tetragius/raxy.svg?branch=master)](https://travis-ci.org/Tetragius/raxy)
 
 # Raxy (ReAct + ProXY)
 
