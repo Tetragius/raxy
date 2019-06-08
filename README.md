@@ -32,6 +32,40 @@ Based on JS Proxy API and works with all browsers that support it.
 npm install --save raxy
 ```
 
+## API description
+
+To create a new store call:
+```javascript
+new Raxy({initialState});
+```
+this returns two methods and proxied state
+
+###### Methods
+
+connect the react component to the store:
+```javascript
+connect(Component, mapper);
+```
+
+> __component__ - reactant component
+> __mapper__ - map store to component props
+___
+
+connect listener to the store:
+```javascript
+subscribe(callback, mapper);
+```
+> __callback__ - function with an argument containing the value returned by the _mapper_
+__mapper__ - map store for _callback_
+
+###### Poxied state
+```javascript
+state
+// you can chage this just chage object properties
+```
+
+---
+
 ## Simple usage
 
 #### Create store
@@ -96,6 +130,8 @@ class Component extends React.Component {
 // connect to store
 export ConnectedComponent = connect(Component, store => ({list: store.list}));
 ```
+
+---
 
 ## Additional
 
