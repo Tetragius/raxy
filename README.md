@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/Tetragius/raxy.svg?branch=master)](https://travis-ci.org/Tetragius/raxy)
+[![Build Status](https://travis-ci.org/Tetragius/raxy.svg?branch=master)](https://travis-ci.org/Tetragius/raxy)[![npm version](https://badge.fury.io/js/raxy.svg)](https://badge.fury.io/js/raxy)
 
 # Raxy (ReAct + ProXY)
 
