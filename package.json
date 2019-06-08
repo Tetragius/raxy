@@ -1,6 +1,6 @@
 {
   "name": "raxy",
-  "version": "1.0.1",
+  "version": "1.0.4",
   "description": "raxy",
   "main": "dist/index.js",
   "scripts": {

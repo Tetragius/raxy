@@ -10,8 +10,7 @@ export function connect(Component: React.ComponentClass, mapper, store, subscrib
                 if (target[name] && target[name] !== val) { this.subscriber.needToUpdate = true; }
                 target[name] = val;
                 return true;
-            },
-            get: (target, name) => target[name]
+            }
         }
 
         constructor(props) {
