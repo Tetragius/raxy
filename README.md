@@ -169,7 +169,7 @@ const {state, subscribe} = new Raxy({
     nested: { b: 2 }
 });
 
-testStore.subscribe(location => console.log(location), state => ({ location: state.location }));
+state.subscribe(location => console.log(location), state => ({ location: state.location }));
 
 history.listen(location => state.location = location);
 ```
