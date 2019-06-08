@@ -40,25 +40,25 @@ new Raxy({initialState});
 ```
 this returns two methods and proxied state
 
-###### Methods
+#### Methods
 
-connect the react component to the store:
+__connect the react component to the store:__
 ```javascript
 connect(Component, mapper);
 ```
 
-> __component__ - reactant component
-> __mapper__ - map store to component props
+__component__ - reactant component
+__mapper__ - map store to component props
 ___
 
-connect listener to the store:
+__connect listener to the store:__
 ```javascript
 subscribe(callback, mapper);
 ```
-> __callback__ - function with an argument containing the value returned by the _mapper_
+__callback__ - function with an argument containing the value returned by the _mapper_
 __mapper__ - map store for _callback_
 
-###### Poxied state
+#### Poxied state
 ```javascript
 state
 // you can chage this just chage object properties
