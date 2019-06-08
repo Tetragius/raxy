@@ -5,8 +5,8 @@ before_script:
   - npm install
 script: 
   - npm run build
-script: echo "Deploying to npm ..."
 deploy:
   provider: npm
+  email: $EMAIL
   api_key: $NPM_API_KEY
   on: master
