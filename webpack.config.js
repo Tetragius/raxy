@@ -26,6 +26,10 @@ module.exports = () => ({
                         cacheDirectory: true,
                         babelrc: false,
                         presets: [
+                            [
+                                "@babel/preset-env",
+                                { targets: { browsers: "last 2 versions" } }
+                            ],
                             "@babel/preset-typescript",
                             "@babel/preset-react"
                         ],
