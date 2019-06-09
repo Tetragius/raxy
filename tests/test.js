@@ -23,3 +23,37 @@ mocha.describe('Test subscribe method', () => {
         store.state.a = 2;
     });
 });
+
+mocha.describe('Test assign', () => {
+    mocha.it('Check subscriber', () => {
+
+        const store = new Raxy({ a: 1, b: 2, nested: { c: 3, nested: { d: 4 } }, nestedAgain: { e: 5 } });
+
+        store.subscribe((s) => expect(s.c).to.equal(4), state => ({ c: state.nested.c }));
+
+        const action = (c, e) => {
+            const state = Object.assign({}, store.state);
+            state.nested.c = c;
+            state.nestedAgain.e = e;
+            Object.assign(store.state, state);
+        }
+
+        action(4, 5);
+    });
+
+    mocha.it('Check subscriber work only fired', () => {
+
+        const store = new Raxy({ a: 1, b: 2, nested: { c: 3, nested: { d: 4 } }, nestedAgain: { e: 5 } });
+
+        store.subscribe((s) => expect(s).to.equal(3), state => ({ d: state.nested.nested.d }));
+
+        const action = (c, e) => {
+            const state = Object.assign({}, store.state);
+            state.nested.c = c;
+            state.nestedAgain.e = e;
+            Object.assign(store.state, state);
+        }
+
+        action(4, 5);
+    });
+});
