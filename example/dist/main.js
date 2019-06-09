@@ -12368,6 +12368,20 @@ module.exports = invariant;
 
 /***/ }),
 
+/***/ "./node_modules/isarray/index.js":
+/*!***************************************!*\
+  !*** ./node_modules/isarray/index.js ***!
+  \***************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = Array.isArray || function (arr) {
+  return Object.prototype.toString.call(arr) == '[object Array]';
+};
+
+
+/***/ }),
+
 /***/ "./node_modules/object-assign/index.js":
 /*!*********************************************!*\
   !*** ./node_modules/object-assign/index.js ***!
@@ -12477,7 +12491,7 @@ module.exports = shouldUseNative() ? Object.assign : function (target, source) {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-var isarray = __webpack_require__(/*! isarray */ "./node_modules/path-to-regexp/node_modules/isarray/index.js")
+var isarray = __webpack_require__(/*! isarray */ "./node_modules/isarray/index.js")
 
 /**
  * Expose `pathToRegexp`.
@@ -12903,20 +12917,6 @@ function pathToRegexp (path, keys, options) {
 
   return stringToRegexp(/** @type {string} */ (path), /** @type {!Array} */ (keys), options)
 }
-
-
-/***/ }),
-
-/***/ "./node_modules/path-to-regexp/node_modules/isarray/index.js":
-/*!*******************************************************************!*\
-  !*** ./node_modules/path-to-regexp/node_modules/isarray/index.js ***!
-  \*******************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-module.exports = Array.isArray || function (arr) {
-  return Object.prototype.toString.call(arr) == '[object Array]';
-};
 
 
 /***/ }),
@@ -13695,7 +13695,7 @@ module.exports = ReactPropTypesSecret;
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-!function(t,e){ true?module.exports=e(__webpack_require__(/*! react */ "./node_modules/react/index.js")):undefined}(window,function(t){return function(t){var e={};function r(o){if(e[o])return e[o].exports;var s=e[o]={i:o,l:!1,exports:{}};return t[o].call(s.exports,s,s.exports,r),s.l=!0,s.exports}return r.m=t,r.c=e,r.d=function(t,e,o){r.o(t,e)||Object.defineProperty(t,e,{enumerable:!0,get:o})},r.r=function(t){"undefined"!=typeof Symbol&&Symbol.toStringTag&&Object.defineProperty(t,Symbol.toStringTag,{value:"Module"}),Object.defineProperty(t,"__esModule",{value:!0})},r.t=function(t,e){if(1&e&&(t=r(t)),8&e)return t;if(4&e&&"object"==typeof t&&t&&t.__esModule)return t;var o=Object.create(null);if(r.r(o),Object.defineProperty(o,"default",{enumerable:!0,value:t}),2&e&&"string"!=typeof t)for(var s in t)r.d(o,s,function(e){return t[e]}.bind(null,s));return o},r.n=function(t){var e=t&&t.__esModule?function(){return t.default}:function(){return t};return r.d(e,"a",e),e},r.o=function(t,e){return Object.prototype.hasOwnProperty.call(t,e)},r.p="",r(r.s=1)}([function(e,r){e.exports=t},function(t,e,r){t.exports=r(2)},function(t,e,r){"use strict";r.r(e);var o=r(0),s=r.n(o);r.d(e,"default",function(){return n});class n{constructor(t){this.state=null,this.proxyMap=new Map,this.subscribers=[],this.hooks={set:(t,e,r,o)=>(t[e]!==r&&("object"==typeof t[e]?t[e]=this.proxyer(r):t[e]=r,this.subscribers.some(t=>{const e=t.state;for(const t in e)if(e[t]&&e[t]===o){for(const t in this.state)this.state[t]&&this.state[t]===o&&(this.state[t]=this.proxyer(o));return!0}const r=t.mapper(this.store);return Object.assign(e,r),t.needToUpdate&&t.updater(e,()=>t.needToUpdate=!1),!1})),!0)},this.store=null,this.connect=((t,e)=>(function(t,e,r,o){return class extends s.a.Component{constructor(t){super(t),this.subscriber=null,this.hooks={set:(t,e,r)=>(t[e]&&t[e]!==r&&(this.subscriber.needToUpdate=!0),t[e]=r,!0)},this.proxyer=(t=>"object"==typeof t?new Proxy(t,this.hooks):t),this.subscriber={updater:this.setState.bind(this),state:this.proxyer(e(r)),mapper:e,needToUpdate:!1},o.push(this.subscriber)}componentWillMount(){this.setState(this.subscriber.state)}render(){return s.a.createElement(t,this.state)}}})(t,e,this.store,this.subscribers)),this.subscribe=((t,e)=>{!function(t,e,r,o){const s={set:(t,e,r)=>(t[e]&&t[e]!==r&&(n.needToUpdate=!0),t[e]=r,!0)},n={updater:(t,e)=>{r(t),e()},state:(t=>"object"==typeof t?new Proxy(t,s):t)(o(t)),mapper:o,needToUpdate:!1};e.push(n)}(this.store,this.subscribers,t,e)}),this.proxyer=(t=>{if(this.proxyMap.has(t)){const e=this.proxyMap.get(t);this.proxyMap.delete(t),t=e.obj,e.revoke()}for(const e in t)t[e]&&"object"==typeof t[e]&&(t[e]=this.proxyer(t[e]));const{proxy:e,revoke:r}=Proxy.revocable(t,this.hooks);return this.proxyMap.set(e,{revoke:r,obj:t}),e}),this.store={...t},this.state=this.proxyer(this.store)}}}])});
+!function(t,e){ true?module.exports=e(__webpack_require__(/*! react */ "./node_modules/react/index.js")):undefined}(window,function(t){return function(t){var e={};function r(n){if(e[n])return e[n].exports;var o=e[n]={i:n,l:!1,exports:{}};return t[n].call(o.exports,o,o.exports,r),o.l=!0,o.exports}return r.m=t,r.c=e,r.d=function(t,e,n){r.o(t,e)||Object.defineProperty(t,e,{enumerable:!0,get:n})},r.r=function(t){"undefined"!=typeof Symbol&&Symbol.toStringTag&&Object.defineProperty(t,Symbol.toStringTag,{value:"Module"}),Object.defineProperty(t,"__esModule",{value:!0})},r.t=function(t,e){if(1&e&&(t=r(t)),8&e)return t;if(4&e&&"object"==typeof t&&t&&t.__esModule)return t;var n=Object.create(null);if(r.r(n),Object.defineProperty(n,"default",{enumerable:!0,value:t}),2&e&&"string"!=typeof t)for(var o in t)r.d(n,o,function(e){return t[e]}.bind(null,o));return n},r.n=function(t){var e=t&&t.__esModule?function(){return t.default}:function(){return t};return r.d(e,"a",e),e},r.o=function(t,e){return Object.prototype.hasOwnProperty.call(t,e)},r.p="",r(r.s=1)}([function(e,r){e.exports=t},function(t,e,r){t.exports=r(2)},function(t,e,r){"use strict";r.r(e);var n=r(0),o=r.n(n);function u(t){return(u="function"==typeof Symbol&&"symbol"==typeof Symbol.iterator?function(t){return typeof t}:function(t){return t&&"function"==typeof Symbol&&t.constructor===Symbol&&t!==Symbol.prototype?"symbol":typeof t})(t)}function i(t,e){for(var r=0;r<e.length;r++){var n=e[r];n.enumerable=n.enumerable||!1,n.configurable=!0,"value"in n&&(n.writable=!0),Object.defineProperty(t,n.key,n)}}function c(t){return(c=Object.setPrototypeOf?Object.getPrototypeOf:function(t){return t.__proto__||Object.getPrototypeOf(t)})(t)}function f(t){if(void 0===t)throw new ReferenceError("this hasn't been initialised - super() hasn't been called");return t}function s(t,e){return(s=Object.setPrototypeOf||function(t,e){return t.__proto__=e,t})(t,e)}function a(t,e,r,n){return function(a){function p(t){var o;return function(t,e){if(!(t instanceof e))throw new TypeError("Cannot call a class as a function")}(this,p),(o=function(t,e){return!e||"object"!==u(e)&&"function"!=typeof e?f(t):e}(this,c(p).call(this,t))).subscriber=null,o.hooks={set:function(t,e,r){return t[e]&&t[e]!==r&&(o.subscriber.needToUpdate=!0),t[e]=r,!0}},o.proxyer=function(t){return"object"===u(t)?new Proxy(t,o.hooks):t},o.subscriber={updater:o.setState.bind(f(o)),state:o.proxyer(e(r)),mapper:e,needToUpdate:!1},n.push(o.subscriber),o}return function(t,e){if("function"!=typeof e&&null!==e)throw new TypeError("Super expression must either be null or a function");t.prototype=Object.create(e&&e.prototype,{constructor:{value:t,writable:!0,configurable:!0}}),e&&s(t,e)}(p,o.a.Component),function(t,e,r){e&&i(t.prototype,e),r&&i(t,r)}(p,[{key:"componentWillMount",value:function(){this.setState(this.subscriber.state)}},{key:"render",value:function(){return o.a.createElement(t,this.state)}}]),p}()}function p(t){return(p="function"==typeof Symbol&&"symbol"==typeof Symbol.iterator?function(t){return typeof t}:function(t){return t&&"function"==typeof Symbol&&t.constructor===Symbol&&t!==Symbol.prototype?"symbol":typeof t})(t)}function y(t,e,r){return e in t?Object.defineProperty(t,e,{value:r,enumerable:!0,configurable:!0,writable:!0}):t[e]=r,t}function l(t){return(l="function"==typeof Symbol&&"symbol"==typeof Symbol.iterator?function(t){return typeof t}:function(t){return t&&"function"==typeof Symbol&&t.constructor===Symbol&&t!==Symbol.prototype?"symbol":typeof t})(t)}r.d(e,"default",function(){return b});var b=function t(e){var r=this;!function(t,e){if(!(t instanceof e))throw new TypeError("Cannot call a class as a function")}(this,t),this.state=null,this.proxyMap=new Map,this.subscribers=[],this.hooks={set:function(t,e,n,o){return t[e]!==n&&("object"===l(t[e])?t[e]=r.proxyer(n):t[e]=n,r.subscribers.some(function(t){var e=t.state;for(var n in e)if(e[n]&&e[n]===o){for(var u in r.state)r.state[u]&&r.state[u]===o&&(r.state[u]=r.proxyer(o));return!0}var i=t.mapper(r.store);return Object.assign(e,i),t.needToUpdate&&t.updater(e,function(){return t.needToUpdate=!1}),!1})),!0}},this.store=null,this.connect=function(t,e){return a(t,e,r.store,r.subscribers)},this.subscribe=function(t,e){!function(t,e,r,n){var o={set:function(t,e,r){return t[e]&&t[e]!==r&&(u.needToUpdate=!0),t[e]=r,!0}},u={updater:function(t,e){r(t),e()},state:function(t){return"object"===p(t)?new Proxy(t,o):t}(n(t)),mapper:n,needToUpdate:!1};e.push(u)}(r.store,r.subscribers,t,e)},this.proxyer=function(t){if(r.proxyMap.has(t)){var e=r.proxyMap.get(t);r.proxyMap.delete(t),t=e.obj,e.revoke()}for(var n in t)t[n]&&"object"===l(t[n])&&(t[n]=r.proxyer(t[n]));var o=Proxy.revocable(t,r.hooks),u=o.proxy,i=o.revoke;return r.proxyMap.set(u,{revoke:i,obj:t}),u},this.store=function(t){for(var e=1;e<arguments.length;e++){var r=null!=arguments[e]?arguments[e]:{},n=Object.keys(r);"function"==typeof Object.getOwnPropertySymbols&&(n=n.concat(Object.getOwnPropertySymbols(r).filter(function(t){return Object.getOwnPropertyDescriptor(r,t).enumerable}))),n.forEach(function(e){y(t,e,r[e])})}return t}({},e),this.state=this.proxyer(this.store)}}])});
 
 /***/ }),
 
@@ -38447,11 +38447,11 @@ react_dom__WEBPACK_IMPORTED_MODULE_0__["render"](react__WEBPACK_IMPORTED_MODULE_
     return;
   }
 
-  reactHotLoader.register(ConterFinished, "ConterFinished", "/Users/ruacli2/Documents/reaxy/example/src/app.tsx");
-  reactHotLoader.register(CurrentLocation, "CurrentLocation", "/Users/ruacli2/Documents/reaxy/example/src/app.tsx");
-  reactHotLoader.register(CountNested, "CountNested", "/Users/ruacli2/Documents/reaxy/example/src/app.tsx");
-  reactHotLoader.register(App, "App", "/Users/ruacli2/Documents/reaxy/example/src/app.tsx");
-  reactHotLoader.register(HotApplication, "HotApplication", "/Users/ruacli2/Documents/reaxy/example/src/app.tsx");
+  reactHotLoader.register(ConterFinished, "ConterFinished", "D:\\Works\\raxy\\example\\src\\app.tsx");
+  reactHotLoader.register(CurrentLocation, "CurrentLocation", "D:\\Works\\raxy\\example\\src\\app.tsx");
+  reactHotLoader.register(CountNested, "CountNested", "D:\\Works\\raxy\\example\\src\\app.tsx");
+  reactHotLoader.register(App, "App", "D:\\Works\\raxy\\example\\src\\app.tsx");
+  reactHotLoader.register(HotApplication, "HotApplication", "D:\\Works\\raxy\\example\\src\\app.tsx");
   leaveModule(module);
 })();
 
@@ -38540,7 +38540,7 @@ function (_React$Component) {
     return;
   }
 
-  reactHotLoader.register(CounterComponent, "CounterComponent", "/Users/ruacli2/Documents/reaxy/example/src/components/counter.tsx");
+  reactHotLoader.register(CounterComponent, "CounterComponent", "D:\\Works\\raxy\\example\\src\\components\\counter.tsx");
   leaveModule(module);
 })();
 
@@ -38661,7 +38661,7 @@ function (_React$Component) {
     return;
   }
 
-  reactHotLoader.register(List, "List", "/Users/ruacli2/Documents/reaxy/example/src/components/list.tsx");
+  reactHotLoader.register(List, "List", "D:\\Works\\raxy\\example\\src\\components\\list.tsx");
   leaveModule(module);
 })();
 
@@ -38759,7 +38759,7 @@ function (_React$Component) {
     return;
   }
 
-  reactHotLoader.register(ListItem, "ListItem", "/Users/ruacli2/Documents/reaxy/example/src/components/listItem.tsx");
+  reactHotLoader.register(ListItem, "ListItem", "D:\\Works\\raxy\\example\\src\\components\\listItem.tsx");
   leaveModule(module);
 })();
 
@@ -38860,9 +38860,9 @@ var _default = Page;
     return;
   }
 
-  reactHotLoader.register(PageComponent, "PageComponent", "/Users/ruacli2/Documents/reaxy/example/src/components/page.tsx");
-  reactHotLoader.register(Page, "Page", "/Users/ruacli2/Documents/reaxy/example/src/components/page.tsx");
-  reactHotLoader.register(_default, "default", "/Users/ruacli2/Documents/reaxy/example/src/components/page.tsx");
+  reactHotLoader.register(PageComponent, "PageComponent", "D:\\Works\\raxy\\example\\src\\components\\page.tsx");
+  reactHotLoader.register(Page, "Page", "D:\\Works\\raxy\\example\\src\\components\\page.tsx");
+  reactHotLoader.register(_default, "default", "D:\\Works\\raxy\\example\\src\\components\\page.tsx");
   leaveModule(module);
 })();
 
@@ -38955,11 +38955,11 @@ if (window.__REDUX_DEVTOOLS_EXTENSION__) {
     return;
   }
 
-  reactHotLoader.register(history, "history", "/Users/ruacli2/Documents/reaxy/example/src/store.ts");
-  reactHotLoader.register(initialState, "initialState", "/Users/ruacli2/Documents/reaxy/example/src/store.ts");
-  reactHotLoader.register(state, "state", "/Users/ruacli2/Documents/reaxy/example/src/store.ts");
-  reactHotLoader.register(connect, "connect", "/Users/ruacli2/Documents/reaxy/example/src/store.ts");
-  reactHotLoader.register(subscribe, "subscribe", "/Users/ruacli2/Documents/reaxy/example/src/store.ts");
+  reactHotLoader.register(history, "history", "D:\\Works\\raxy\\example\\src\\store.ts");
+  reactHotLoader.register(initialState, "initialState", "D:\\Works\\raxy\\example\\src\\store.ts");
+  reactHotLoader.register(state, "state", "D:\\Works\\raxy\\example\\src\\store.ts");
+  reactHotLoader.register(connect, "connect", "D:\\Works\\raxy\\example\\src\\store.ts");
+  reactHotLoader.register(subscribe, "subscribe", "D:\\Works\\raxy\\example\\src\\store.ts");
   leaveModule(module);
 })();
 
