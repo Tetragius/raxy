@@ -12,3 +12,6 @@ webpack.config.js
 build
 tests
 example
+_config.yml
+logo.png
+.travis.yml
