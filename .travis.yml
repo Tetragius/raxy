@@ -1,7 +1,3 @@
-stages:
-  - test
-  - deploy
-
 jobs:
   include:
 
