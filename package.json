@@ -4,6 +4,7 @@
   "description": "raxy",
   "main": "dist/index.js",
   "scripts": {
+    "test": "webpack; mocha tests/*.js -r jsdom-global/register",
     "build": "tsc; webpack"
   },
   "keywords": [
@@ -14,8 +15,8 @@
   "author": "Chertorylskiy Ilya Sergeevich",
   "homepage": "https://github.com/Tetragius/raxy",
   "repository": {
-    "type" : "git",
-    "url" : "https://github.com/Tetragius/raxy.git"
+    "type": "git",
+    "url": "https://github.com/Tetragius/raxy.git"
   },
   "license": "MIT",
   "devDependencies": {
@@ -26,7 +27,11 @@
     "@babel/preset-typescript": "7.3.3",
     "@types/react": "16.8.19",
     "babel-loader": "8.0.6",
+    "chai": "^4.2.0",
     "dts-bundle-webpack": "1.0.2",
+    "jsdom": "15.1.1",
+    "jsdom-global": "3.0.2",
+    "mocha": "^6.1.4",
     "react": "16.8.6",
     "tslint": "5.17.0",
     "tslint-config-prettier": "1.18.0",

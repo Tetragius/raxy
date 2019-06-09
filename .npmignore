@@ -10,3 +10,5 @@ webpack.config.js
 .npmrc
 .babelrc
 build
+tests
+example
