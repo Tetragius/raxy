@@ -1,11 +1,10 @@
 {
   "name": "raxy",
-  "version": "1.1.6",
+  "version": "1.1.7",
   "description": "raxy",
   "main": "dist/index.js",
   "scripts": {
-    "onlytest": "mocha tests/*.js -r jsdom-global/register",
-    "test": "npm run build; mocha tests/*.js -r jsdom-global/register",
+    "test": "mocha tests/*.js -r jsdom-global/register",
     "build": "tsc; webpack"
   },
   "keywords": [
