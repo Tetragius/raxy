@@ -38341,7 +38341,7 @@ var ConterFinished = Object(_store__WEBPACK_IMPORTED_MODULE_4__["connect"])(_com
 });
 var CurrentLocation = Object(_store__WEBPACK_IMPORTED_MODULE_4__["connect"])(_components_counter__WEBPACK_IMPORTED_MODULE_5__["default"], function (store) {
   return {
-    value: 'current location: ' + store.location.pathname
+    value: 'current location is: ' + store.location.pathname
   };
 });
 
