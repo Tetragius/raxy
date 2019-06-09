@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<style>
+    * {
+        font-family: Arial;
+        transition: all .2s;
+        box-sizing: border-box;
+    }
+
+    .link {
+        display: inline-block;
+        margin: 24px;
+        cursor: pointer;
+        text-transform: uppercase;
+    }
+
+    .link:hover {
+        color: red;
+    }
+
+    .link.active {
+        color: green;
+    }
+
+    .page {
+        background: transparent;
+        padding: 24px;
+        margin: 24px
+    }
+
+    .page.route-one {
+        background: antiquewhite;
+    }
+
+    .page.route-two {
+        background: azure;
+    }
+
+    .append {
+        cursor: pointer;
+        text-transform: uppercase;
+        border: 1px solid gray;
+        padding: 8px;
+        display: flex;
+        width: 100px;
+        align-items: center;
+        justify-content: center;
+        margin-left: 4px;
+    }
+
+    .append:hover {
+        color: red;
+    }
+
+    .counter {
+        text-transform: uppercase;
+        border: 1px solid gray;
+        padding: 8px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 4px;
+    }
+
+    .list {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .list-item {
+        display: flex;
+        border: 1px solid gray;
+        padding: 8px;
+        min-width: 300px;
+        margin: 4px auto;
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+        cursor: pointer;
+
+    }
+
+    .label {
+        text-transform: uppercase;
+    }
+
+    .check {
+        width: 32px;
+        height: 32px;
+        border: 1px solid gray;
+        background: transparent;
+    }
+
+    .check.finished {
+        background: gray;
+    }
+</style>
+
+<body>
+    <div id="app"></div>
+</body>
+
+</html>

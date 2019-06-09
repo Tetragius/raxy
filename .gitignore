@@ -3,4 +3,5 @@ node_modules
 package-lock.json
 .npmrc
 build
-example
+example/node_modules
+!example/dist
