@@ -1,23 +1,30 @@
-job:
-  language: node_js
-  node_js: node
-  cache: npm
-  before_script:
-    - npm install
-  script: 
-    - npm run build
-  deploy:
-    provider: npm
-    email: $EMAIL
-    api_key: $NPM_API_KEY
-    on: release
+stages:
+  - test
+  - deploy
 
-job:
-  language: node_js
-  node_js: node
-  cache: npm
-  before_script:
-    - npm install
-  script: 
-    - npm run test
-  on: master
+jobs:
+  include:
+  - stage: deploy
+    language: node_js
+    node_js: node
+    cache: npm
+    before_script:
+      - npm install
+    script: 
+      - npm run build
+    deploy:
+      provider: npm
+      email: $EMAIL
+      api_key: $NPM_API_KEY
+      on: release
+
+  include:
+  - stage: test
+    language: node_js
+    node_js: node
+    cache: npm
+    before_script:
+      - npm install
+    script: 
+      - npm run test
+    on: master
