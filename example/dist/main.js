@@ -38341,7 +38341,7 @@ var ConterFinished = Object(_store__WEBPACK_IMPORTED_MODULE_4__["connect"])(_com
 });
 var CurrentLocation = Object(_store__WEBPACK_IMPORTED_MODULE_4__["connect"])(_components_counter__WEBPACK_IMPORTED_MODULE_5__["default"], function (store) {
   return {
-    value: 'current location' + store.location.pathname
+    value: 'current location: ' + store.location.pathname
   };
 });
 
@@ -38365,7 +38365,7 @@ function (_React$Component) {
 
     _this.append = function () {
       _store__WEBPACK_IMPORTED_MODULE_4__["state"].list = [].concat(_toConsumableArray(_store__WEBPACK_IMPORTED_MODULE_4__["state"].list), [{
-        label: 'item ' + _store__WEBPACK_IMPORTED_MODULE_4__["state"].list.length + 1,
+        label: 'item ' + (_store__WEBPACK_IMPORTED_MODULE_4__["state"].list.length + 1),
         finished: false
       }]);
     };
@@ -38378,7 +38378,22 @@ function (_React$Component) {
     value: function render() {
       return react__WEBPACK_IMPORTED_MODULE_1__["createElement"](react_router__WEBPACK_IMPORTED_MODULE_2__["Router"], {
         history: _store__WEBPACK_IMPORTED_MODULE_4__["history"]
-      }, react__WEBPACK_IMPORTED_MODULE_1__["createElement"](react_router__WEBPACK_IMPORTED_MODULE_2__["Route"], {
+      }, react__WEBPACK_IMPORTED_MODULE_1__["createElement"]("div", null, react__WEBPACK_IMPORTED_MODULE_1__["createElement"]("div", {
+        className: "link",
+        onClick: function onClick() {
+          return _store__WEBPACK_IMPORTED_MODULE_4__["history"].push('/');
+        }
+      }, "home"), react__WEBPACK_IMPORTED_MODULE_1__["createElement"]("div", {
+        className: "link",
+        onClick: function onClick() {
+          return _store__WEBPACK_IMPORTED_MODULE_4__["history"].push('/route-one');
+        }
+      }, "page one"), react__WEBPACK_IMPORTED_MODULE_1__["createElement"]("div", {
+        className: "link",
+        onClick: function onClick() {
+          return _store__WEBPACK_IMPORTED_MODULE_4__["history"].push('/route-two');
+        }
+      }, "page two"), react__WEBPACK_IMPORTED_MODULE_1__["createElement"](react_router__WEBPACK_IMPORTED_MODULE_2__["Route"], {
         exact: true,
         path: "/route-one",
         component: _components_page__WEBPACK_IMPORTED_MODULE_3__["default"]
@@ -38389,7 +38404,7 @@ function (_React$Component) {
       }), react__WEBPACK_IMPORTED_MODULE_1__["createElement"]("div", {
         className: "append",
         onClick: this.append
-      }, "Add item"), react__WEBPACK_IMPORTED_MODULE_1__["createElement"](ConterFinished, null), react__WEBPACK_IMPORTED_MODULE_1__["createElement"](CurrentLocation, null));
+      }, "Add item"), react__WEBPACK_IMPORTED_MODULE_1__["createElement"](ConterFinished, null), react__WEBPACK_IMPORTED_MODULE_1__["createElement"](CurrentLocation, null)));
     }
   }, {
     key: "__reactstandin__regenerateByEval",
@@ -38416,10 +38431,10 @@ react_dom__WEBPACK_IMPORTED_MODULE_0__["render"](react__WEBPACK_IMPORTED_MODULE_
     return;
   }
 
-  reactHotLoader.register(ConterFinished, "ConterFinished", "/Users/ruacli2/Documents/example/src/app.tsx");
-  reactHotLoader.register(CurrentLocation, "CurrentLocation", "/Users/ruacli2/Documents/example/src/app.tsx");
-  reactHotLoader.register(App, "App", "/Users/ruacli2/Documents/example/src/app.tsx");
-  reactHotLoader.register(HotApplication, "HotApplication", "/Users/ruacli2/Documents/example/src/app.tsx");
+  reactHotLoader.register(ConterFinished, "ConterFinished", "/Users/ruacli2/Documents/reaxy/example/src/app.tsx");
+  reactHotLoader.register(CurrentLocation, "CurrentLocation", "/Users/ruacli2/Documents/reaxy/example/src/app.tsx");
+  reactHotLoader.register(App, "App", "/Users/ruacli2/Documents/reaxy/example/src/app.tsx");
+  reactHotLoader.register(HotApplication, "HotApplication", "/Users/ruacli2/Documents/reaxy/example/src/app.tsx");
   leaveModule(module);
 })();
 
@@ -38508,7 +38523,7 @@ function (_React$Component) {
     return;
   }
 
-  reactHotLoader.register(CounterComponent, "CounterComponent", "/Users/ruacli2/Documents/example/src/components/counter.tsx");
+  reactHotLoader.register(CounterComponent, "CounterComponent", "/Users/ruacli2/Documents/reaxy/example/src/components/counter.tsx");
   leaveModule(module);
 })();
 
@@ -38597,7 +38612,7 @@ function (_React$Component) {
 
       return react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("div", {
         className: "list"
-      }, this.props.list.map(function (item, idx) {
+      }, this.props.items.map(function (item, idx) {
         return react__WEBPACK_IMPORTED_MODULE_0__["createElement"](_listItem__WEBPACK_IMPORTED_MODULE_2__["default"], {
           key: idx,
           item: item,
@@ -38629,7 +38644,7 @@ function (_React$Component) {
     return;
   }
 
-  reactHotLoader.register(List, "List", "/Users/ruacli2/Documents/example/src/components/list.tsx");
+  reactHotLoader.register(List, "List", "/Users/ruacli2/Documents/reaxy/example/src/components/list.tsx");
   leaveModule(module);
 })();
 
@@ -38700,8 +38715,8 @@ function (_React$Component) {
       }, react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("div", {
         className: "label"
       }, this.props.item.label), react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("div", {
-        className: "check"
-      }, this.props.item.finished));
+        className: "check ".concat(this.props.item.finished && 'finished' || '')
+      }));
     }
   }, {
     key: "__reactstandin__regenerateByEval",
@@ -38727,7 +38742,7 @@ function (_React$Component) {
     return;
   }
 
-  reactHotLoader.register(ListItem, "ListItem", "/Users/ruacli2/Documents/example/src/components/listItem.tsx");
+  reactHotLoader.register(ListItem, "ListItem", "/Users/ruacli2/Documents/reaxy/example/src/components/listItem.tsx");
   leaveModule(module);
 })();
 
@@ -38791,9 +38806,11 @@ function (_React$Component) {
   _createClass(PageComponent, [{
     key: "render",
     value: function render() {
-      return react__WEBPACK_IMPORTED_MODULE_0__["createElement"](_list__WEBPACK_IMPORTED_MODULE_2__["default"], {
+      return react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("div", {
+        className: "page ".concat(this.props.pathName.split('/')[1])
+      }, react__WEBPACK_IMPORTED_MODULE_0__["createElement"](_list__WEBPACK_IMPORTED_MODULE_2__["default"], {
         items: this.props.list
-      });
+      }));
     }
   }, {
     key: "__reactstandin__regenerateByEval",
@@ -38809,7 +38826,8 @@ function (_React$Component) {
 
 var Page = Object(_store__WEBPACK_IMPORTED_MODULE_1__["connect"])(PageComponent, function (store) {
   return {
-    list: store.list
+    list: store.list,
+    pathName: store.location.pathname
   };
 });
 var _default = Page;
@@ -38825,9 +38843,9 @@ var _default = Page;
     return;
   }
 
-  reactHotLoader.register(PageComponent, "PageComponent", "/Users/ruacli2/Documents/example/src/components/page.tsx");
-  reactHotLoader.register(Page, "Page", "/Users/ruacli2/Documents/example/src/components/page.tsx");
-  reactHotLoader.register(_default, "default", "/Users/ruacli2/Documents/example/src/components/page.tsx");
+  reactHotLoader.register(PageComponent, "PageComponent", "/Users/ruacli2/Documents/reaxy/example/src/components/page.tsx");
+  reactHotLoader.register(Page, "Page", "/Users/ruacli2/Documents/reaxy/example/src/components/page.tsx");
+  reactHotLoader.register(_default, "default", "/Users/ruacli2/Documents/reaxy/example/src/components/page.tsx");
   leaveModule(module);
 })();
 
@@ -38917,12 +38935,12 @@ subscribe(function (s) {
     return;
   }
 
-  reactHotLoader.register(history, "history", "/Users/ruacli2/Documents/example/src/store.ts");
-  reactHotLoader.register(initialState, "initialState", "/Users/ruacli2/Documents/example/src/store.ts");
-  reactHotLoader.register(state, "state", "/Users/ruacli2/Documents/example/src/store.ts");
-  reactHotLoader.register(connect, "connect", "/Users/ruacli2/Documents/example/src/store.ts");
-  reactHotLoader.register(subscribe, "subscribe", "/Users/ruacli2/Documents/example/src/store.ts");
-  reactHotLoader.register(devTools, "devTools", "/Users/ruacli2/Documents/example/src/store.ts");
+  reactHotLoader.register(history, "history", "/Users/ruacli2/Documents/reaxy/example/src/store.ts");
+  reactHotLoader.register(initialState, "initialState", "/Users/ruacli2/Documents/reaxy/example/src/store.ts");
+  reactHotLoader.register(state, "state", "/Users/ruacli2/Documents/reaxy/example/src/store.ts");
+  reactHotLoader.register(connect, "connect", "/Users/ruacli2/Documents/reaxy/example/src/store.ts");
+  reactHotLoader.register(subscribe, "subscribe", "/Users/ruacli2/Documents/reaxy/example/src/store.ts");
+  reactHotLoader.register(devTools, "devTools", "/Users/ruacli2/Documents/reaxy/example/src/store.ts");
   leaveModule(module);
 })();
 
