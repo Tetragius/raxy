@@ -17,7 +17,7 @@ export function connect(Component: React.ComponentClass, mapper, store, subscrib
             super(props);
             this.subscriber = {
                 updater: this.setState.bind(this),
-                state: new Proxy(mapper(store), this.hooks),
+                state: this.proxyer(mapper(store)),
                 mapper,
                 needToUpdate: false
             }
@@ -27,5 +27,12 @@ export function connect(Component: React.ComponentClass, mapper, store, subscrib
         componentWillMount() { this.setState(this.subscriber.state); }
 
         render() { return <Component  {...this.state} /> }
+
+        private proxyer = data => {
+            if (typeof data === 'object') {
+                return new Proxy(data, this.hooks);
+            }
+            return data;
+        }
     }
 }

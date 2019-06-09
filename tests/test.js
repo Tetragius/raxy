@@ -4,8 +4,6 @@ const Raxy = require('../dist/index.js').default;
 
 const expect = chai.expect;
 
-console.log(expect);
-
 mocha.describe('Test subscribe method', () => {
     mocha.it('Check subscriber', () => {
 
