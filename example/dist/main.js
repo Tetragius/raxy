@@ -38929,18 +38929,21 @@ history.listen(function (location) {
   return state.location = location;
 });
 
-var devTools = window.__REDUX_DEVTOOLS_EXTENSION__.connect();
+if (window.__REDUX_DEVTOOLS_EXTENSION__) {
+  var devTools = window.__REDUX_DEVTOOLS_EXTENSION__.connect();
 
-devTools.init({
-  value: state
-});
-subscribe(function (s) {
-  return devTools.send('change state', {
-    value: s
+  devTools.init({
+    value: state
   });
-}, function (s) {
-  return _objectSpread({}, s);
-});
+  subscribe(function (s) {
+    return devTools.send('change state', {
+      value: s
+    });
+  }, function (s) {
+    return _objectSpread({}, s);
+  });
+}
+
 ;
 
 (function () {
@@ -38957,7 +38960,6 @@ subscribe(function (s) {
   reactHotLoader.register(state, "state", "/Users/ruacli2/Documents/reaxy/example/src/store.ts");
   reactHotLoader.register(connect, "connect", "/Users/ruacli2/Documents/reaxy/example/src/store.ts");
   reactHotLoader.register(subscribe, "subscribe", "/Users/ruacli2/Documents/reaxy/example/src/store.ts");
-  reactHotLoader.register(devTools, "devTools", "/Users/ruacli2/Documents/reaxy/example/src/store.ts");
   leaveModule(module);
 })();
 
