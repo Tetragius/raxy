@@ -38344,6 +38344,11 @@ var CurrentLocation = Object(_store__WEBPACK_IMPORTED_MODULE_4__["connect"])(_co
     value: 'current location is: ' + store.location.pathname
   };
 });
+var CountNested = Object(_store__WEBPACK_IMPORTED_MODULE_4__["connect"])(_components_counter__WEBPACK_IMPORTED_MODULE_5__["default"], function (store) {
+  return {
+    value: 'nested is: ' + store.nested.itemOne
+  };
+});
 
 var App =
 /*#__PURE__*/
@@ -38368,6 +38373,10 @@ function (_React$Component) {
         label: 'item ' + (_store__WEBPACK_IMPORTED_MODULE_4__["state"].list.length + 1),
         finished: false
       }]);
+    };
+
+    _this.increment = function () {
+      return _store__WEBPACK_IMPORTED_MODULE_4__["state"].nested.itemOne += 1;
     };
 
     return _this;
@@ -38395,6 +38404,10 @@ function (_React$Component) {
         }
       }, "page two"), react__WEBPACK_IMPORTED_MODULE_1__["createElement"](react_router__WEBPACK_IMPORTED_MODULE_2__["Route"], {
         exact: true,
+        path: "/",
+        component: CountNested
+      }), react__WEBPACK_IMPORTED_MODULE_1__["createElement"](react_router__WEBPACK_IMPORTED_MODULE_2__["Route"], {
+        exact: true,
         path: "/route-one",
         component: _components_page__WEBPACK_IMPORTED_MODULE_3__["default"]
       }), react__WEBPACK_IMPORTED_MODULE_1__["createElement"](react_router__WEBPACK_IMPORTED_MODULE_2__["Route"], {
@@ -38404,7 +38417,10 @@ function (_React$Component) {
       }), react__WEBPACK_IMPORTED_MODULE_1__["createElement"]("div", {
         className: "append",
         onClick: this.append
-      }, "Add item"), react__WEBPACK_IMPORTED_MODULE_1__["createElement"](ConterFinished, null), react__WEBPACK_IMPORTED_MODULE_1__["createElement"](CurrentLocation, null)));
+      }, "Add item"), react__WEBPACK_IMPORTED_MODULE_1__["createElement"]("div", {
+        className: "append",
+        onClick: this.increment
+      }, "Increment nested"), react__WEBPACK_IMPORTED_MODULE_1__["createElement"](ConterFinished, null), react__WEBPACK_IMPORTED_MODULE_1__["createElement"](CurrentLocation, null)));
     }
   }, {
     key: "__reactstandin__regenerateByEval",
@@ -38433,6 +38449,7 @@ react_dom__WEBPACK_IMPORTED_MODULE_0__["render"](react__WEBPACK_IMPORTED_MODULE_
 
   reactHotLoader.register(ConterFinished, "ConterFinished", "/Users/ruacli2/Documents/reaxy/example/src/app.tsx");
   reactHotLoader.register(CurrentLocation, "CurrentLocation", "/Users/ruacli2/Documents/reaxy/example/src/app.tsx");
+  reactHotLoader.register(CountNested, "CountNested", "/Users/ruacli2/Documents/reaxy/example/src/app.tsx");
   reactHotLoader.register(App, "App", "/Users/ruacli2/Documents/reaxy/example/src/app.tsx");
   reactHotLoader.register(HotApplication, "HotApplication", "/Users/ruacli2/Documents/reaxy/example/src/app.tsx");
   leaveModule(module);
