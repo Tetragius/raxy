@@ -27,6 +27,19 @@ Based on JS Proxy API and works with all browsers that support it. Also IE 10+ b
 --- | --- | --- | --- | --- |
 49+ ✔ | 18+ ✔ | IE 10+ (Edge)18+ ✔ | 36+ ✔ | 10+ ✔ |
 
+---
+Navigation
+- [Installation](#installation)
+- [API description](#api-description)
+- [Simple usage](#simple-usage)
+- [Additional](#additional)
+- [Updates & side-effects](#updates-side-effects)
+- [Actions (optional)](#actions-optional)
+- [Subscribes](#subscribes)
+- [Dev-tools & history examples](#dev-tools-history-examples)
+
+
+
 
 ## Installation
 
