@@ -57,3 +57,23 @@ mocha.describe('Test assign', () => {
         action(4, 5);
     });
 });
+
+mocha.describe('Test unsubscribe and resubscribe methods', () => {
+
+    const store = new Raxy({ a: 1, b: 2 });
+    const subscriber = store.subscribe((s) => expect(s.a).to.equal(2), state => ({ a: state.a }));
+
+    mocha.it('Check subscriber', () => {
+        store.state.a = 2;
+    });
+
+    mocha.it('Check unsubscribe', () => {
+        subscriber.off();
+        store.state.a = 3;
+    });
+
+    mocha.it('Check resubscribe', () => {
+        subscriber.on();
+        store.state.a = 2;
+    });
+});

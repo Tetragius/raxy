@@ -1,6 +1,11 @@
 import { connect } from './connect';
 import { subscribe } from './subscribe';
 
+interface ISubscriber {
+    off(): void;
+    on(): void;
+}
+
 /**
  *
  *
@@ -61,7 +66,15 @@ export default class Raxy<S> {
      * @memberof Raxy
      */
     public connect = <P>(component: React.ComponentClass, mapper: (state: S) => P): React.ComponentClass => {
-        return connect(component, mapper, this.store, this.subscribers);
+        let subscriber;
+
+        const init = (wrapper, listener) => {
+            subscriber = subscribe(this.store, this.subscribers, listener, mapper);
+            subscriber.wrapper = wrapper;
+            return subscriber;
+        }
+
+        return connect(component, init, wrapper => this.disposal(s => s.wrapper !== wrapper));
     }
 
     /**
@@ -69,8 +82,22 @@ export default class Raxy<S> {
      *
      * @memberof Raxy
      */
-    public subscribe = <P>(callback, mapper: (state: S) => P): void => {
-        subscribe(this.store, this.subscribers, callback, mapper);
+    public subscribe = <P>(callback, mapper: (state: S) => P): ISubscriber => {
+        let subscriber;
+
+        const listener = (state, cb) => { callback(state); cb(); }
+
+        const init = () => subscriber = subscribe(this.store, this.subscribers, listener, mapper);
+        init();
+
+        const off = () => this.disposal(s => s !== subscriber);
+        const on = () => init();
+
+        return { off, on };
+    }
+
+    private disposal = exp => {
+        this.subscribers = this.subscribers.filter(exp);
     }
 
     private proxyer = (obj: any): any => {

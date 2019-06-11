@@ -62,6 +62,8 @@ __callback__ - function with an argument containing the value returned by the _m
 
 __mapper__ - map store for _callback_
 
+retrun object with _off_ and _on_ methids;
+
 #### Poxied state
 ```javascript
 state
@@ -190,12 +192,39 @@ export const {state, connect} = new Raxy({ToDo, AnotherToDo, Another});
     connect(Component, store => ({b: store.Another.ObjectA.b}));
 ```
 
+#### Actions (optional)
+
+You can create actions for combine multiple operations at one.
+
+```javascript
+const store = new Raxy({ 
+    a: 1, b: 2, 
+    nested: { c: 3, nested: { d: 4 } }, 
+    nestedAgain: { e: 5 } });
+
+store.subscribe((s) => expect(s).to.equal(3), state => ({ d:state.nested.nested.d }));
+
+const action = (c, e) => {
+    const state = Object.assign({}, store.state);
+    state.nested.c = c;
+    state.nestedAgain.e = e;
+    Object.assign(store.state, state);
+}
+
+action(4, 5);
+```
+
 ## Subscribes
 
 ```javascript
 const {state, connect, /*!!*/ subscribe /*!!*/} = new Raxy({ToDo, AnotherToDo, Another});
 
 subscribe((state) => console.log(state), s => ({...s})); // example
+
+// or
+// const subscriber = subscribe((state) => console.log(state), s => ({...s}));
+// subscriber.off() - stop listen;
+// subscriber.on() - start again;
 ```
 
 ## Dev-tools & history examples

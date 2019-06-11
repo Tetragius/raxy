@@ -5,3 +5,5 @@ package-lock.json
 build
 example/node_modules
 !example/dist
+coverage
+.vscode

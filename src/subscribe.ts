@@ -1,4 +1,4 @@
-export function subscribe<S, T>(store, subscribers, callback, mapper): void {
+export function subscribe<S, T>(store, subscribers, listener, mapper): any {
 
     const hooks = {
         set: (target, name, val) => {
@@ -16,11 +16,14 @@ export function subscribe<S, T>(store, subscribers, callback, mapper): void {
     }
 
     const subscriber = {
-        updater: (state, cb) => { callback(state); cb(); },
+        updater: listener,
         state: proxyer(mapper(store)),
         mapper,
-        needToUpdate: false
+        needToUpdate: false,
+        wrapper: null
     }
 
     subscribers.push(subscriber);
+
+    return subscriber;
 }

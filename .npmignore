@@ -15,3 +15,5 @@ example
 _config.yml
 logo.png
 .travis.yml
+coverage
+.vscode
