@@ -65,7 +65,7 @@ export default class Raxy<S> {
      *
      * @memberof Raxy
      */
-    public connect = <P>(component: React.ComponentClass, mapper: (state: S) => P): React.ComponentClass => {
+    public connect = <P = any>(component: React.ComponentClass, mapper: (state: S) => Partial<P>): React.ComponentClass<Partial<P>> => {
         let subscriber;
 
         const init = (wrapper, listener) => {
@@ -74,7 +74,7 @@ export default class Raxy<S> {
             return subscriber;
         }
 
-        return connect(component, init, wrapper => this.disposal(s => s.wrapper !== wrapper));
+        return connect<P>(component, init, wrapper => this.disposal(s => s.wrapper !== wrapper));
     }
 
     /**

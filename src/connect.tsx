@@ -1,8 +1,8 @@
 import React from 'react';
 
-export function connect(Component: React.ComponentClass, init, disposal): React.ComponentClass {
+export function connect<P>(Component: React.ComponentClass, init, disposal): React.ComponentClass<P> {
 
-    return class extends React.Component {
+    return class extends React.Component<P> {
 
         constructor(props) {
             super(props);
@@ -17,7 +17,7 @@ export function connect(Component: React.ComponentClass, init, disposal): React.
             disposal(this);
         }
 
-        render() { return <Component  {...this.state} /> }
+        render() { return <Component  {...this.state} {...this.props} /> }
 
     }
 }

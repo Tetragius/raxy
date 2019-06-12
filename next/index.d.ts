@@ -19,7 +19,7 @@ export default class Raxy<S> {
             *
             * @memberof Raxy
             */
-        connect: <P>(component: import("react").ComponentClass<{}, any>, mapper: (state: S) => P) => import("react").ComponentClass<{}, any>;
+        connect: <P = any>(component: import("react").ComponentClass<{}, any>, mapper: (state: S) => Partial<P>) => import("react").ComponentClass<Partial<P>, any>;
         /**
             *
             *

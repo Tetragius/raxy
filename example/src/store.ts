@@ -4,7 +4,12 @@ import { createHashHistory } from 'history';
 export const history = createHashHistory({ basename: '/' });
 
 const initialState = {
-    list: [
+    listA: [
+        { label: 'item 1', finished: false },
+        { label: 'item 2', finished: true },
+        { label: 'item 3', finished: false },
+    ],
+    listB: [
         { label: 'item 1', finished: false },
         { label: 'item 2', finished: true },
         { label: 'item 3', finished: false },

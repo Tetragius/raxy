@@ -5,15 +5,21 @@ import Page from './components/page';
 import { connect, state, history } from './store';
 import CounterComponent from './components/counter';
 import { hot } from 'react-hot-loader';
+import PageDynamic from './components/pageDynamic';
 
-const ConterFinished = connect(CounterComponent, store => ({ value: 'finised tasks: ' + store.list.filter(i => i.finished).length }));
+const ConterFinishedA = connect(CounterComponent, store => ({ value: 'finised tasks of list A: ' + store.listA.filter(i => i.finished).length }));
+const ConterFinishedB = connect(CounterComponent, store => ({ value: 'finised tasks of list B: ' + store.listB.filter(i => i.finished).length }));
 const CurrentLocation = connect(CounterComponent, store => ({ value: 'current location is: ' + store.location.pathname }));
 const CountNested = connect(CounterComponent, store => ({ value: 'nested is: ' + store.nested.itemOne }));
 
 class App extends React.Component {
 
-    append = () => {
-        state.list = [...state.list, { label: 'item ' + (state.list.length + 1), finished: false }];
+    appendA = () => {
+        state.listA = [...state.listA, { label: 'item ' + (state.listA.length + 1), finished: false }];
+    }
+
+    appendB = () => {
+        state.listB = [...state.listB, { label: 'item ' + (state.listB.length + 1), finished: false }];
     }
 
     increment = () => state.nested.itemOne += 1;
@@ -26,10 +32,12 @@ class App extends React.Component {
                 <div className='link' onClick={() => history.push('/route-two')}>page two</div>
                 <Route exact={true} path='/' component={CountNested} />
                 <Route exact={true} path='/route-one' component={Page} />
-                <Route exact={true} path='/route-two' component={Page} />
-                <div className='append' onClick={this.append}>Add item</div>
+                <Route exact={true} path='/route-two' component={PageDynamic} />
+                <div className='append' onClick={this.appendA}>Add item to list A</div>
+                <div className='append' onClick={this.appendB}>Add item to list B</div>
                 <div className='append' onClick={this.increment}>Increment nested</div>
-                <ConterFinished />
+                <ConterFinishedA />
+                <ConterFinishedB />
                 <CurrentLocation />
             </div>
         </Router>

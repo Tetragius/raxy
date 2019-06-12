@@ -38,6 +38,7 @@ Navigation
 - [Complex store](#store-can-be-more-complicated)
 - [Arrays](#also-you-can-subscribe-or-update-item-in-arrays)
 - [Updates & side-effects](#updates-side-effects)
+- [Dynamic connect](#dynamic-connect)
 - [Actions (optional)](#actions-optional)
 - [Subscribes](#subscribes)
 - [Dev-tools & history examples](#dev-tools-history-examples)
@@ -231,6 +232,59 @@ state.list[1].finished = false
     connect(Component, store => ({list: store.ToDo.list}));
     connect(Component, store => ({countFinished: store.ToDo.list.filter(i => i.finished).length}));
     connect(Component, store => ({b: store.Another.ObjectA.b}));
+```
+
+#### Dynamic connect (from example)
+
+```javascript
+// example/src/pageDynamic.tsx
+
+import * as React from 'react';
+import { connect } from '../store';
+import ListDynamic from './listDynamic';
+
+class PageDynamicComponent extends React.Component<any, any> {
+    render() {
+        return <div className={`page ${this.props.pathName.split('/')[1]}`}>
+            <div>List B</div>
+            <ListDynamic items={this.props.list} />
+        </div>
+    }
+}
+
+const PageDynamic = connect<any>(PageDynamicComponent, store => ({ list: store.listB, pathName: store.location.pathname }));
+export default PageDynamic;
+```
+
+```javascript
+// example/src/listDynamic.tsx
+import * as React from 'react';
+import { connect } from '../store';
+import ListItem, { IListItemProps } from './listItem';
+
+export default class ListDynamic extends React.Component<any, any> {
+
+    click = (idx, item) => {
+        // you can uodate props because it is Proxy or you can import 'state' from '../store';
+        this.props.items[idx] = { label: item.label, finished: !item.finished };
+    }
+
+    defineListItem = idx => {
+        // you can create connection dynamicly;
+        return connect<IListItemProps>(ListItem, s => ({ item: s.listB[idx] }));
+    }
+
+    render() {
+        return (
+            <div className='list'>
+                {this.props.items.map((item, idx) => {
+                    const Item = this.defineListItem(idx);
+                    return <Item key={idx} onClick={() => this.click(idx, item)} />;
+                })}
+            </div>
+        )
+    }
+}
 ```
 
 #### Actions (optional)

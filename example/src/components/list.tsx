@@ -6,7 +6,7 @@ import ListItem from './listItem';
 export default class List extends React.Component<any, any> {
 
     click = item => {
-        state.list = state.list.map(i => {
+        state.listA = state.listA.map(i => {
             if (item === i) {
                 i.finished = !i.finished;
             }
