@@ -38,7 +38,7 @@ Navigation
 - [Complex store](#store-can-be-more-complicated)
 - [Arrays](#also-you-can-subscribe-or-update-item-in-arrays)
 - [Updates & side-effects](#updates-side-effects)
-- [Dynamic connect](#dynamic-connect)
+- [Dynamic connect](#dynamic-connect-from-example)
 - [Actions (optional)](#actions-optional)
 - [Subscribes](#subscribes)
 - [Dev-tools & history examples](#dev-tools-history-examples)
