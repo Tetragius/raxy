@@ -7,6 +7,7 @@ package-lock.json
 tslint.json
 tsconfig.json
 webpack.config.js
+webpack-next.config.js
 .npmrc
 .babelrc
 build

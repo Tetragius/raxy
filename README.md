@@ -7,6 +7,8 @@
 Simple react state manager. You can work with state as with a regular object.
 Can be used with redux-devtools-extension and history.
 
+__~2kb__ or __~5kb__ with plyfill for IE
+
 [DEMO](https://tetragius.github.io/raxy/example/dist/#/)
 
 ```typescript
@@ -33,6 +35,8 @@ Navigation
 - [API description](#api-description)
 - [Simple usage](#simple-usage)
 - [Additional](#additional)
+- [Complex store](#store-can-be-more-complicated)
+- [Arrays](#also-you-can-subscribe-or-update-item-in-arrays)
 - [Updates & side-effects](#updates-side-effects)
 - [Actions (optional)](#actions-optional)
 - [Subscribes](#subscribes)
@@ -86,6 +90,11 @@ state
 ---
 
 ## Simple usage
+
+```javascript
+import Raxy from 'raxy'; // with polyfill
+import Raxy from 'raxy/next'; // without polyfill
+```
 
 #### Create store
 
@@ -186,6 +195,25 @@ const Another = {
 
 // create new store
 export const {state, connect} = new Raxy({ToDo, AnotherToDo, Another});
+```
+
+#### Also you can subscribe or update item in arrays
+
+```javascript
+const ToDo = {
+    list: [
+        {title: 'item 1', finished: false},
+        {title: 'item 2', finished: false},
+        {title: 'item 3', finished: false},
+    ]
+
+export const {state, subscribe} = new Raxy({ToDo});
+
+subscribe((s) => console.log(s), state => ({ list: state.list }));
+subscribe((s) => console.log(s), state => ({ item: state.list[1] }));
+
+state.list[1] = {title: 'item 1', finished: true};
+state.list[1].finished = false
 ```
 
 #### Updates & side-effects

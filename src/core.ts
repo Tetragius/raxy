@@ -23,7 +23,7 @@ export default class Raxy<S> {
     private hooks = {
         set: (target, name, val, proxed) => {
             if (target[name] !== val) {
-                if (typeof target[name] === 'object') {
+                if (typeof target[name] === 'object' || Array.isArray(target[name])) {
                     target[name] = this.proxyer(val);
                 }
                 else {
@@ -110,7 +110,7 @@ export default class Raxy<S> {
         }
 
         for (const key in obj) {
-            if (obj[key] && typeof obj[key] === 'object') {
+            if (obj[key] && typeof obj[key] === 'object' || Array.isArray(obj[key])) {
                 obj[key] = this.proxyer(obj[key]);
             }
         }

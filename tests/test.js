@@ -77,3 +77,28 @@ mocha.describe('Test unsubscribe and resubscribe methods', () => {
         store.state.a = 2;
     });
 });
+
+mocha.describe('Test Arrays', () => {
+
+    mocha.it('Check subscriber element', () => {
+
+        const { state, subscribe } = new Raxy({ a: 1, b: 2, c: [1, 2, 3, 4], d: [{ a: 1, b: 2 }, { a: 1, b: 2 }] });
+
+        subscribe((s) => expect(s.a).to.equal(2), state => ({ a: state.a }));
+        subscribe((s) => expect(s.a).not.equal(1), state => ({ a: state.a }));
+
+        state.a = 2;
+    });
+
+    mocha.it('Check arrays proxy', () => {
+
+        const { state, subscribe } = new Raxy({ a: 1, b: 2, c: [1, 2, 3, 4], d: [{ a: 1, b: 2 }, { a: 1, b: 2 }] });
+
+        subscribe((s) => expect(s.a[1]).to.equal(3), state => ({ a: state.c }));
+        subscribe((s) => expect(s.a).to.equal(3), state => ({ a: state.c[1] }));
+        subscribe((s) => expect(s.a).not.equal(2), state => ({ a: state.c[1] }));
+
+        state.c[1] = 3;
+    });
+
+});

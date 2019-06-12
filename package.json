@@ -1,11 +1,12 @@
 {
   "name": "raxy",
-  "version": "1.1.10",
+  "version": "1.1.12",
   "description": "raxy",
   "main": "dist/index.js",
   "scripts": {
     "test": "mocha tests/*.js -r jsdom-global/register",
-    "build": "tsc; webpack"
+    "build": "tsc; webpack",
+    "build:next": "tsc; webpack --config webpack-next.config.js"
   },
   "keywords": [
     "raxy",
