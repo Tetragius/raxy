@@ -5,7 +5,7 @@
 # Raxy (ReAct + ProXY)
 
 Simple react state manager. You can work with state as with a regular object.
-Can be used with redux-devtools-extension and history.
+Can be used with redux-devtools-extension and history. Also works with react hooks.
 
 __~2kb__ or __~5kb__ with plyfill for IE
 
@@ -40,6 +40,7 @@ Navigation
 - [Updates & side-effects](#updates-side-effects)
 - [Dynamic connect](#dynamic-connect-from-example)
 - [Actions (optional)](#actions-optional)
+- [React hooks](#react-hooks)
 - [Subscribes](#subscribes)
 - [Dev-tools & history examples](#dev-tools-history-examples)
 
@@ -307,6 +308,33 @@ const action = (c, e) => {
 }
 
 action(4, 5);
+```
+
+#### React hooks
+
+You can work with hooks (from example)
+```javascript
+import { subscribe, state } from '../store';
+import React, { useState, useEffect } from 'react';
+
+// create custom hook
+function useRaxy(mapper) {
+    const [data, setState] = useState(mapper(state));
+
+    useEffect(() => {
+        subscribe(s => setState(s), mapper);
+    });
+
+    return data;
+}
+
+export function Hook() {
+    const data = useRaxy(s => ({ val: 'nested is: ' + s.nested.itemOne }));
+
+    return <div className='counter'>
+        <div>{data.val} (Functional component with hook)</div>
+    </div>
+}
 ```
 
 ## Subscribes

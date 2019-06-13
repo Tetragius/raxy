@@ -12368,20 +12368,6 @@ module.exports = invariant;
 
 /***/ }),
 
-/***/ "./node_modules/isarray/index.js":
-/*!***************************************!*\
-  !*** ./node_modules/isarray/index.js ***!
-  \***************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-module.exports = Array.isArray || function (arr) {
-  return Object.prototype.toString.call(arr) == '[object Array]';
-};
-
-
-/***/ }),
-
 /***/ "./node_modules/object-assign/index.js":
 /*!*********************************************!*\
   !*** ./node_modules/object-assign/index.js ***!
@@ -12491,7 +12477,7 @@ module.exports = shouldUseNative() ? Object.assign : function (target, source) {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-var isarray = __webpack_require__(/*! isarray */ "./node_modules/isarray/index.js")
+var isarray = __webpack_require__(/*! isarray */ "./node_modules/path-to-regexp/node_modules/isarray/index.js")
 
 /**
  * Expose `pathToRegexp`.
@@ -12917,6 +12903,20 @@ function pathToRegexp (path, keys, options) {
 
   return stringToRegexp(/** @type {string} */ (path), /** @type {!Array} */ (keys), options)
 }
+
+
+/***/ }),
+
+/***/ "./node_modules/path-to-regexp/node_modules/isarray/index.js":
+/*!*******************************************************************!*\
+  !*** ./node_modules/path-to-regexp/node_modules/isarray/index.js ***!
+  \*******************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = Array.isArray || function (arr) {
+  return Object.prototype.toString.call(arr) == '[object Array]';
+};
 
 
 /***/ }),
@@ -35042,7 +35042,7 @@ if (false) {} else {
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-function _interopDefault(t){return t&&"object"==typeof t&&"default"in t?t.default:t}Object.defineProperty(exports,"__esModule",{value:!0});var React=_interopDefault(__webpack_require__(/*! react */ "./node_modules/react/index.js")),classCallCheck=function(t,e){if(!(t instanceof e))throw new TypeError("Cannot call a class as a function")},inherits=function(t,e){if("function"!=typeof e&&null!==e)throw new TypeError("Super expression must either be null or a function, not "+typeof e);t.prototype=Object.create(e&&e.prototype,{constructor:{value:t,enumerable:!1,writable:!0,configurable:!0}}),e&&(Object.setPrototypeOf?Object.setPrototypeOf(t,e):t.__proto__=e)},possibleConstructorReturn=function(t,e){if(!t)throw new ReferenceError("this hasn't been initialised - super() hasn't been called");return!e||"object"!=typeof e&&"function"!=typeof e?t:e},AppContainer=function(t){function e(){return classCallCheck(this,e),possibleConstructorReturn(this,t.apply(this,arguments))}return inherits(e,t),e.prototype.render=function(){return React.Children.only(this.props.children)},e}(React.Component),hot_prod=function(){return function(t){return t}},areComponentsEqual=function(t,e){return t===e},setConfig=function(){},cold=function(t){return t};exports.AppContainer=AppContainer,exports.hot=hot_prod,exports.areComponentsEqual=areComponentsEqual,exports.setConfig=setConfig,exports.cold=cold;
+function _interopDefault(e){return e&&"object"==typeof e&&"default"in e?e.default:e}Object.defineProperty(exports,"__esModule",{value:!0});var React=_interopDefault(__webpack_require__(/*! react */ "./node_modules/react/index.js"));function AppContainer(e){return React.Children.only(e.children)}var hot_prod=function(){return function(e){return e}},areComponentsEqual=function(e,n){return e===n},setConfig=function(){},cold=function(e){return e},configureComponent=function(){};exports.AppContainer=AppContainer,exports.hot=hot_prod,exports.areComponentsEqual=areComponentsEqual,exports.setConfig=setConfig,exports.cold=cold,exports.configureComponent=configureComponent;
 
 
 /***/ }),
@@ -35057,21 +35057,11 @@ function _interopDefault(t){return t&&"object"==typeof t&&"default"in t?t.defaul
 "use strict";
 
 
-var evalAllowed = false;
-try {
-  eval('evalAllowed = true');
-} catch (e) {
-  // eval not allowed due to CSP
-}
-
-// RHL needs setPrototypeOf to operate Component inheritance, and eval to patch methods
-var platformSupported = !!Object.setPrototypeOf && evalAllowed;
+var hasWindow = typeof window !== 'undefined';
 
 if (true) {
-  if (false) {}
   module.exports = __webpack_require__(/*! ./dist/react-hot-loader.production.min.js */ "./node_modules/react-hot-loader/dist/react-hot-loader.production.min.js");
-} else {}
-
+} else { var jsFeaturesPresent, evalAllowed; }
 
 /***/ }),
 
@@ -39999,6 +39989,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react_hot_loader__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! react-hot-loader */ "./node_modules/react-hot-loader/index.js");
 /* harmony import */ var react_hot_loader__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(react_hot_loader__WEBPACK_IMPORTED_MODULE_6__);
 /* harmony import */ var _components_pageDynamic__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./components/pageDynamic */ "./src/components/pageDynamic.tsx");
+/* harmony import */ var _components_hook__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./components/hook */ "./src/components/hook.tsx");
 (function () {
   var enterModule = __webpack_require__(/*! react-hot-loader */ "./node_modules/react-hot-loader/index.js").enterModule;
 
@@ -40030,6 +40021,7 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
 
 function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
 
 
 
@@ -40144,7 +40136,7 @@ function (_React$Component) {
       }, "Add item to list B"), react__WEBPACK_IMPORTED_MODULE_1__["createElement"]("div", {
         className: "append",
         onClick: this.increment
-      }, "Increment nested"), react__WEBPACK_IMPORTED_MODULE_1__["createElement"](ConterFinishedA, null), react__WEBPACK_IMPORTED_MODULE_1__["createElement"](ConterFinishedB, null), react__WEBPACK_IMPORTED_MODULE_1__["createElement"](CurrentLocation, null)));
+      }, "Increment nested"), react__WEBPACK_IMPORTED_MODULE_1__["createElement"](ConterFinishedA, null), react__WEBPACK_IMPORTED_MODULE_1__["createElement"](ConterFinishedB, null), react__WEBPACK_IMPORTED_MODULE_1__["createElement"](CurrentLocation, null), react__WEBPACK_IMPORTED_MODULE_1__["createElement"](_components_hook__WEBPACK_IMPORTED_MODULE_8__["Hook"], null)));
     }
   }, {
     key: "__reactstandin__regenerateByEval",
@@ -40171,12 +40163,12 @@ react_dom__WEBPACK_IMPORTED_MODULE_0__["render"](react__WEBPACK_IMPORTED_MODULE_
     return;
   }
 
-  reactHotLoader.register(ConterFinishedA, "ConterFinishedA", "D:\\Works\\raxy\\example\\src\\app.tsx");
-  reactHotLoader.register(ConterFinishedB, "ConterFinishedB", "D:\\Works\\raxy\\example\\src\\app.tsx");
-  reactHotLoader.register(CurrentLocation, "CurrentLocation", "D:\\Works\\raxy\\example\\src\\app.tsx");
-  reactHotLoader.register(CountNested, "CountNested", "D:\\Works\\raxy\\example\\src\\app.tsx");
-  reactHotLoader.register(App, "App", "D:\\Works\\raxy\\example\\src\\app.tsx");
-  reactHotLoader.register(HotApplication, "HotApplication", "D:\\Works\\raxy\\example\\src\\app.tsx");
+  reactHotLoader.register(ConterFinishedA, "ConterFinishedA", "/Users/ruacli2/Documents/reaxy/example/src/app.tsx");
+  reactHotLoader.register(ConterFinishedB, "ConterFinishedB", "/Users/ruacli2/Documents/reaxy/example/src/app.tsx");
+  reactHotLoader.register(CurrentLocation, "CurrentLocation", "/Users/ruacli2/Documents/reaxy/example/src/app.tsx");
+  reactHotLoader.register(CountNested, "CountNested", "/Users/ruacli2/Documents/reaxy/example/src/app.tsx");
+  reactHotLoader.register(App, "App", "/Users/ruacli2/Documents/reaxy/example/src/app.tsx");
+  reactHotLoader.register(HotApplication, "HotApplication", "/Users/ruacli2/Documents/reaxy/example/src/app.tsx");
   leaveModule(module);
 })();
 
@@ -40265,11 +40257,87 @@ function (_React$Component) {
     return;
   }
 
-  reactHotLoader.register(CounterComponent, "CounterComponent", "D:\\Works\\raxy\\example\\src\\components\\counter.tsx");
+  reactHotLoader.register(CounterComponent, "CounterComponent", "/Users/ruacli2/Documents/reaxy/example/src/components/counter.tsx");
   leaveModule(module);
 })();
 
 ;
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../../node_modules/webpack/buildin/harmony-module.js */ "./node_modules/webpack/buildin/harmony-module.js")(module)))
+
+/***/ }),
+
+/***/ "./src/components/hook.tsx":
+/*!*********************************!*\
+  !*** ./src/components/hook.tsx ***!
+  \*********************************/
+/*! exports provided: Hook */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* WEBPACK VAR INJECTION */(function(module) {/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "Hook", function() { return Hook; });
+/* harmony import */ var _store__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../store */ "./src/store.ts");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_1__);
+(function () {
+  var enterModule = (typeof reactHotLoaderGlobal !== 'undefined' ? reactHotLoaderGlobal : __webpack_require__(/*! react-hot-loader */ "./node_modules/react-hot-loader/index.js")).enterModule;
+  enterModule && enterModule(module);
+})();
+
+function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _nonIterableRest(); }
+
+function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance"); }
+
+function _iterableToArrayLimit(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
+
+function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
+
+
+
+
+function useRaxy(mapper) {
+  var _useState = Object(react__WEBPACK_IMPORTED_MODULE_1__["useState"])(mapper(_store__WEBPACK_IMPORTED_MODULE_0__["state"])),
+      _useState2 = _slicedToArray(_useState, 2),
+      data = _useState2[0],
+      setState = _useState2[1];
+
+  Object(react__WEBPACK_IMPORTED_MODULE_1__["useEffect"])(function () {
+    Object(_store__WEBPACK_IMPORTED_MODULE_0__["subscribe"])(function (s) {
+      return setState(s);
+    }, mapper);
+  });
+  return data;
+}
+
+function Hook() {
+  var data = useRaxy(function (s) {
+    return {
+      val: 'nested is: ' + s.nested.itemOne
+    };
+  });
+  return react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
+    className: "counter"
+  }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", null, data.val, " (Functional component with hook)"));
+}
+;
+
+(function () {
+  var reactHotLoader = (typeof reactHotLoaderGlobal !== 'undefined' ? reactHotLoaderGlobal : __webpack_require__(/*! react-hot-loader */ "./node_modules/react-hot-loader/index.js")).default;
+
+  if (!reactHotLoader) {
+    return;
+  }
+
+  reactHotLoader.register(useRaxy, "useRaxy", "/Users/ruacli2/Documents/reaxy/example/src/components/hook.tsx");
+  reactHotLoader.register(Hook, "Hook", "/Users/ruacli2/Documents/reaxy/example/src/components/hook.tsx");
+})();
+
+;
+
+(function () {
+  var leaveModule = (typeof reactHotLoaderGlobal !== 'undefined' ? reactHotLoaderGlobal : __webpack_require__(/*! react-hot-loader */ "./node_modules/react-hot-loader/index.js")).leaveModule;
+  leaveModule && leaveModule(module);
+})();
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../../node_modules/webpack/buildin/harmony-module.js */ "./node_modules/webpack/buildin/harmony-module.js")(module)))
 
 /***/ }),
@@ -40386,7 +40454,7 @@ function (_React$Component) {
     return;
   }
 
-  reactHotLoader.register(List, "List", "D:\\Works\\raxy\\example\\src\\components\\list.tsx");
+  reactHotLoader.register(List, "List", "/Users/ruacli2/Documents/reaxy/example/src/components/list.tsx");
   leaveModule(module);
 })();
 
@@ -40515,7 +40583,7 @@ function (_React$Component) {
     return;
   }
 
-  reactHotLoader.register(ListDynamic, "ListDynamic", "D:\\Works\\raxy\\example\\src\\components\\listDynamic.tsx");
+  reactHotLoader.register(ListDynamic, "ListDynamic", "/Users/ruacli2/Documents/reaxy/example/src/components/listDynamic.tsx");
   leaveModule(module);
 })();
 
@@ -40613,7 +40681,7 @@ function (_React$Component) {
     return;
   }
 
-  reactHotLoader.register(ListItem, "ListItem", "D:\\Works\\raxy\\example\\src\\components\\listItem.tsx");
+  reactHotLoader.register(ListItem, "ListItem", "/Users/ruacli2/Documents/reaxy/example/src/components/listItem.tsx");
   leaveModule(module);
 })();
 
@@ -40714,9 +40782,9 @@ var _default = Page;
     return;
   }
 
-  reactHotLoader.register(PageComponent, "PageComponent", "D:\\Works\\raxy\\example\\src\\components\\page.tsx");
-  reactHotLoader.register(Page, "Page", "D:\\Works\\raxy\\example\\src\\components\\page.tsx");
-  reactHotLoader.register(_default, "default", "D:\\Works\\raxy\\example\\src\\components\\page.tsx");
+  reactHotLoader.register(PageComponent, "PageComponent", "/Users/ruacli2/Documents/reaxy/example/src/components/page.tsx");
+  reactHotLoader.register(Page, "Page", "/Users/ruacli2/Documents/reaxy/example/src/components/page.tsx");
+  reactHotLoader.register(_default, "default", "/Users/ruacli2/Documents/reaxy/example/src/components/page.tsx");
   leaveModule(module);
 })();
 
@@ -40817,9 +40885,9 @@ var _default = PageDynamic;
     return;
   }
 
-  reactHotLoader.register(PageDynamicComponent, "PageDynamicComponent", "D:\\Works\\raxy\\example\\src\\components\\pageDynamic.tsx");
-  reactHotLoader.register(PageDynamic, "PageDynamic", "D:\\Works\\raxy\\example\\src\\components\\pageDynamic.tsx");
-  reactHotLoader.register(_default, "default", "D:\\Works\\raxy\\example\\src\\components\\pageDynamic.tsx");
+  reactHotLoader.register(PageDynamicComponent, "PageDynamicComponent", "/Users/ruacli2/Documents/reaxy/example/src/components/pageDynamic.tsx");
+  reactHotLoader.register(PageDynamic, "PageDynamic", "/Users/ruacli2/Documents/reaxy/example/src/components/pageDynamic.tsx");
+  reactHotLoader.register(_default, "default", "/Users/ruacli2/Documents/reaxy/example/src/components/pageDynamic.tsx");
   leaveModule(module);
 })();
 
@@ -40922,11 +40990,11 @@ if (window.__REDUX_DEVTOOLS_EXTENSION__) {
     return;
   }
 
-  reactHotLoader.register(history, "history", "D:\\Works\\raxy\\example\\src\\store.ts");
-  reactHotLoader.register(initialState, "initialState", "D:\\Works\\raxy\\example\\src\\store.ts");
-  reactHotLoader.register(state, "state", "D:\\Works\\raxy\\example\\src\\store.ts");
-  reactHotLoader.register(connect, "connect", "D:\\Works\\raxy\\example\\src\\store.ts");
-  reactHotLoader.register(subscribe, "subscribe", "D:\\Works\\raxy\\example\\src\\store.ts");
+  reactHotLoader.register(history, "history", "/Users/ruacli2/Documents/reaxy/example/src/store.ts");
+  reactHotLoader.register(initialState, "initialState", "/Users/ruacli2/Documents/reaxy/example/src/store.ts");
+  reactHotLoader.register(state, "state", "/Users/ruacli2/Documents/reaxy/example/src/store.ts");
+  reactHotLoader.register(connect, "connect", "/Users/ruacli2/Documents/reaxy/example/src/store.ts");
+  reactHotLoader.register(subscribe, "subscribe", "/Users/ruacli2/Documents/reaxy/example/src/store.ts");
   leaveModule(module);
 })();
 

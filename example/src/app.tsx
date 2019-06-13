@@ -6,6 +6,7 @@ import { connect, state, history } from './store';
 import CounterComponent from './components/counter';
 import { hot } from 'react-hot-loader';
 import PageDynamic from './components/pageDynamic';
+import { Hook } from './components/hook';
 
 const ConterFinishedA = connect(CounterComponent, store => ({ value: 'finised tasks of list A: ' + store.listA.filter(i => i.finished).length }));
 const ConterFinishedB = connect(CounterComponent, store => ({ value: 'finised tasks of list B: ' + store.listB.filter(i => i.finished).length }));
@@ -39,6 +40,7 @@ class App extends React.Component {
                 <ConterFinishedA />
                 <ConterFinishedB />
                 <CurrentLocation />
+                <Hook />
             </div>
         </Router>
     }
