@@ -40302,9 +40302,13 @@ function useRaxy(mapper) {
       setState = _useState2[1];
 
   Object(react__WEBPACK_IMPORTED_MODULE_1__["useEffect"])(function () {
-    Object(_store__WEBPACK_IMPORTED_MODULE_0__["subscribe"])(function (s) {
+    var subscriber = Object(_store__WEBPACK_IMPORTED_MODULE_0__["subscribe"])(function (s) {
       return setState(s);
     }, mapper);
+    return function () {
+      subscriber.off();
+      subscriber = null;
+    };
   });
   return data;
 }

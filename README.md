@@ -324,7 +324,11 @@ function useRaxy(mapper) {
     const [data, setState] = useState(mapper(state));
 
     useEffect(() => {
-        subscribe(s => setState(s), mapper);
+        let subscriber = subscribe(s => setState(s), mapper);
+        return () => { // dont forget unsubscribe when dismount
+            subscriber.off();
+            subscriber = null;
+        }
     });
 
     return data;
