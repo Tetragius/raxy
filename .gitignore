@@ -7,3 +7,4 @@ example/node_modules
 !example/dist
 coverage
 .vscode
+next
