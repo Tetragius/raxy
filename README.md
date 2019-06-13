@@ -7,6 +7,8 @@
 Simple react state manager. You can work with state as with a regular object.
 Can be used with redux-devtools-extension and history. Also works with react hooks.
 
+Powered by Proxy API. It is possible to dynamically create wrappers (page-two in the example) for rendering optimization or using react hooks.
+
 __~2kb__ or __~5kb__ with plyfill for IE
 
 [DEMO](https://tetragius.github.io/raxy/example/dist/#/)
