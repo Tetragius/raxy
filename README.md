@@ -56,32 +56,32 @@ npm install --save raxy
 ## API description
 
 To create a new store call:
-```javascript
-new Raxy({initialState});
+```typescript
+new Raxy<IState>({initialState});
 ```
 this returns two methods and proxied state
 
 #### Methods
 
 __connect the react component to the store:__
-```javascript
-connect(Component, mapper);
+```typescript
+connect<IComponentProps>(Component, mapper) : WrappedComponent;
 ```
 
-__component__ - reactant component
+__component__ - react component
 
-__mapper__ - map store to component props
+__mapper__ - map store to component props (return Partial<IComponentProps>)
 ___
 
 __connect listener to the store:__
-```javascript
-subscribe(callback, mapper);
+```typescript
+subscribe<T>(callback, mapper) : ISubscriber;
 ```
 __callback__ - function with an argument containing the value returned by the _mapper_
 
-__mapper__ - map store for _callback_
+__mapper__ - map store for _callback_ (return T)
 
-retrun object with _off_ and _on_ methids;
+retrun object with _off_ and _on_ methods;
 
 #### Poxied state
 ```javascript
