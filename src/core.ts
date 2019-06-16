@@ -21,33 +21,24 @@ export default class Raxy<S> {
     private subscribers = [];
 
     private hooks = {
-        set: (target, name, val, proxed) => {
+        set: (target, name, val) => {
             if (target[name] !== val) {
+
                 if (typeof target[name] === 'object' || Array.isArray(target[name])) {
-                    target[name] = this.proxyer(val);
+                    target[name] = this.proxier(val);
                 }
                 else {
                     target[name] = val;
                 }
-                this.subscribers.some(subscriber => {
-                    const subscriberState = subscriber.state;
-                    for (const key in subscriberState) {
-                        if (subscriberState[key] && subscriberState[key] === proxed) {
-                            for (const obj in this.state) {
-                                if (this.state[obj] && this.state[obj] === proxed) {
-                                    this.state[obj] = this.proxyer(proxed);
-                                }
-                            }
-                            return true;
-                        }
-                    }
+
+                this.subscribers.forEach(subscriber => {
                     const mapped = subscriber.mapper(this.store);
-                    Object.assign(subscriberState, mapped);
+                    Object.assign(subscriber.state, mapped);
                     if (subscriber.needToUpdate) {
-                        subscriber.updater(subscriberState, () => (subscriber.needToUpdate = false));
+                        subscriber.updater(subscriber.state, () => (subscriber.needToUpdate = false));
                     }
-                    return false;
                 });
+
             }
             return true;
         }
@@ -57,7 +48,7 @@ export default class Raxy<S> {
 
     constructor(store: S) {
         this.store = { ...store };
-        this.state = this.proxyer(this.store);
+        this.state = this.proxier(this.store);
     }
 
     /**
@@ -100,7 +91,7 @@ export default class Raxy<S> {
         this.subscribers = this.subscribers.filter(exp);
     }
 
-    private proxyer = (obj: any): any => {
+    private proxier = (obj: any): any => {
 
         if (this.proxyMap.has(obj)) {
             const oldProxy = this.proxyMap.get(obj);
@@ -111,7 +102,7 @@ export default class Raxy<S> {
 
         for (const key in obj) {
             if (obj[key] && typeof obj[key] === 'object' || Array.isArray(obj[key])) {
-                obj[key] = this.proxyer(obj[key]);
+                obj[key] = this.proxier(obj[key]);
             }
         }
 

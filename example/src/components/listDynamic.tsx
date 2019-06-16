@@ -17,7 +17,7 @@ export default class ListDynamic extends React.Component<any, any> {
             <div className='list'>
                 {this.props.items.map((item, idx) => {
                     const Item = this.defineListItem(idx);
-                    return <Item key={idx} onClick={() => this.click(idx, item)} />;
+                    return <Item key={idx} onClick={i => this.click(idx, i)} />;
                 })}
             </div>
         )

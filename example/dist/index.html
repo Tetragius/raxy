@@ -14,6 +14,30 @@
         box-sizing: border-box;
     }
 
+    .info {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .buttons {
+        display: flex;
+    }
+
+    .nav {
+        display: flex;
+        align-items: center;
+    }
+
+    .lists {
+        display: flex;
+        width: 100%;
+    }
+
+    .lists .page {
+        width: 50%;
+    }
+
     .link {
         display: inline-block;
         margin: 24px;
@@ -32,7 +56,9 @@
     .page {
         background: transparent;
         padding: 24px;
-        margin: 24px
+        margin: 24px;
+        overflow: auto;
+        height: 278px;
     }
 
     .page.route-one {
@@ -41,6 +67,10 @@
 
     .page.route-two {
         background: azure;
+    }
+
+    .page.route-three {
+        background: lightsteelblue;
     }
 
     .append {
@@ -72,13 +102,14 @@
     .list {
         display: flex;
         flex-direction: column;
+        box-sizing: border-box;
     }
 
     .list-item {
         display: flex;
         border: 1px solid gray;
         padding: 8px;
-        min-width: 300px;
+        min-width: 100%;
         margin: 4px auto;
         flex-direction: row;
         align-items: center;
