@@ -20,6 +20,8 @@ export default class Raxy<S> {
 
     private subscribers = [];
 
+    private callback = null;
+
     private hooks = {
         set: (target, name, val) => {
             if (target[name] !== val) {
@@ -39,6 +41,8 @@ export default class Raxy<S> {
                     }
                 });
 
+                this.callback && this.callback(this.store);
+
             }
             return true;
         }
@@ -46,14 +50,22 @@ export default class Raxy<S> {
 
     private store: S = null;
 
-    constructor(store: S) {
+    /**
+     * Creates an instance of Raxy.
+     * @param {S} store
+     * @param {(store: S) => void} callback Calls when state is updated
+     * @memberof Raxy
+     */
+    constructor(store: S, callback: (store: S) => void) {
         this.store = { ...store };
         this.state = this.proxier(this.store);
+        this.callback = callback;
     }
 
     /**
-     *
-     *
+     * Connect react component to store, return wrapped component
+     * @param {React.ComponentClass} component
+     * @param {(state: S) => Partial<P>} mapper
      * @memberof Raxy
      */
     public connect = <P = any>(component: React.ComponentClass, mapper: (state: S) => Partial<P>): React.ComponentClass<Partial<P>> => {
@@ -69,8 +81,9 @@ export default class Raxy<S> {
     }
 
     /**
-     *
-     *
+     * Subscribe to store
+     * @param {(P) => void} callback
+     * @param {(state: S) => P} component
      * @memberof Raxy
      */
     public subscribe = <P>(callback, mapper: (state: S) => P): ISubscriber => {

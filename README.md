@@ -59,7 +59,7 @@ npm install --save raxy
 
 To create a new store call:
 ```typescript
-new Raxy<IState>({initialState});
+new Raxy<IState>({initialState}, [callback]);
 ```
 this returns two methods and proxied state
 
@@ -377,11 +377,10 @@ history.listen(location => state.location = location);
 ```
 
 ```javascript
-const {state, subscribe} = new Raxy({});
+const devTools = (window as any).__REDUX_DEVTOOLS_EXTENSION__ && (window as any).__REDUX_DEVTOOLS_EXTENSION__.connect();
+const callback = store => devTools && devTools.send('change state', { value: { ...store } });
 
-const devTools = window.__REDUX_DEVTOOLS_EXTENSION__.connect();
+export const { state, connect, subscribe } = new Raxy(initialState, callback);
 
-devTools.init({ value: state });
-
-subscribe(state => devTools.send('change state', { value: state }), state => ({ ...state }));
+devTools && devTools.init({ value: state });
 ```

@@ -20,12 +20,11 @@ const initialState = {
     location: history.location,
 }
 
-export const { state, connect, subscribe } = new Raxy(initialState);
+const devTools = (window as any).__REDUX_DEVTOOLS_EXTENSION__ && (window as any).__REDUX_DEVTOOLS_EXTENSION__.connect();
+const callback = store => devTools && devTools.send('change state', { value: { ...store } });
+
+export const { state, connect, subscribe } = new Raxy(initialState, callback);
+
+devTools && devTools.init({ value: state });
 
 history.listen(location => state.location = location);
-
-if ((window as any).__REDUX_DEVTOOLS_EXTENSION__) {
-    const devTools = (window as any).__REDUX_DEVTOOLS_EXTENSION__.connect();
-    devTools.init({ value: state });
-    subscribe(s => devTools.send('change state', { value: s }), s => ({ ...s }));
-}
