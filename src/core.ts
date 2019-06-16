@@ -1,7 +1,7 @@
 import { connect } from './connect';
 import { subscribe } from './subscribe';
 
-interface ISubscriber {
+export interface ISubscriber {
     off(): void;
     on(): void;
 }
