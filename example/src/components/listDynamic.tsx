@@ -9,7 +9,7 @@ export default class ListDynamic extends React.Component<any, any> {
     }
 
     defineListItem = idx => {
-        return connect<IListItemProps>(ListItem, s => ({ item: s.listB[idx] }));
+        return connect<IListItemProps>(ListItem, s => ({ item: s.listB[idx], finised: s.listB[idx].finished }));
     }
 
     render() {

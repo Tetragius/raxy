@@ -2,7 +2,7 @@ export function subscribe<S>(store, subscribers, listener, mapper): any {
 
     const hooks = {
         set: (target, name, val) => {
-            if (target[name] && target[name] !== val) { subscriber.needToUpdate = true; }
+            if (target[name] !== val) { subscriber.needToUpdate = true; }
             target[name] = val;
             return true;
         },
