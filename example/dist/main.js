@@ -40367,8 +40367,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _store__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../store */ "./src/store.ts");
 /* harmony import */ var _listItem__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./listItem */ "./src/components/listItem.tsx");
 (function () {
-  var enterModule = __webpack_require__(/*! react-hot-loader */ "./node_modules/react-hot-loader/index.js").enterModule;
-
+  var enterModule = (typeof reactHotLoaderGlobal !== 'undefined' ? reactHotLoaderGlobal : __webpack_require__(/*! react-hot-loader */ "./node_modules/react-hot-loader/index.js")).enterModule;
   enterModule && enterModule(module);
 })();
 
@@ -40396,8 +40395,8 @@ function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || func
 
 var List =
 /*#__PURE__*/
-function (_React$Component) {
-  _inherits(List, _React$Component);
+function (_React$PureComponent) {
+  _inherits(List, _React$PureComponent);
 
   function List() {
     var _getPrototypeOf2;
@@ -40450,25 +40449,27 @@ function (_React$Component) {
   }]);
 
   return List;
-}(react__WEBPACK_IMPORTED_MODULE_0__["Component"]);
+}(react__WEBPACK_IMPORTED_MODULE_0__["PureComponent"]);
 
 
 ;
 
 (function () {
-  var reactHotLoader = __webpack_require__(/*! react-hot-loader */ "./node_modules/react-hot-loader/index.js").default;
-
-  var leaveModule = __webpack_require__(/*! react-hot-loader */ "./node_modules/react-hot-loader/index.js").leaveModule;
+  var reactHotLoader = (typeof reactHotLoaderGlobal !== 'undefined' ? reactHotLoaderGlobal : __webpack_require__(/*! react-hot-loader */ "./node_modules/react-hot-loader/index.js")).default;
 
   if (!reactHotLoader) {
     return;
   }
 
   reactHotLoader.register(List, "List", "/Users/ruacli2/Documents/reaxy/example/src/components/list.tsx");
-  leaveModule(module);
 })();
 
 ;
+
+(function () {
+  var leaveModule = (typeof reactHotLoaderGlobal !== 'undefined' ? reactHotLoaderGlobal : __webpack_require__(/*! react-hot-loader */ "./node_modules/react-hot-loader/index.js")).leaveModule;
+  leaveModule && leaveModule(module);
+})();
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../../node_modules/webpack/buildin/harmony-module.js */ "./node_modules/webpack/buildin/harmony-module.js")(module)))
 
 /***/ }),
@@ -40516,8 +40517,8 @@ function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || func
 
 var ListDynamic =
 /*#__PURE__*/
-function (_React$Component) {
-  _inherits(ListDynamic, _React$Component);
+function (_React$PureComponent) {
+  _inherits(ListDynamic, _React$PureComponent);
 
   function ListDynamic() {
     var _getPrototypeOf2;
@@ -40582,7 +40583,7 @@ function (_React$Component) {
   }]);
 
   return ListDynamic;
-}(react__WEBPACK_IMPORTED_MODULE_0__["Component"]);
+}(react__WEBPACK_IMPORTED_MODULE_0__["PureComponent"]);
 
 
 ;
@@ -41029,8 +41030,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _store__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../store */ "./src/store.ts");
 /* harmony import */ var _list__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./list */ "./src/components/list.tsx");
 (function () {
-  var enterModule = __webpack_require__(/*! react-hot-loader */ "./node_modules/react-hot-loader/index.js").enterModule;
-
+  var enterModule = (typeof reactHotLoaderGlobal !== 'undefined' ? reactHotLoaderGlobal : __webpack_require__(/*! react-hot-loader */ "./node_modules/react-hot-loader/index.js")).enterModule;
   enterModule && enterModule(module);
 })();
 
@@ -41058,8 +41058,8 @@ function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || func
 
 var PageComponent =
 /*#__PURE__*/
-function (_React$Component) {
-  _inherits(PageComponent, _React$Component);
+function (_React$PureComponent) {
+  _inherits(PageComponent, _React$PureComponent);
 
   function PageComponent() {
     _classCallCheck(this, PageComponent);
@@ -41086,7 +41086,7 @@ function (_React$Component) {
   }]);
 
   return PageComponent;
-}(react__WEBPACK_IMPORTED_MODULE_0__["Component"]);
+}(react__WEBPACK_IMPORTED_MODULE_0__["PureComponent"]);
 
 var Page = Object(_store__WEBPACK_IMPORTED_MODULE_1__["connect"])(PageComponent, function (store) {
   return {
@@ -41099,9 +41099,7 @@ var _default = Page;
 ;
 
 (function () {
-  var reactHotLoader = __webpack_require__(/*! react-hot-loader */ "./node_modules/react-hot-loader/index.js").default;
-
-  var leaveModule = __webpack_require__(/*! react-hot-loader */ "./node_modules/react-hot-loader/index.js").leaveModule;
+  var reactHotLoader = (typeof reactHotLoaderGlobal !== 'undefined' ? reactHotLoaderGlobal : __webpack_require__(/*! react-hot-loader */ "./node_modules/react-hot-loader/index.js")).default;
 
   if (!reactHotLoader) {
     return;
@@ -41110,10 +41108,14 @@ var _default = Page;
   reactHotLoader.register(PageComponent, "PageComponent", "/Users/ruacli2/Documents/reaxy/example/src/components/page.tsx");
   reactHotLoader.register(Page, "Page", "/Users/ruacli2/Documents/reaxy/example/src/components/page.tsx");
   reactHotLoader.register(_default, "default", "/Users/ruacli2/Documents/reaxy/example/src/components/page.tsx");
-  leaveModule(module);
 })();
 
 ;
+
+(function () {
+  var leaveModule = (typeof reactHotLoaderGlobal !== 'undefined' ? reactHotLoaderGlobal : __webpack_require__(/*! react-hot-loader */ "./node_modules/react-hot-loader/index.js")).leaveModule;
+  leaveModule && leaveModule(module);
+})();
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../../node_modules/webpack/buildin/harmony-module.js */ "./node_modules/webpack/buildin/harmony-module.js")(module)))
 
 /***/ }),
@@ -41132,8 +41134,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _store__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../store */ "./src/store.ts");
 /* harmony import */ var _listDynamic__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./listDynamic */ "./src/components/listDynamic.tsx");
 (function () {
-  var enterModule = __webpack_require__(/*! react-hot-loader */ "./node_modules/react-hot-loader/index.js").enterModule;
-
+  var enterModule = (typeof reactHotLoaderGlobal !== 'undefined' ? reactHotLoaderGlobal : __webpack_require__(/*! react-hot-loader */ "./node_modules/react-hot-loader/index.js")).enterModule;
   enterModule && enterModule(module);
 })();
 
@@ -41161,8 +41162,8 @@ function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || func
 
 var PageDynamicComponent =
 /*#__PURE__*/
-function (_React$Component) {
-  _inherits(PageDynamicComponent, _React$Component);
+function (_React$PureComponent) {
+  _inherits(PageDynamicComponent, _React$PureComponent);
 
   function PageDynamicComponent() {
     _classCallCheck(this, PageDynamicComponent);
@@ -41176,7 +41177,8 @@ function (_React$Component) {
       return react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("div", {
         className: "page ".concat(this.props.pathName.split('/')[1])
       }, react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("div", null, "List B"), react__WEBPACK_IMPORTED_MODULE_0__["createElement"](_listDynamic__WEBPACK_IMPORTED_MODULE_2__["default"], {
-        items: this.props.list
+        items: this.props.list,
+        l: this.props.listCount
       }));
     }
   }, {
@@ -41189,12 +41191,13 @@ function (_React$Component) {
   }]);
 
   return PageDynamicComponent;
-}(react__WEBPACK_IMPORTED_MODULE_0__["Component"]);
+}(react__WEBPACK_IMPORTED_MODULE_0__["PureComponent"]);
 
 var PageDynamic = Object(_store__WEBPACK_IMPORTED_MODULE_1__["connect"])(PageDynamicComponent, function (store) {
   return {
     list: store.listB,
-    pathName: store.location.pathname
+    pathName: store.location.pathname,
+    listCount: _store__WEBPACK_IMPORTED_MODULE_1__["state"].listB.length
   };
 });
 var _default = PageDynamic;
@@ -41202,9 +41205,7 @@ var _default = PageDynamic;
 ;
 
 (function () {
-  var reactHotLoader = __webpack_require__(/*! react-hot-loader */ "./node_modules/react-hot-loader/index.js").default;
-
-  var leaveModule = __webpack_require__(/*! react-hot-loader */ "./node_modules/react-hot-loader/index.js").leaveModule;
+  var reactHotLoader = (typeof reactHotLoaderGlobal !== 'undefined' ? reactHotLoaderGlobal : __webpack_require__(/*! react-hot-loader */ "./node_modules/react-hot-loader/index.js")).default;
 
   if (!reactHotLoader) {
     return;
@@ -41213,10 +41214,14 @@ var _default = PageDynamic;
   reactHotLoader.register(PageDynamicComponent, "PageDynamicComponent", "/Users/ruacli2/Documents/reaxy/example/src/components/pageDynamic.tsx");
   reactHotLoader.register(PageDynamic, "PageDynamic", "/Users/ruacli2/Documents/reaxy/example/src/components/pageDynamic.tsx");
   reactHotLoader.register(_default, "default", "/Users/ruacli2/Documents/reaxy/example/src/components/pageDynamic.tsx");
-  leaveModule(module);
 })();
 
 ;
+
+(function () {
+  var leaveModule = (typeof reactHotLoaderGlobal !== 'undefined' ? reactHotLoaderGlobal : __webpack_require__(/*! react-hot-loader */ "./node_modules/react-hot-loader/index.js")).leaveModule;
+  leaveModule && leaveModule(module);
+})();
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../../node_modules/webpack/buildin/harmony-module.js */ "./node_modules/webpack/buildin/harmony-module.js")(module)))
 
 /***/ }),

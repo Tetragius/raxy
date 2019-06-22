@@ -3,7 +3,7 @@ import * as React from 'react';
 import { connect } from '../store';
 import List from './list';
 
-class PageComponent extends React.Component<any, any> {
+class PageComponent extends React.PureComponent<any, any> {
     render() {
         return <div className={`page ${this.props.pathName.split('/')[1]}`}>
             <div>List A</div>

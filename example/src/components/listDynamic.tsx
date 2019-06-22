@@ -2,7 +2,7 @@ import * as React from 'react';
 import { connect, state } from '../store';
 import ListItem, { IListItemProps } from './listItem';
 
-export default class ListDynamic extends React.Component<any, any> {
+export default class ListDynamic extends React.PureComponent<any, any> {
 
     click = (idx, item) => {
         state.listB[idx].finished = !item.finished;
