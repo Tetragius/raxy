@@ -10,6 +10,7 @@ class NavComponent extends React.Component<any, any> {
             <div className={`link${this.props.pathname === '/route-one' && ' active' || ''}`} onClick={() => history.replace('/route-one')}>page one</div>
             <div className={`link${this.props.pathname === '/route-two' && ' active' || ''}`} onClick={() => history.replace('/route-two')}>page two</div>
             <div className={`link${this.props.pathname === '/route-three' && ' active' || ''}`} onClick={() => history.replace('/route-three')}>page three</div>
+            <div className={`link${this.props.pathname === '/route-four' && ' active' || ''}`} onClick={() => history.replace('/route-four')}>page four</div>
         </div>
     }
 }

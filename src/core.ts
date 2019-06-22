@@ -1,6 +1,10 @@
 import { connect } from './connect';
 import { subscribe } from './subscribe';
 
+const $parent = Symbol.for('parent');
+const $updated = Symbol.for('updated');
+const $name = Symbol.for('name');
+
 export interface ISubscriber {
     off(): void;
     on(): void;
@@ -16,15 +20,20 @@ export interface ISubscriber {
 export default class Raxy<S> {
     public state: S = null;
 
-    private proxyMap = new Map();
+    private proxyMap = new WeakMap();
 
     private subscribers = [];
 
     private callback = null;
 
-    private hooks = {
-        set: (target, name, val) => {
+    private hooks: ProxyHandler<any> = {
+        set: (target, name, val, receiver) => {
             if (target[name] !== val) {
+
+                if (name === $parent) {
+                    target[name] = val;
+                    return true;
+                }
 
                 if (typeof target[name] === 'object' || Array.isArray(target[name])) {
                     target[name] = this.proxier(val);
@@ -37,13 +46,37 @@ export default class Raxy<S> {
                     const mapped = subscriber.mapper(this.store);
                     Object.assign(subscriber.state, mapped);
                     if (subscriber.needToUpdate) {
+                        receiver[$updated] = true;
                         subscriber.updater(subscriber.state, () => (subscriber.needToUpdate = false));
                     }
                 });
 
-                this.callback && this.callback(this.store);
+                if (receiver[$parent]) {
+                    receiver[$parent][$updated] = true;
+                }
+
+                target[Symbol.for('updated')] = false;
+
+                if (name !== $updated) {
+                    this.callback && this.callback(this.store);
+                }
 
             }
+            return true;
+        },
+        deleteProperty: (target, name) => {
+
+            const parent = target[name][$parent];
+
+            if (Array.isArray(target) && target[name]) {
+                target.splice(name as number, 1);
+            } else {
+                delete target[name];
+            }
+
+            parent[$updated] = true;
+
+
             return true;
         }
     }
@@ -104,7 +137,7 @@ export default class Raxy<S> {
         this.subscribers = this.subscribers.filter(exp);
     }
 
-    private proxier = (obj: any): any => {
+    private proxier = (obj: any, name?: string, parent?: any): any => {
 
         if (this.proxyMap.has(obj)) {
             const oldProxy = this.proxyMap.get(obj);
@@ -113,15 +146,18 @@ export default class Raxy<S> {
             oldProxy.revoke();
         }
 
-        for (const key in obj) {
-            if (obj[key] && typeof obj[key] === 'object' || Array.isArray(obj[key])) {
-                obj[key] = this.proxier(obj[key]);
-            }
-        }
-
         const { proxy, revoke } = Proxy.revocable(obj, this.hooks);
 
-        this.proxyMap.set(proxy, { revoke, obj });
+        obj[$parent] = parent;
+        obj[$name] = name;
+
+        this.proxyMap.set(proxy, { revoke, obj, proxy });
+
+        for (const key in obj) {
+            if (obj[key] && typeof obj[key] === 'object' || Array.isArray(obj[key])) {
+                obj[key] = this.proxier(obj[key], key, proxy);
+            }
+        }
 
         return proxy;
     }

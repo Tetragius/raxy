@@ -1,15 +1,19 @@
 import * as React from 'react';
-import { connect } from '../store';
+import { connect, state } from '../store';
 import ListItem, { IListItemProps } from './listItem';
 
 export default class ListDynamic extends React.Component<any, any> {
 
     click = (idx, item) => {
-        this.props.items[idx] = { label: item.label, finished: !item.finished };
+        state.listB[idx].finished = !item.finished;
+    }
+
+    delete = (idx, item) => {
+        delete state.listB[idx];
     }
 
     defineListItem = idx => {
-        return connect<IListItemProps>(ListItem, s => ({ item: s.listB[idx], finised: s.listB[idx].finished }));
+        return connect<IListItemProps>(ListItem, s => ({ item: s.listB[idx] }));
     }
 
     render() {
@@ -17,7 +21,7 @@ export default class ListDynamic extends React.Component<any, any> {
             <div className='list'>
                 {this.props.items.map((item, idx) => {
                     const Item = this.defineListItem(idx);
-                    return <Item key={idx} onClick={i => this.click(idx, i)} />;
+                    return <Item key={idx} onClick={i => this.click(idx, i)} onDelete={i => this.delete(idx, i)} />;
                 })}
             </div>
         )

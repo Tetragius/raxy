@@ -9,6 +9,7 @@ import PageDynamic from './components/pageDynamic';
 import { Hook } from './components/hook';
 import { PageThree } from './components/page-three';
 import Nav from './components/nav';
+import { PageFour } from './components/page-four';
 
 const ConterFinishedA = connect(CounterComponent, store => ({ value: 'finised tasks of list A: ' + store.listA.filter(i => i.finished).length }));
 const ConterFinishedB = connect(CounterComponent, store => ({ value: 'finised tasks of list B: ' + store.listB.filter(i => i.finished).length }));
@@ -36,6 +37,7 @@ class App extends React.Component {
                     <Route exact={true} path='/route-one' component={Page} />
                     <Route exact={true} path='/route-two' component={PageDynamic} />
                     <Route exact={true} path='/route-three' component={PageThree} />
+                    <Route exact={true} path='/route-four' component={PageFour} />
                 </div>
                 <div className='buttons'>
                     <div className='append' onClick={this.appendA}>Add item to list A</div>
