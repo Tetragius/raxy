@@ -114,6 +114,18 @@ export default class Raxy<S> {
     }
 
     /**
+     * ComponentClass decorator
+     * @param {(state: S) => Partial<P>} mapper
+     * @memberof Raxy
+     */
+    componentDecorator<P = any>(mapper) {
+        const _connect = this.connect;
+        return function classDecorator<T extends new(...args: any[]) => React.Component>(constructor: T) {
+            return _connect<P>(constructor, mapper) as any;
+        }
+    }
+
+    /**
      * Subscribe to store
      * @param {(P) => void} callback
      * @param {(state: S) => P} component

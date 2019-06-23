@@ -1,9 +1,10 @@
 
 import * as React from 'react';
-import { connect, state } from '../store';
+import { componentDecorator } from '../store';
 import ListDynamic from './listDynamic';
 
-class PageDynamicComponent extends React.PureComponent<any, any> {
+@componentDecorator(store => ({ list: store.listB, pathName: store.location.pathname, listCount: store.listB.length }))
+export default class PageDynamic extends React.PureComponent<any, any> {
     render() {
         return <div className={`page ${this.props.pathName.split('/')[1]}`}>
             <div>List B</div>
@@ -11,6 +12,3 @@ class PageDynamicComponent extends React.PureComponent<any, any> {
         </div>
     }
 }
-
-const PageDynamic = connect<any>(PageDynamicComponent, store => ({ list: store.listB, pathName: store.location.pathname, listCount: state.listB.length }));
-export default PageDynamic;
