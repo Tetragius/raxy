@@ -29,16 +29,19 @@ export default class Raxy<S> {
     private hooks: ProxyHandler<any> = {
         set: (target, name, val, receiver) => {
             if (target[name] !== val) {
-
+                
                 if (name === $parent) {
                     target[name] = val;
                     return true;
                 }
 
                 if (typeof target[name] === 'object' || Array.isArray(target[name])) {
-                    target[name] = this.proxier(val);
+                    target[name] = this.proxier(val, name as string, receiver);
                 }
-                else {
+                else if(typeof val === 'object' || Array.isArray(val)){
+                    target[name] = this.proxier(val, name as string, receiver);;
+                }
+                else{
                     target[name] = val;
                 }
 

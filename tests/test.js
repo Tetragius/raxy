@@ -193,3 +193,18 @@ mocha.describe('Test delete', () => {
     });
 
 });
+
+mocha.describe('Test array push', () => {
+
+    const { state, subscribe } = new Raxy({ list: [{item: 'item 1'}] });
+
+    mocha.it('Check array push', () => {
+
+        state.list.push({item: 'item 2'});
+
+        expect(state.list[0][Symbol.for('parent')]).not.equal(undefined);
+        expect(state.list[1][Symbol.for('parent')]).not.equal(undefined);
+
+    });
+
+});
