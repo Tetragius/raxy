@@ -27,4 +27,4 @@ export const { state, connect, subscribe, componentDecorator } = new Raxy(initia
 
 devTools && devTools.init({ value: state });
 
-history.listen(location => state.location = location);
+history.listen(location => Object.assign(state.location,location));

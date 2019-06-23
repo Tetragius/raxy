@@ -19,11 +19,11 @@ const CountNested = connect(CounterComponent, store => ({ value: 'nested is: ' +
 class App extends React.Component {
 
     appendA = () => {
-        state.listA = [...state.listA, { label: 'item ' + (state.listA.length + 1), finished: false }];
+        state.listA.push({ label: 'item ' + (state.listA.length + 1), finished: false });
     }
 
     appendB = () => {
-        state.listB = [...state.listB, { label: 'item ' + (state.listB.length + 1), finished: false }];
+        state.listB.push({ label: 'item ' + (state.listB.length + 1), finished: false });
     }
 
     increment = () => state.nested.itemOne += 1;

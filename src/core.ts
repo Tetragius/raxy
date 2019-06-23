@@ -4,6 +4,8 @@ import { subscribe } from './subscribe';
 const $parent = Symbol.for('parent');
 const $updated = Symbol.for('updated');
 const $name = Symbol.for('name');
+const $id = Symbol.for('id');
+const $source = Symbol.for('source');
 
 export interface ISubscriber {
     off(): void;
@@ -29,19 +31,23 @@ export default class Raxy<S> {
     private hooks: ProxyHandler<any> = {
         set: (target, name, val, receiver) => {
             if (target[name] !== val) {
-                
+
                 if (name === $parent) {
                     target[name] = val;
                     return true;
                 }
 
+                if (name === $updated) {
+                    target[name] = val;
+                }
+
                 if (typeof target[name] === 'object' || Array.isArray(target[name])) {
                     target[name] = this.proxier(val, name as string, receiver);
                 }
-                else if(typeof val === 'object' || Array.isArray(val)){
+                else if (typeof val === 'object' || Array.isArray(val)) {
                     target[name] = this.proxier(val, name as string, receiver);;
                 }
-                else{
+                else {
                     target[name] = val;
                 }
 
@@ -64,12 +70,26 @@ export default class Raxy<S> {
                     this.callback && this.callback(this.store);
                 }
 
+                console.log(this.proxyMap);
+
             }
             return true;
+        },
+        get: (target, name) =>{
+            if(name === $source){
+                return target;
+            }
+            return target[name];
         },
         deleteProperty: (target, name) => {
 
             const parent = target[name][$parent];
+
+            if (this.proxyMap.has(target[name][$source])) {
+                const oldProxy = this.proxyMap.get(target[name][$source]);
+                this.proxyMap.delete(target[name][$source]);
+                oldProxy.revoke();
+            }
 
             if (Array.isArray(target) && target[name]) {
                 target.splice(name as number, 1);
@@ -78,7 +98,6 @@ export default class Raxy<S> {
             }
 
             parent[$updated] = true;
-
 
             return true;
         }
@@ -153,9 +172,15 @@ export default class Raxy<S> {
 
     private proxier = (obj: any, name?: string, parent?: any): any => {
 
-        if (this.proxyMap.has(obj)) {
-            const oldProxy = this.proxyMap.get(obj);
-            this.proxyMap.delete(obj);
+        if (!obj[$id]) {
+            obj[$id] = Math.random().toString(36).substr(2, 9);
+        }
+
+        const source = obj[$source] || obj;
+
+        if (this.proxyMap.has(source)) {
+            const oldProxy = this.proxyMap.get(source);
+            this.proxyMap.delete(source);
             obj = oldProxy.obj;
             oldProxy.revoke();
         }
@@ -165,7 +190,7 @@ export default class Raxy<S> {
         obj[$parent] = parent;
         obj[$name] = name;
 
-        this.proxyMap.set(proxy, { revoke, obj, proxy });
+        this.proxyMap.set(obj, { revoke, obj, proxy });
 
         for (const key in obj) {
             if (obj[key] && typeof obj[key] === 'object' || Array.isArray(obj[key])) {
