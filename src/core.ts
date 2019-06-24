@@ -51,6 +51,8 @@ export default class Raxy<S> {
                     target[name] = val;
                 }
 
+                let iii = Math.random().toString(36).substr(2, 9);
+
                 this.subscribers.forEach(subscriber => {
                     const mapped = subscriber.mapper(this.store);
                     Object.assign(subscriber.state, mapped);
@@ -60,17 +62,11 @@ export default class Raxy<S> {
                     }
                 });
 
-                if (receiver[$parent]) {
-                    receiver[$parent][$updated] = true;
-                }
-
-                target[Symbol.for('updated')] = false;
+                target[$updated] = false;
 
                 if (name !== $updated) {
                     this.callback && this.callback(this.store);
                 }
-
-                console.log(this.proxyMap);
 
             }
             return true;
