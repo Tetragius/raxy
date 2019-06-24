@@ -23,8 +23,11 @@ const initialState = {
 const devTools = (window as any).__REDUX_DEVTOOLS_EXTENSION__ && (window as any).__REDUX_DEVTOOLS_EXTENSION__.connect();
 const callback = store => devTools && devTools.send('change state', { value: { ...store } });
 
-export const { state, connect, subscribe, componentDecorator } = new Raxy(initialState, callback);
+const raxy = new Raxy(initialState, callback);
+// raxy['__DIAGNOSTIC__'] = true;
+
+export const { state, connect, subscribe, componentDecorator } = raxy;
 
 devTools && devTools.init({ value: state });
 
-history.listen(location => Object.assign(state.location,location));
+history.listen(location => Object.assign(state.location, location));
