@@ -1,15 +1,11 @@
-const $source = Symbol.for('source');
 const $updated = Symbol.for('updated');
 
-export function subscribe<S>(store, subscribers, listener, mapper): any {
+export function subscribe(store, subscribers, listener, mapper): any {
 
     const hooks: ProxyHandler<any> = {
         set: (target, name, val) => {
             if (target[name] !== val || (val && val[$updated])) {
                 subscriber.needToUpdate = true;
-                if (val[$source]) {
-                    val[$source][$updated] = false;
-                }
             }
 
             target[name] = val;

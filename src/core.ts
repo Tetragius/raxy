@@ -41,12 +41,11 @@ export default class Raxy<S> {
                 }
                 else {
                     target[name] = val;
-                    if (target[$source]) {
-                        target[$source][$updated] = true;
-                    }
                 }
 
+                this.remark(target, true);
                 this.send();
+                this.remark(target, false);
 
                 this.callback && this.callback(this.store);
 
@@ -66,6 +65,8 @@ export default class Raxy<S> {
                 this.proxyMap.delete(target[name][$source]);
                 oldProxy.revoke();
             }
+
+            this.remark(target, true);
 
             if (Array.isArray(target) && target[name]) {
                 target.splice(name as number, 1);
@@ -146,6 +147,16 @@ export default class Raxy<S> {
         this.subscribers = this.subscribers.filter(exp);
     }
 
+    private remark = (target, flag) => {
+        if (target[$source]) {
+            target[$source][$updated] = flag;
+            let _target = target[$parent];
+            while(_target){
+                _target[$source][$updated] = flag;
+                _target = _target[$parent]
+            }
+        }
+    }
     private send = () => {
 
         // tslint:disable-next-line: no-string-literal
