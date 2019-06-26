@@ -71,6 +71,8 @@ export default class Raxy<S> {
 
             this.send();
 
+            this.callback && this.callback(this.store);
+
             return true;
         }
     }
@@ -152,7 +154,7 @@ export default class Raxy<S> {
             }
         }
     }
-    
+
     private send = () => {
 
         // tslint:disable-next-line: no-string-literal
