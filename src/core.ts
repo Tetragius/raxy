@@ -32,7 +32,7 @@ export default class Raxy<S> {
                     target[name] = this.proxier(val, name as string, receiver);
                 }
                 else if (typeof val === 'object' || Array.isArray(val)) {
-                    target[name] = this.proxier(val, name as string, receiver);;
+                    target[name] = this.proxier(val, name as string, receiver);
                 }
                 else {
                     target[name] = val;
@@ -55,11 +55,7 @@ export default class Raxy<S> {
         },
         deleteProperty: (target, name) => {
 
-            if (this.proxyMap.has(target[name][Symbols.source])) {
-                const oldProxy = this.proxyMap.get(target[name][Symbols.source]);
-                this.proxyMap.delete(target[name][Symbols.source]);
-                oldProxy.revoke();
-            }
+            this.clearProxy(target[name][Symbols.source]);
 
             this.remark(target, true);
 
@@ -86,8 +82,7 @@ export default class Raxy<S> {
      * @memberof Raxy
      */
     constructor(store: S, callback?: (store: S) => void) {
-        this.store = { ...store };
-        this.state = this.proxier(this.store);
+        this.apply(store);
         this.callback = callback;
     }
 
@@ -140,28 +135,62 @@ export default class Raxy<S> {
         return { off, on };
     }
 
+    private clone = (obj: any): any => {
+        if (typeof obj !== 'object' && !Array.isArray(obj)) {
+            return obj;
+        }
+        const target: S = {} as S;
+        for (const prop in obj) {
+            if (obj.hasOwnProperty(prop)) {
+                const _obj = obj[prop];
+                if (typeof _obj !== 'symbol') {
+                    if (Array.isArray(_obj)) {
+                        target[prop] = [..._obj.map(this.clone)];
+                    } else if (typeof _obj === 'object') {
+                        target[prop] = this.clone(_obj);
+                    } else {
+                        target[prop] = _obj;
+                    }
+                }
+            }
+        }
+        return target;
+    }
+
+    private apply = newState => {
+        this.store = this.clone(newState);
+        this.state = this.proxier(this.store);
+    }
+
+    private clearProxy = source => {
+        let obj = null;
+        if (this.proxyMap.has(source)) {
+            const oldProxy = this.proxyMap.get(source);
+            this.proxyMap.delete(source);
+            obj = oldProxy.obj;
+            oldProxy.revoke();
+        }
+        return obj;
+    }
+
     private disposal = exp => {
         this.subscribers = this.subscribers.filter(exp);
     }
 
     private remark = (target, flag) => {
-        if (target[Symbols.source]) {
-            target[Symbols.source][Symbols.updated] = flag;
-            let _target = target[Symbols.parent];
-            while(_target){
-                _target[Symbols.source][Symbols.updated] = flag;
-                _target = _target[Symbols.parent]
+        const { source, parent, updated } = Symbols;
+        const src = target[source];
+        if (src) {
+            src[updated] = flag;
+            let _target = target[parent];
+            while (_target) {
+                _target[source][updated] = flag;
+                _target = _target[parent]
             }
         }
     }
 
     private send = () => {
-
-        // tslint:disable-next-line: no-string-literal
-        if (this['__DIAGNOSTIC__']) {
-            console.log(this.proxyMap, this.subscribers);
-        }
-
         this.subscribers.forEach(subscriber => {
             const mapped = subscriber.mapper(this.store);
             Object.assign(subscriber.state, mapped);
@@ -171,32 +200,31 @@ export default class Raxy<S> {
         });
     }
 
-    private proxier = (obj: any, name?: string, parent?: any): any => {
+    private proxier = (obj: any, name?: string, prnt?: any): any => {
 
-        if (!obj[Symbols.id]) {
-            obj[Symbols.id] = Math.random().toString(36).substr(2, 9);
+        const { source, parent, id } = Symbols;
+
+        if (!obj[id]) {
+            obj[id] = Math.random().toString(36).substr(2, 9);
         }
 
-        const source = obj[Symbols.source] || obj;
+        const src = obj[source] || obj;
 
-        if (this.proxyMap.has(source)) {
-            const oldProxy = this.proxyMap.get(source);
-            this.proxyMap.delete(source);
-            obj = oldProxy.obj;
-            oldProxy.revoke();
-        }
+        obj = this.clearProxy(src) || obj;
 
         const { proxy, revoke } = Proxy.revocable(obj, this.hooks);
 
-        obj[Symbols.parent] = parent;
-        obj[Symbols.name] = name;
-        obj[Symbols.source] = obj;
+        obj[parent] = prnt;
+        obj[name] = name;
+        obj[source] = obj;
 
         this.proxyMap.set(obj, { revoke, obj, proxy });
 
+        // tslint:disable-next-line: forin
         for (const key in obj) {
-            if (obj[key] && typeof obj[key] === 'object' || Array.isArray(obj[key])) {
-                obj[key] = this.proxier(obj[key], key, proxy);
+            const _obj = obj[key];
+            if (_obj && typeof _obj === 'object' || Array.isArray(_obj)) {
+                obj[key] = this.proxier(_obj, key, proxy);
             }
         }
 
