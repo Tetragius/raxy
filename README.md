@@ -57,7 +57,7 @@ npm install --save raxy
 
 ## API description
 
-To create a new store call:
+Create a new store call:
 ```typescript
 new Raxy<IState>({initialState}, [callback]);
 ```
@@ -287,7 +287,7 @@ import ListItem, { IListItemProps } from './listItem';
 export default class ListDynamic extends React.Component<any, any> {
 
     click = (idx, item) => {
-        // you can uodate props because it is Proxy or you can import 'state' from '../store';
+        // you can update props because it is Proxy or you can import 'state' from '../store';
         this.props.items[idx] = { label: item.label, finished: !item.finished };
     }
 
