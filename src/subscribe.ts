@@ -1,10 +1,10 @@
-const $updated = Symbol.for('updated');
+import Symbols from './symbols';
 
 export function subscribe(store, subscribers, listener, mapper): any {
 
     const hooks: ProxyHandler<any> = {
         set: (target, name, val) => {
-            if (target[name] !== val || (val && val[$updated])) {
+            if (target[name] !== val || (val && val[Symbols.updated])) {
                 subscriber.needToUpdate = true;
             }
 

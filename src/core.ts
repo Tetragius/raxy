@@ -1,11 +1,6 @@
 import { connect } from './connect';
 import { subscribe } from './subscribe';
-
-const $parent = Symbol.for('parent');
-const $name = Symbol.for('name');
-const $id = Symbol.for('id');
-const $source = Symbol.for('source');
-const $updated = Symbol.for('updated');
+import Symbols from './symbols';
 
 export interface ISubscriber {
     off(): void;
@@ -53,16 +48,16 @@ export default class Raxy<S> {
             return true;
         },
         get: (target, name) => {
-            if (name === $source) {
+            if (name === Symbols.source) {
                 return target;
             }
             return target[name];
         },
         deleteProperty: (target, name) => {
 
-            if (this.proxyMap.has(target[name][$source])) {
-                const oldProxy = this.proxyMap.get(target[name][$source]);
-                this.proxyMap.delete(target[name][$source]);
+            if (this.proxyMap.has(target[name][Symbols.source])) {
+                const oldProxy = this.proxyMap.get(target[name][Symbols.source]);
+                this.proxyMap.delete(target[name][Symbols.source]);
                 oldProxy.revoke();
             }
 
@@ -148,15 +143,16 @@ export default class Raxy<S> {
     }
 
     private remark = (target, flag) => {
-        if (target[$source]) {
-            target[$source][$updated] = flag;
-            let _target = target[$parent];
+        if (target[Symbols.source]) {
+            target[Symbols.source][Symbols.updated] = flag;
+            let _target = target[Symbols.parent];
             while(_target){
-                _target[$source][$updated] = flag;
-                _target = _target[$parent]
+                _target[Symbols.source][Symbols.updated] = flag;
+                _target = _target[Symbols.parent]
             }
         }
     }
+    
     private send = () => {
 
         // tslint:disable-next-line: no-string-literal
@@ -175,11 +171,11 @@ export default class Raxy<S> {
 
     private proxier = (obj: any, name?: string, parent?: any): any => {
 
-        if (!obj[$id]) {
-            obj[$id] = Math.random().toString(36).substr(2, 9);
+        if (!obj[Symbols.id]) {
+            obj[Symbols.id] = Math.random().toString(36).substr(2, 9);
         }
 
-        const source = obj[$source] || obj;
+        const source = obj[Symbols.source] || obj;
 
         if (this.proxyMap.has(source)) {
             const oldProxy = this.proxyMap.get(source);
@@ -190,9 +186,9 @@ export default class Raxy<S> {
 
         const { proxy, revoke } = Proxy.revocable(obj, this.hooks);
 
-        obj[$parent] = parent;
-        obj[$name] = name;
-        obj[$source] = obj;
+        obj[Symbols.parent] = parent;
+        obj[Symbols.name] = name;
+        obj[Symbols.source] = obj;
 
         this.proxyMap.set(obj, { revoke, obj, proxy });
 
