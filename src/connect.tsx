@@ -10,8 +10,7 @@ export function connect<P>(Component: React.ComponentClass, init, disposal): Rea
 
         componentWillMount() {
             const subscriber = init(this, (state, cb) => {
-                this.setState({ ...state }, cb);
-                // this.forceUpdate();
+                this.setState(state, cb);
             });
             this.setState(subscriber.state);
         }

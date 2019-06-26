@@ -15,7 +15,11 @@ export interface ISubscriber {
  * @template S
  */
 export default class Raxy<S> {
-    public state: S = null;
+    public get state(): S {
+        return this.$state;
+    };
+
+    private $state
 
     private proxyMap = new WeakMap();
 
@@ -42,7 +46,7 @@ export default class Raxy<S> {
                 this.send();
                 this.remark(target, false);
 
-                this.callback && this.callback(this.store);
+                this.callback && this.callback(this.$store);
 
             }
             return true;
@@ -67,13 +71,13 @@ export default class Raxy<S> {
 
             this.send();
 
-            this.callback && this.callback(this.store);
+            this.callback && this.callback(this.$store);
 
             return true;
         }
     }
 
-    private store: S = null;
+    private $store: S = null;
 
     /**
      * Creates an instance of Raxy.
@@ -96,7 +100,7 @@ export default class Raxy<S> {
         let subscriber;
 
         const init = (wrapper, listener) => {
-            subscriber = subscribe(this.store, this.subscribers, listener, mapper);
+            subscriber = subscribe(() => this.$store, this.subscribers, listener, mapper);
             subscriber.wrapper = wrapper;
             return subscriber;
         }
@@ -126,13 +130,20 @@ export default class Raxy<S> {
 
         const listener = (state, cb) => { callback(state); cb(); }
 
-        const init = () => subscriber = subscribe(this.store, this.subscribers, listener, mapper);
+        const init = () => subscriber = subscribe(() => this.$store, this.subscribers, listener, mapper);
         init();
 
         const off = () => this.disposal(s => s !== subscriber);
         const on = () => init();
 
         return { off, on };
+    }
+
+    public apply = newState => {
+        this.proxyMap = new WeakMap();
+        this.$store = this.clone(newState);
+        this.$state = this.proxier(this.$store);
+        this.$state[Symbols.updated] = true;
     }
 
     private clone = (obj: any): any => {
@@ -155,11 +166,6 @@ export default class Raxy<S> {
             }
         }
         return target;
-    }
-
-    private apply = newState => {
-        this.store = this.clone(newState);
-        this.state = this.proxier(this.store);
     }
 
     private clearProxy = source => {
@@ -192,7 +198,7 @@ export default class Raxy<S> {
 
     private send = () => {
         this.subscribers.forEach(subscriber => {
-            const mapped = subscriber.mapper(this.store);
+            const mapped = subscriber.mapper(this.$store);
             Object.assign(subscriber.state, mapped);
             if (subscriber.needToUpdate) {
                 subscriber.updater(subscriber.state, () => (subscriber.needToUpdate = false));
@@ -200,9 +206,9 @@ export default class Raxy<S> {
         });
     }
 
-    private proxier = (obj: any, name?: string, prnt?: any): any => {
+    private proxier = (obj: any, _name?: string, prnt?: any): any => {
 
-        const { source, parent, id } = Symbols;
+        const { source, parent, id, name } = Symbols;
 
         if (!obj[id]) {
             obj[id] = Math.random().toString(36).substr(2, 9);
@@ -215,7 +221,7 @@ export default class Raxy<S> {
         const { proxy, revoke } = Proxy.revocable(obj, this.hooks);
 
         obj[parent] = prnt;
-        obj[name] = name;
+        obj[name] = _name;
         obj[source] = obj;
 
         this.proxyMap.set(obj, { revoke, obj, proxy });

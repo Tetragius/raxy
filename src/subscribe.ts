@@ -13,7 +13,7 @@ export function subscribe(store, subscribers, listener, mapper): any {
             return true;
         },
         get: (target, name) => {
-            const current = mapper(store);
+            const current = mapper(store());
             return current[name];
         }
     }
@@ -27,7 +27,7 @@ export function subscribe(store, subscribers, listener, mapper): any {
 
     const subscriber = {
         updater: listener,
-        state: proxier(mapper(store)),
+        state: proxier(mapper(store())),
         mapper,
         needToUpdate: false,
         wrapper: null
