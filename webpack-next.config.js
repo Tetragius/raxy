@@ -3,7 +3,7 @@ const DtsBundleWebpack = require('dts-bundle-webpack');
 
 module.exports = () => ({
     mode: "production",
-    entry: ["./src/core.ts"],
+    entry: ["./src/index.ts"],
     resolve: {
         extensions: [".ts", ".tsx"]
     },
