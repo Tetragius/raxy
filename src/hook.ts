@@ -5,7 +5,7 @@ import {
     createContext,
     useContext
 } from "react";
-import { IDetail, IRaxy } from "./core";
+import { IDetail, IRaxy, Transaction, raxy } from "./core";
 
 import Symbols from './symbols';
 
@@ -15,11 +15,11 @@ type Filter<Store = typeof context, State = any> = (sotre: Store) => State;
 
 export const Raxy = context.Provider;
 
-export const useRaxy = <Store = any, State = any>(filter: Filter<Store, State>): { state: State, store: Store } => {
+export const useRaxy = <Store = any, State = any>(filter: Filter<Store, State>): { state: State, store: Store, transaction: Transaction<Store> } => {
     const instanse: IRaxy<Store> = useContext(context);
 
     if (!instanse) {
-        return { state: null, store: null };
+        return { state: null, store: null, transaction: null };
     }
 
     const saveNow = useCallback(
@@ -59,5 +59,14 @@ export const useRaxy = <Store = any, State = any>(filter: Filter<Store, State>):
         };
     }, [instanse, subscriber]);
 
-    return { state, store: instanse.store };
+    return { state, store: instanse.store, transaction: instanse.transaction };
 };
+
+interface IRaxyWithHook<S> extends IRaxy<S> {
+    useRaxy: <S, State = any>(filter: Filter<S, State>) => { state: State, store: S, transaction: Transaction<S> };
+}
+
+export const raxyReact = <Store = any>(initStore: Store): IRaxyWithHook<Store> => {
+    const { subscribe, unsubscribe, store, transaction } = raxy(initStore);
+    return { subscribe, unsubscribe, store, transaction, useRaxy }
+}

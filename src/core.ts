@@ -4,6 +4,7 @@ interface ITransact<S> { name: string, complete: boolean, store: S }
 type Rollback = () => void;
 type Updater<S> = (store: S) => Promise<boolean>;
 type Resolver<S> = (data: ITransact<S>) => void;
+export type Transaction<S> = (name: string, updater: Updater<S>) => Promise<ITransact<S>>
 export type EventHandler<S> = (event: CustomEvent<IDetail<S>>) => void;
 
 type EventTypes = 'update' | 'transactionstart' | 'transactionend';
@@ -26,7 +27,7 @@ export interface IRaxy<S> {
     subscribe(on: EventTypes, subscriber: EventHandler<S>): void;
     unsubscribe(on: EventTypes, subscriber: EventHandler<S>): void;
     store: S;
-    transaction(name: string, updater: Updater<S>): Promise<ITransact<S>>;
+    transaction: Transaction<S>;
 }
 
 export const raxy = <Store = any>(initStore: Store): IRaxy<Store> => {
