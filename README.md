@@ -39,21 +39,21 @@ Navigation
 ## Installation
 
 ```sh
-npm install --save raxy
+npm install --save @tetragius/raxy
 ```
 
 ## Simple usage
 
 ```javascript
-import { raxy } from 'raxy'; // with polyfill
-import { raxy } from 'raxy/next'; // without polyfill
+import { raxy } from '@tetragius/raxy'; // with polyfill
+import { raxy } from '@tetragius/raxy/next'; // without polyfill
 ```
 
 #### Create store
 
 ```javascript
 // store.js
-import { raxy } from 'raxy';
+import { raxy } from '@tetragius/raxy';
 
 // initial app state
 const initStore = { message: 'Hello' }
@@ -67,7 +67,7 @@ export const instanse = raxy(initStore);
 ```javascript
 // component.jsx
 import React from 'react';
-import { Raxy, useRaxy } from 'raxy';
+import { Raxy, useRaxy } from '@tetragius/raxy';
 import { instanse } from './store';
 
 function Component() {

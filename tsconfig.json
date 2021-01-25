@@ -12,6 +12,7 @@
       "target": "es6",
       "module": "commonjs",
       "jsx": "react",
+      "lib": [ "es2015", "dom" ],
       "experimentalDecorators": true,
       "declaration": true,
       "declarationDir": "./build",

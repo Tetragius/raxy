@@ -13,21 +13,20 @@ const context = createContext(null);
 
 type Filter<Store = typeof context, State = any> = (sotre: Store) => State;
 
-export const Manager = context.Provider;
+export const Raxy = context.Provider;
 
-export const useRaxy = <Store = typeof instanse, State = any>(filter: Filter<Store, State>) => {
+export const useRaxy = <Store = any, State = any>(filter: Filter<Store, State>): { state: State, store: Store } => {
     const instanse: IRaxy<Store> = useContext(context);
 
     if (!instanse) {
-        return;
+        return { state: null, store: null };
     }
 
     const saveNow = useCallback(
         (state) => {
             for (const key in state) {
-                if (state[key][Symbols.now]) {
+                if (state[key] && state[key][Symbols.now]) {
                     state[key][Symbols.prevNow] = state[key][Symbols.now];
-                    console.log(state[key][Symbols.now], state[key][Symbols.prevNow]);
                 }
             }
             return state;
@@ -41,14 +40,6 @@ export const useRaxy = <Store = typeof instanse, State = any>(filter: Filter<Sto
         (e: CustomEvent<IDetail<Store>>) => {
             const newState = filter(e.detail.store);
             for (const key in state) {
-                console.log(
-                    state[key],
-                    newState[key],
-                    state[key] !== newState[key],
-                    state[key][Symbols.prevNow],
-                    newState[key][Symbols.now],
-                    state[key][Symbols.prevNow] !== newState[key][Symbols.now]
-                );
                 if (
                     state[key] !== newState[key] ||
                     state[key][Symbols.prevNow] !== newState[key][Symbols.now]
@@ -68,5 +59,5 @@ export const useRaxy = <Store = typeof instanse, State = any>(filter: Filter<Sto
         };
     }, [instanse, subscriber]);
 
-    return state;
+    return { state, store: instanse.store };
 };

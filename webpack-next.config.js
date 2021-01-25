@@ -42,7 +42,7 @@ module.exports = () => ({
     plugins: [
         new DtsBundleWebpack({
             name: "raxy",
-            main: 'build/core.d.ts',
+            main: 'build/index.d.ts',
             baseDir: 'next',
             out: 'index.d.ts',
         })
