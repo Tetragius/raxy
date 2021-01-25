@@ -106,17 +106,17 @@ export const raxy = <Store = any>(initStore: Store): IRaxy<Store> => {
         for (const key in obj) {
             let sub = obj[key];
             if (typeof sub === "object" && typeof key !== "symbol") {
-                sub[Symbols.now] = now;
-                sub[Symbols.prevNow] = now;
                 if (sub[Symbols.parent]) {
                     sub[Symbols.parent] = obj;
                 }
                 else {
+                    sub[Symbols.now] = now;
+                    sub[Symbols.prevNow] = now;
                     sub[Symbols.parent] = obj;
                     const proxy = new Proxy(sub, hooks);
                     obj[key] = proxy;
+                    proxier(sub);
                 }
-                proxier(sub);
             }
         }
     };
