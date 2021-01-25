@@ -45,7 +45,7 @@ export const raxy = <Store = any>(initStore: Store): IRaxy<Store> => {
     }
 
     const hooks = {
-        set: (target: any, prop: string, value: any, rec: any) => {
+        set: (target: any, prop: string | symbol, value: any, rec: any) => {
             const oldValue = target[prop];
 
             if (typeof value === "object" && !value[Symbols.now]) {
@@ -62,6 +62,10 @@ export const raxy = <Store = any>(initStore: Store): IRaxy<Store> => {
                 target[Symbols.now] = now;
                 target[prop] = value;
                 updateParents(target);
+            } else if (
+                prop === Symbols.prevNow
+            ) {
+                target[prop] = value;
             } else {
                 return true;
             }
