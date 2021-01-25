@@ -54,6 +54,7 @@ export const raxy = <Store = any>(initStore: Store): IRaxy<Store> => {
                 value[Symbols.parent] = target;
                 updateParents(value);
                 target[prop] = new Proxy(value, hooks);
+                proxier(value);
             } else if (
                 typeof value !== "object" &&
                 value !== target[prop] &&
@@ -108,8 +109,13 @@ export const raxy = <Store = any>(initStore: Store): IRaxy<Store> => {
                 sub[Symbols.now] = now;
                 sub[Symbols.prevNow] = now;
                 sub[Symbols.parent] = obj;
-                const proxy = new Proxy(sub, hooks);
-                obj[key] = proxy;
+                if (sub[Symbols.parent]) {
+                    sub[Symbols.parent] = obj;
+                }
+                else {
+                    const proxy = new Proxy(sub, hooks);
+                    obj[key] = proxy;
+                }
                 proxier(sub);
             }
         }
