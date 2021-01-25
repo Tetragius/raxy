@@ -50,6 +50,7 @@ export const raxy = <Store = any>(initStore: Store): IRaxy<Store> => {
 
             if (typeof value === "object" && !value[Symbols.now]) {
                 value[Symbols.now] = now;
+                value[Symbols.prevNow] = now;
                 value[Symbols.parent] = target;
                 updateParents(value);
                 target[prop] = new Proxy(value, hooks);
@@ -101,6 +102,7 @@ export const raxy = <Store = any>(initStore: Store): IRaxy<Store> => {
             let sub = obj[key];
             if (typeof sub === "object" && typeof key !== "symbol") {
                 sub[Symbols.now] = now;
+                sub[Symbols.prevNow] = now;
                 sub[Symbols.parent] = obj;
                 const proxy = new Proxy(sub, hooks);
                 obj[key] = proxy;
