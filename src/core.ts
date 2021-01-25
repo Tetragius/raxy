@@ -64,7 +64,7 @@ export const raxy = <Store = any>(initStore: Store): IRaxy<Store> => {
                 target[prop] = value;
                 updateParents(target);
             } else if (
-                prop === Symbols.prevNow
+                prop === Symbols.prevNow || prop === Symbols.parent
             ) {
                 target[prop] = value;
             } else {
