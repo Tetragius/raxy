@@ -34,6 +34,7 @@ Navigation
 - [Simple usage](#simple-usage)
 - [Transactions](#transactions)
 - [Dev-tools example](#dev-tools-example)
+- [API](#api)
 
 
 ## Installation
@@ -54,12 +55,17 @@ import { raxy } from '@tetragius/raxy/next'; // without polyfill
 ```javascript
 // store.js
 import { raxy } from '@tetragius/raxy';
+// import { raxyReact } from '@tetragius/raxy'; -> for better typescript with react
 
 // initial app state
 const initStore = { message: 'Hello' }
 
 // create new store
-export const instanse = raxy(initStore);
+export const instanse = raxy(initStore); // or raxyReact(initStore)
+// instanse = {store, transaction, subscribe, unsubscribe}
+
+// instanse = {store, transaction, subscribe, unsubscribe, useRaxy} for raxyReact
+// export const {store, transaction, subscribe, unsubscribe, useRaxy} = instanse; for export useRaxy
 ```
 
 #### Usage in react
@@ -68,10 +74,11 @@ export const instanse = raxy(initStore);
 // component.jsx
 import React from 'react';
 import { Raxy, useRaxy } from '@tetragius/raxy';
+// import { useRaxy } from './store' if you use raxyReact
 import { instanse } from './store';
 
 function Component() {
-  const state = useRaxy((state: any) => ({
+  const { state } = useRaxy((state: any) => ({ // return {state, store, transaction}
     message: state.message,
   }));
 
@@ -92,12 +99,12 @@ export default function App() {
 You can create transaction for combine multiple operations at one.
 
 ```javascript
-const initalState = new Raxy({ 
+const initalState = { 
     a: 1,
     b: 2, 
     array: [1, 2, 3, 4],
     nested: { c: 3, nested: { d: 4 } }, 
-});
+};
 
 const { transaction, store, subscribe } = raxy(initalState); 
 
@@ -113,16 +120,50 @@ transaction("transaction name", (store) => {
 });
 ```
 
-## Dev-tools example
+## API
+
+#### raxy
 
 ```javascript
-const devTools = (window as any).__REDUX_DEVTOOLS_EXTENSION__ && (window as any).__REDUX_DEVTOOLS_EXTENSION__.connect();
-
-export const { store, subscribe } = new Raxy(initialState);
-
-subscribe("transactionend", (event) => {
-    devTools && devTools.send(event.detail.name, { value: { ...event.detail.store } });
-});
-
-devTools && devTools.init({ value: store });
+raxy(initState)
 ```
+
+return object with fields
+- store - store for update and other operations
+- transaction - method for create bulk operations
+- subscribe - subscribe to store change (on `update`, `transactionstart`, `transactionend`)
+- unsubscribe - subscribe from store change
+
+#### raxyReact
+
+```javascript
+raxyReact(initState)
+```
+
+return object with fields
+- store - store for update and other operations
+- transaction - method for create bulk operations
+- subscribe - subscribe to store change (on `update`, `transactionstart`, `transactionend`)
+- unsubscribe - subscribe from store change
+- useRaxy - useRaxy + typescript support for store;
+
+#### transaction
+
+```typescript
+transaction<Store>(name: string, async (store: Store)) => boolean
+```
+
+create bulk operation, you can chain transaction by use `then`. If transaction return false it well rollback;
+
+#### subscribe/unsobscribe
+
+```typescript
+export interface IDetail<S> {
+    name?: string;
+    complete?: string;
+    store: S;
+}
+subscribe(on: 'update'|'transactionstart'|'transactionend', (event: CustomEvent<IDetail>) => void)
+```
+
+subscribe to store changes. event has field `detail` with typeof `IDetail`
