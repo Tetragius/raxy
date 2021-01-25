@@ -30,12 +30,16 @@ Based on JS Proxy API and works with all browsers that support it. Also IE 10+ b
 
 ---
 Navigation
+- [Demo](#demo)
 - [Installation](#installation)
 - [Simple usage](#simple-usage)
 - [Transactions](#transactions)
 - [Dev-tools example](#dev-tools-example)
 - [API](#api)
 
+## Demo
+
+[DEMO](https://codesandbox.io/s/raxy-demo-3mur7)
 
 ## Installation
 
