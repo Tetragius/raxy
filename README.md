@@ -167,3 +167,13 @@ subscribe(on: 'update'|'transactionstart'|'transactionend', (event: CustomEvent<
 ```
 
 subscribe to store changes. event has field `detail` with typeof `IDetail`
+
+#### useRaxy
+
+```typescript
+type Filter<Store = typeof context, State = any> = (sotre: Store) => State;
+
+useRaxy<Store, State>(filter: Filter<Store, State>): { state: State, store: Store, transaction: Transaction<Store> }
+```
+
+hook for react - rerender component when store is updated
