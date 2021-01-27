@@ -32,7 +32,6 @@ Navigation
 - [Installation](#installation)
 - [Simple usage](#simple-usage)
 - [Transactions](#transactions)
-- [Dev-tools example](#dev-tools-example)
 - [API](#api)
 
 ## Demo
