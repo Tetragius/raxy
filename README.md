@@ -11,8 +11,6 @@ Powered by Proxy API. It is possible to dynamically create wrappers (page-two in
 
 __~2kb__ or __~5kb__ with plyfill for IE
 
-[DEMO](https://codesandbox.io/s/raxy-demo-3mur7)
-
 ```typescript
 const initalState = { message: 'Hello' };
 const { subscribe, store } = raxy(initalState); 
@@ -39,7 +37,8 @@ Navigation
 
 ## Demo
 
-[DEMO](https://codesandbox.io/s/raxy-demo-3mur7)
+[DEMO: Todo list](https://codesandbox.io/s/raxy-demo-3mur7)
+[DEMO: Todo list - complex](https://codesandbox.io/s/raxy-demo-complex-5syo0)
 
 ## Installation
 
