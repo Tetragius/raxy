@@ -37,8 +37,8 @@ Navigation
 
 ## Demo
 
-[DEMO: Todo list](https://codesandbox.io/s/raxy-demo-3mur7)
-[DEMO: Todo list - complex](https://codesandbox.io/s/raxy-demo-complex-5syo0)
+- [DEMO: Todo list](https://codesandbox.io/s/raxy-demo-3mur7)
+- [DEMO: Todo list - complex](https://codesandbox.io/s/raxy-demo-complex-5syo0)
 
 ## Installation
 
