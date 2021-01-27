@@ -37,7 +37,7 @@ export const raxy = <Store = any>(initStore: Store): IRaxy<Store> => {
     let now = Date.now();
 
     const updateParents = (obj: any) => {
-        const parent = obj[Symbols.parent];
+        const parent = obj && obj[Symbols.parent];
         if (parent) {
             parent[Symbols.now] = now;
             updateParents(parent);
@@ -48,7 +48,7 @@ export const raxy = <Store = any>(initStore: Store): IRaxy<Store> => {
         set: (target: any, prop: string | symbol, value: any, rec: any) => {
             const oldValue = target[prop];
 
-            if (typeof value === "object" && !value[Symbols.now]) {
+            if (value && typeof value === "object" && !value[Symbols.now]) {
                 value[Symbols.now] = now;
                 value[Symbols.prevNow] = now;
                 value[Symbols.parent] = target;
@@ -111,7 +111,7 @@ export const raxy = <Store = any>(initStore: Store): IRaxy<Store> => {
     const proxier = (obj: Object) => {
         for (const key in obj) {
             let sub = obj[key];
-            if (typeof sub === "object" && typeof key !== "symbol") {
+            if (sub && typeof sub === "object" && typeof key !== "symbol") {
                 if (sub[Symbols.parent]) {
                     sub[Symbols.parent] = obj;
                 }
