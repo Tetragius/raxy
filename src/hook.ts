@@ -38,7 +38,7 @@ export const useRaxy = <Store = any, State = any>(filter?: Filter<Store, State>)
 
     const subscriber = useCallback(
         (e: CustomEvent<IDetail<Store>>) => {
-            const newState = filter?.(e.detail.store) ?? null;
+            const newState = filter?.(e?.detail?.store) ?? null;
             if (newState) {
                 for (const key in state) {
                     if (
