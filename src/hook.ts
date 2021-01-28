@@ -48,11 +48,9 @@ export const useRaxy = <Store = any, State = any>(filter?: Filter<Store, State>,
     const subscriber = useCallback(
         (e: CustomEvent<IDetail<Store>>) => {
             const newState = filter?.(e?.detail?.store) ?? null;
-            console.log(1, options)
             if (newState) {
                 for (const key in state) {
                     const option = options && options[key];
-                    console.log(option)
                     if (
                         state[key] !== newState[key] ||
                         (!option?.ignoreTimeStamp && nowMap.has(state[key]) && nowMap.get(state[key]) !== newState[key][Symbols.now])

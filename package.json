@@ -1,6 +1,6 @@
 {
   "name": "@tetragius/raxy",
-  "version": "2.0.25",
+  "version": "2.0.26",
   "description": "raxy",
   "main": "dist/index.js",
   "scripts": {
