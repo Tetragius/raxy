@@ -64,7 +64,7 @@ export const useRaxy = <Store = any, State = any>(filter?: Filter<Store, State>)
     return { state, store: instanse.store, transaction: instanse.transaction };
 };
 
-type Hook<S> = <State = any>(filter: Filter<S, State>) => { state: State, store: S, transaction: Transaction<S> }
+type Hook<S> = <State = any>(filter?: Filter<S, State>) => { state: State, store: S, transaction: Transaction<S> }
 
 interface IRaxyWithHook<S> extends IRaxy<S> {
     useRaxy: Hook<S>;
