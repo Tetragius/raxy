@@ -1,6 +1,6 @@
 {
   "name": "@tetragius/raxy",
-  "version": "2.0.26",
+  "version": "2.0.27",
   "description": "raxy",
   "main": "dist/index.js",
   "scripts": {
@@ -19,14 +19,13 @@
     "url": "https://github.com/Tetragius/raxy.git"
   },
   "license": "MIT",
-  "peerDependencies": {
+  "devDependencies": {
     "@babel/core": "^7.4.5",
     "@babel/plugin-proposal-class-properties": "^7.4.4",
     "@babel/plugin-proposal-decorators": "^7.4.4",
     "@babel/plugin-proposal-nullish-coalescing-operator": "^7.12.1",
     "@babel/plugin-proposal-optional-chaining": "^7.12.7",
     "@babel/preset-env": "^7.4.5",
-    "@babel/preset-react": "^7.0.0",
     "@babel/preset-typescript": "^7.3.3",
     "@types/react": "^17.0.0",
     "babel-loader": "^8.0.6",

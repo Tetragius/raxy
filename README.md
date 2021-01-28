@@ -9,8 +9,6 @@ Can be used with redux-devtools-extension and history. Also works with react hoo
 
 Powered by Proxy API. It is possible to dynamically create wrappers (page-two in the example) for rendering optimization or using react hooks.
 
-__~2kb__ or __~5kb__ with plyfill for IE
-
 ```typescript
 const initalState = { message: 'Hello' };
 const { subscribe, store } = raxy(initalState); 
@@ -20,11 +18,11 @@ subscribe('update', (event) => console.log(event.detail.store)) // output: {mess
 store.message = "Hellow raxy"; // update state;
 ```
 
-Based on JS Proxy API and works with all browsers that support it. Also IE 10+ because has polyfill.
+Based on JS Proxy API and works with all browsers that support it.
 
-![Chrome](https://raw.githubusercontent.com/alrra/browser-logos/master/src/chrome/chrome_48x48.png) | ![Firefox](https://raw.githubusercontent.com/alrra/browser-logos/master/src/firefox/firefox_48x48.png) | ![IE](https://raw.githubusercontent.com/alrra/browser-logos/master/src/edge/edge_48x48.png) | ![Opera](https://raw.githubusercontent.com/alrra/browser-logos/master/src/opera/opera_48x48.png) | ![Safari](https://raw.githubusercontent.com/alrra/browser-logos/master/src/safari/safari_48x48.png)
---- | --- | --- | --- | --- |
-49+ ✔ | 18+ ✔ | IE 10+ (Edge)18+ ✔ | 36+ ✔ | 10+ ✔ |
+![Chrome](https://raw.githubusercontent.com/alrra/browser-logos/master/src/chrome/chrome_48x48.png) | ![Firefox](https://raw.githubusercontent.com/alrra/browser-logos/master/src/firefox/firefox_48x48.png) | ![IE](https://raw.githubusercontent.com/alrra/browser-logos/master/src/edge/edge_48x48.png) | ![Opera](https://raw.githubusercontent.com/alrra/browser-logos/master/src/opera/opera_48x48.png) |
+--- | --- | --- | --- |
+49+ ✔ | 18+ ✔ | (Edge)18+ ✔ | 36+ ✔ |
 
 ---
 Navigation
@@ -48,8 +46,7 @@ npm install --save @tetragius/raxy
 ## Simple usage
 
 ```javascript
-import { raxy } from '@tetragius/raxy'; // with polyfill
-import { raxy } from '@tetragius/raxy/next'; // without polyfill
+import { raxy } from '@tetragius/raxy';
 ```
 
 #### Create store

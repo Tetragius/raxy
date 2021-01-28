@@ -5,7 +5,7 @@ module.exports = () => ({
     mode: "production",
     entry: ["./src/index.ts"],
     resolve: {
-        extensions: [".ts", ".tsx"]
+        extensions: [".ts"]
     },
     output: {
         library: 'raxy',
@@ -26,12 +26,8 @@ module.exports = () => ({
                         cacheDirectory: true,
                         babelrc: false,
                         presets: [
-                            [
-                                "@babel/preset-env",
-                                { targets: { browsers: "last 2 versions" } }
-                            ],
+                            "@babel/preset-env",
                             "@babel/preset-typescript",
-                            "@babel/preset-react"
                         ],
                         plugins: [
                             ["@babel/plugin-proposal-decorators", { legacy: true }],
