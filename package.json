@@ -4,8 +4,7 @@
   "description": "raxy",
   "main": "dist/index.js",
   "scripts": {
-    "build": "tsc; webpack",
-    "build:next": "tsc; webpack --config webpack-next.config.js"
+    "build": "tsc; webpack"
   },
   "keywords": [
     "raxy",
