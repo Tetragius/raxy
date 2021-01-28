@@ -6,3 +6,4 @@ const Symbols = {
 }
 
 export default Symbols;
+export const ignoreTimeStamp = Symbols.ignoreTimeStamp
