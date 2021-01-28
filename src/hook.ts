@@ -15,7 +15,7 @@ type Filter<Store = typeof context, State = any> = (sotre: Store) => State;
 
 export const Raxy = context.Provider;
 
-export const useRaxy = <Store = any, State = any>(filter: Filter<Store, State>): { state: State, store: Store, transaction: Transaction<Store> } => {
+export const useRaxy = <Store = any, State = any>(filter?: Filter<Store, State>): { state: State, store: Store, transaction: Transaction<Store> } => {
     const instanse: IRaxy<Store> = useContext(context);
 
     if (!instanse) {
@@ -38,14 +38,16 @@ export const useRaxy = <Store = any, State = any>(filter: Filter<Store, State>):
 
     const subscriber = useCallback(
         (e: CustomEvent<IDetail<Store>>) => {
-            const newState = filter(e.detail.store);
-            for (const key in state) {
-                if (
-                    state[key] !== newState[key] ||
-                    state[key][Symbols.prevNow] !== newState[key][Symbols.now]
-                ) {
-                    setState(saveNow(newState));
-                    break;
+            const newState = filter?.(e.detail.store) ?? null;
+            if (newState) {
+                for (const key in state) {
+                    if (
+                        state[key] !== newState[key] ||
+                        (!newState[Symbols.ignoreTimeStamp] && state[key][Symbols.prevNow] !== newState[key][Symbols.now])
+                    ) {
+                        setState(saveNow(newState));
+                        break;
+                    }
                 }
             }
         },
