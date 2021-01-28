@@ -24,9 +24,11 @@ export const useRaxy = <Store = any, State = any>(filter?: Filter<Store, State>)
 
     const saveNow = useCallback(
         (state) => {
-            for (const key in state) {
-                if (state[key] && state[key][Symbols.now]) {
-                    state[key][Symbols.prevNow] = state[key][Symbols.now];
+            if (state) {
+                for (const key in state) {
+                    if (state[key] && state[key][Symbols.now]) {
+                        state[key][Symbols.prevNow] = state[key][Symbols.now];
+                    }
                 }
             }
             return state;
@@ -34,7 +36,7 @@ export const useRaxy = <Store = any, State = any>(filter?: Filter<Store, State>)
         []
     );
 
-    const [state, setState] = useState(saveNow(filter(instanse.store)));
+    const [state, setState] = useState(saveNow(filter?.(instanse.store)));
 
     const subscriber = useCallback(
         (e: CustomEvent<IDetail<Store>>) => {
