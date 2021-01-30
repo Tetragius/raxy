@@ -38,6 +38,12 @@ export const useRaxy = <Store = any, State = any>(filter?: Filter<Store, State>,
     const saveNow = useCallback(
         (state) => {
             if (state) {
+
+                const descriptors = Object.getOwnPropertyDescriptors(state);
+                Object.keys(descriptors)
+                    .filter(key => descriptors[key].get)
+                    .forEach(key => Object.defineProperty(state, key, { value: state[key] }));
+
                 for (const key in state) {
                     if (state[key] && state[key][Symbols.now]) {
                         nowMap.set(state[key], state[key][Symbols.now]);
@@ -88,7 +94,7 @@ export const useRaxy = <Store = any, State = any>(filter?: Filter<Store, State>,
         const element = options?.elementRef?.current;
 
         if (window.IntersectionObserver && element) {
-            const observer = new IntersectionObserver(observerCallback, { threshold: 1 });
+            const observer = new IntersectionObserver(observerCallback, { threshold: 0 });
             observer.observe(element)
 
             return () => {
