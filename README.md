@@ -1,13 +1,9 @@
-![logo](logo.png?raw=true "logo")
-
 [![Build Status](https://travis-ci.org/Tetragius/raxy.svg?branch=master)](https://travis-ci.org/Tetragius/raxy) [![npm version](https://badge.fury.io/js/%40tetragius%2Fraxy.svg)](https://badge.fury.io/js/%40tetragius%2Fraxy) [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 # Raxy (ReAct + ProXY)
 
 Simple react state manager. You can work with state as with a regular object.
 Can be used with redux-devtools-extension and history. Also works with react hooks.
-
-Powered by Proxy API. It is possible to dynamically create wrappers (page-two in the example) for rendering optimization or using react hooks.
 
 ```typescript
 const initalState = { message: 'Hello' };
@@ -20,9 +16,9 @@ store.message = "Hellow raxy"; // update state;
 
 Based on JS Proxy API and works with all browsers that support it.
 
-![Chrome](https://raw.githubusercontent.com/alrra/browser-logos/master/src/chrome/chrome_48x48.png) | ![Firefox](https://raw.githubusercontent.com/alrra/browser-logos/master/src/firefox/firefox_48x48.png) | ![IE](https://raw.githubusercontent.com/alrra/browser-logos/master/src/edge/edge_48x48.png) | ![Opera](https://raw.githubusercontent.com/alrra/browser-logos/master/src/opera/opera_48x48.png) |
---- | --- | --- | --- |
-49+ ✔ | 18+ ✔ | (Edge)18+ ✔ | 36+ ✔ |
+![Chrome](https://raw.githubusercontent.com/alrra/browser-logos/master/src/chrome/chrome_48x48.png) | ![Firefox](https://raw.githubusercontent.com/alrra/browser-logos/master/src/firefox/firefox_48x48.png) | ![IE](https://raw.githubusercontent.com/alrra/browser-logos/master/src/edge/edge_48x48.png) | ![Opera](https://raw.githubusercontent.com/alrra/browser-logos/master/src/opera/opera_48x48.png) | ![Opera](https://raw.githubusercontent.com/alrra/browser-logos/master/src/safari/safari_48x48.png) |
+--- | --- | --- | --- | --- |
+49+ ✔ | 18+ ✔ | 18+ ✔ | 36+ ✔ | 10+ ✔ | 
 
 ---
 Navigation
@@ -172,7 +168,39 @@ subscribe to store changes. event has field `detail` with typeof `IDetail`
 ```typescript
 type Filter<Store = typeof context, State = any> = (sotre: Store) => State;
 
-useRaxy<Store, State>(filter: Filter<Store, State>): { state: State, store: Store, transaction: Transaction<Store> }
+useRaxy<Store, State>(filter: Filter<Store, State>, options?): { state: State, store: Store, transaction: Transaction<Store> }
 ```
 
 hook for react - rerender component when store is updated
+
+- options - can be used for optimisation
+
+example 
+
+```typescript
+const { state } = useRaxy(
+    (store) => ({
+      todos: store.todos,
+      length: store.todos.length // rerender if change todos count
+    }),
+    {
+      todos: { ignoreTimeStamp: true } // rerender if changes object link
+      // elementRef: ref - if you want rerender if element in viewport (ref: React.RefObj)
+    }
+  );
+```
+
+#### logger
+
+```typescript
+logger: (subscribe: IRaxy<any>['subscribe']) => void;
+```
+log changes into console
+
+#### connectDevTools
+
+```typescript
+connectDevTools: (instanse: IRaxy<any>) => void;
+```
+
+activeate Redux dev-tools
