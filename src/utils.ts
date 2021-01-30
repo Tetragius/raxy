@@ -39,9 +39,9 @@ export const logger = (subscribe: IRaxy<any>['subscribe']) => {
 }
 
 export const connectDevTools = (instanse: IRaxy<any>) => {
-    const devTools = window.__REDUX_DEVTOOLS_EXTENSION__?.connect({});
-    devTools?.init(snapshot(instanse.store));
-    devTools?.subscribe((data: any) => {
+    dt.devTools = window.__REDUX_DEVTOOLS_EXTENSION__?.connect({});
+    dt.devTools?.init(snapshot(instanse.store));
+    dt.devTools?.subscribe((data: any) => {
         instanse.transaction("DEV-TOOLS", async (store) => {
             dt.disableLogger = true;
             data.state && Object.assign(store, JSON.parse(data.state));
