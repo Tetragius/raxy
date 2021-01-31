@@ -30,7 +30,7 @@ const getRef = (ref: RefObj) => {
     return ref.current;
 }
 
-export const connect = <Store = any, State = any>(instanse: IRaxy<Store>, filter?: Filter<Store, State>, options?: IOptions & Options<State>): IConnector<Store, State> => {
+export const connect = <Store = any, State = any>(instanse: IRaxy<Store>, updateCallback: (state: State) => void, filter?: Filter<Store, State>, options?: IConnectorOptions & Options<State>): IConnector<Store, State> => {
 
     if (!instanse) {
         return { state: null, store: null, transaction: null, mountCallback: null, unmountCallback: null };
@@ -42,6 +42,7 @@ export const connect = <Store = any, State = any>(instanse: IRaxy<Store>, filter
 
     const updateState = (newState) => {
         state = saveNow(newState);
+        updateCallback(state);
     }
 
     const saveNow =
@@ -119,7 +120,7 @@ export const connect = <Store = any, State = any>(instanse: IRaxy<Store>, filter
     return { state, store: instanse.store, transaction: instanse.transaction, mountCallback, unmountCallback };
 };
 
-type Connector<S> = <State = any>(filter?: Filter<S, State>, options?: IOptions & Options<State>) => IConnector<S, State>
+type Connector<S> = <State = any>(updateCallback: (state: State) => void, filter?: Filter<S, State>, options?: IConnectorOptions & Options<State>) => IConnector<S, State>
 
 interface IRaxyWithConnector<S> extends IRaxy<S> {
     connect: Connector<S>;
