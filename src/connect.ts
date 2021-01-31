@@ -10,7 +10,7 @@ type Options<State = any> = {
 
 type RefObj<T = any> = { current: T } | (() => T)
 
-interface IOptions<T = any> {
+interface IConnectorOptions<T = any> {
     elementRef?: RefObj<T>;
 }
 
