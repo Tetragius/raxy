@@ -27,7 +27,7 @@ const getRef = (ref: RefObj) => {
         return ref();
     }
 
-    return ref.current;
+    return ref?.current;
 }
 
 export const connect = <Store = any, State = any>(instanse: IRaxy<Store>, updateCallback: (state: State) => void, filter?: Filter<Store, State>, options?: IConnectorOptions & Options<State>): IConnector<Store, State> => {
