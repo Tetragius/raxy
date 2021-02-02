@@ -90,7 +90,7 @@ await transaction('transaction B', updater_B);
 
 Имя транзакции носит чисто информативный  характер и может быть выбрано на усмотрение разработчика.
 
-## subscribe/unsobscribe
+## subscribe/unsubscribe
 
 ```typescript
 export interface IDetail<S> {
