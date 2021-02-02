@@ -1,6 +1,6 @@
 [![Build Status](https://travis-ci.org/Tetragius/raxy.svg?branch=master)](https://travis-ci.org/Tetragius/raxy) [![npm version](https://badge.fury.io/js/%40tetragius%2Fraxy.svg)](https://badge.fury.io/js/%40tetragius%2Fraxy) [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-# Raxy (ReAct + ProXY)
+# Raxy
 
 Simple react state manager. You can work with state as with a regular object.
 Can be used with redux-devtools-extension and history. Also works with react hooks.

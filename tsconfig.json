@@ -11,15 +11,30 @@
       "resolveJsonModule": true,
       "target": "es6",
       "module": "commonjs",
-      "jsx": "react",
-      "lib": [ "es2017", "dom" ],
+      "lib": [
+        "es2017",
+        "dom"
+      ],
       "experimentalDecorators": true,
       "declaration": true,
-      "declarationDir": "./build",
-      "outDir": "./build"
+      "declarationDir": "dist",
+      "baseUrl": "./packages",
+      "paths": {
+        "@tetragius/raxy": [
+          "raxy"
+        ],
+        "@tetragius/raxy-react": [
+          "raxy-react"
+        ],
+        "@tetragius/raxy-vue": [
+          "raxy-vue"
+        ],
+      },
     },
     "include": [
-      "./src/**/*"
+      "packages/raxy/**/*",
+      "packages/raxy-react/**/*",
+      "packages/raxy-vue/**/*"
     ],
     "exclude": [
       "node_modules",
@@ -28,5 +43,5 @@
     "typeRoots": [
       "./typings",
       "./node_modules/@types"
-    ]
+    ],
   }

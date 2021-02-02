@@ -1,20 +1,30 @@
 const path = require('path');
-const DtsBundleWebpack = require('dts-bundle-webpack');
+const TsconfigPathsPlugin = require('tsconfig-paths-webpack-plugin');
 
 module.exports = () => ({
     mode: "production",
-    entry: ["./src/index.ts"],
+    entry: {
+        "raxy/dist/index": ["./packages/raxy"],
+        "raxy-react/dist/index": ["./packages/raxy-react"],
+        "raxy-vue/dist/index": ["./packages/raxy-vue"],
+    },
     resolve: {
-        extensions: [".ts"]
+        extensions: [".ts"],
+        plugins: [
+            new TsconfigPathsPlugin({}),
+        ]
     },
     output: {
         library: 'raxy',
         libraryTarget: 'umd',
-        path: path.join(__dirname, '/dist'),
-        filename: 'index.js'
+        path: path.join(__dirname, '/packages'),
+        filename: '[name].js'
     },
     externals: [
-        { react: 'react' }
+        {
+            react: 'react',
+            "@tetragius/raxy": '@tetragius/raxy'
+        }
     ],
     module: {
         rules: [
@@ -39,13 +49,5 @@ module.exports = () => ({
                 }
             },
         ]
-    },
-    plugins: [
-        new DtsBundleWebpack({
-            name: "raxy",
-            main: 'build/index.d.ts',
-            baseDir: 'dist',
-            out: 'index.d.ts',
-        })
-    ]
+    }
 })
