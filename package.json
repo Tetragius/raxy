@@ -1,6 +1,6 @@
 {
-  "name": "@tetragius/raxy",
-  "version": "2.1.2",
+  "name": "@tetragius/raxy-core",
+  "version": "1.0.0",
   "description": "raxy",
   "main": "dist/index.js",
   "scripts": {
@@ -16,7 +16,9 @@
   "keywords": [
     "raxy",
     "react",
-    "proxy"
+    "proxy",
+    "state",
+    "vue"
   ],
   "author": "Chertorylskiy Ilya Sergeevich",
   "homepage": "https://github.com/Tetragius/raxy",
