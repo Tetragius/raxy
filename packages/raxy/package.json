@@ -1,0 +1,18 @@
+{
+  "name": "@tetragius/raxy",
+  "version": "3.0.0",
+  "description": "raxy",
+  "main": "dist/index.js",
+  "keywords": [
+    "raxy",
+    "proxy",
+    "state"
+  ],
+  "author": "Chertorylskiy Ilya Sergeevich",
+  "homepage": "https://github.com/Tetragius/raxy",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Tetragius/raxy.git"
+  },
+  "license": "MIT"
+}

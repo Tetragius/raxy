@@ -1,0 +1,39 @@
+{
+  "compilerOptions": {
+    "allowSyntheticDefaultImports": true,
+    "noFallthroughCasesInSwitch": true,
+    "noUnusedParameters": false,
+    "noImplicitReturns": true,
+    "moduleResolution": "node",
+    "esModuleInterop": true,
+    "noUnusedLocals": true,
+    "noImplicitAny": false,
+    "resolveJsonModule": true,
+    "target": "es6",
+    "module": "commonjs",
+    "lib": [
+      "es2017",
+      "dom"
+    ],
+    "experimentalDecorators": true,
+    "declaration": true,
+    "declarationDir": "dist",
+    "baseUrl": "../../packages",
+    "paths": {
+      "@tetragius/raxy": [
+        "raxy"
+      ],
+    },
+  },
+  "include": [
+    "./src/**/*",
+  ],
+  "exclude": [
+    "node_modules",
+    "**/*.test.ts"
+  ],
+  "typeRoots": [
+    "./typings",
+    "./node_modules/@types"
+  ],
+}

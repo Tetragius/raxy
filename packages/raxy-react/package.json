@@ -1,0 +1,22 @@
+{
+  "name": "@tetragius/raxy-react",
+  "version": "1.0.2",
+  "description": "raxy-react",
+  "main": "dist/index.js",
+  "keywords": [
+    "raxy",
+    "react",
+    "proxy",
+    "state"
+  ],
+  "author": "Chertorylskiy Ilya Sergeevich",
+  "homepage": "https://github.com/Tetragius/tree/master/packages/raxy-react",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Tetragius/raxy.git"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "@tetragius/raxy": "^3.0.0"
+  }
+}
