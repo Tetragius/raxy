@@ -1,4 +1,4 @@
-  {
+{
     "compilerOptions": {
       "allowSyntheticDefaultImports": true,
       "noFallthroughCasesInSwitch": true,
@@ -17,24 +17,10 @@
       ],
       "experimentalDecorators": true,
       "declaration": true,
-      "declarationDir": "dist",
-      "baseUrl": "./packages",
-      "paths": {
-        "@tetragius/raxy": [
-          "raxy"
-        ],
-        "@tetragius/raxy-react": [
-          "raxy-react"
-        ],
-        "@tetragius/raxy-vue": [
-          "raxy-vue"
-        ],
-      },
+      "declarationDir": "dist"
     },
     "include": [
-      "packages/raxy/**/*",
-      "packages/raxy-react/**/*",
-      "packages/raxy-vue/**/*"
+      "./src/**/*",
     ],
     "exclude": [
       "node_modules",

@@ -1,0 +1,19 @@
+{
+  "name": "@tetragius/raxy-vue",
+  "version": "1.0.3",
+  "description": "raxy-vue",
+  "main": "dist/index.js",
+  "keywords": [
+    "raxy",
+    "vue",
+    "proxy",
+    "state"
+  ],
+  "author": "Chertorylskiy Ilya Sergeevich",
+  "homepage": "https://github.com/Tetragius/tree/master/packages/raxy-vue",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Tetragius/raxy.git"
+  },
+  "license": "MIT"
+}

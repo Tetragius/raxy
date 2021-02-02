@@ -8,3 +8,5 @@ example/node_modules
 coverage
 .vscode
 next
+**/dist
+**/*.d.ts

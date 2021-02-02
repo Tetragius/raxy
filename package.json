@@ -1,15 +1,24 @@
 {
-  "name": "@tetragius/raxy",
-  "version": "2.1.2",
+  "name": "@tetragius/raxy-core",
+  "version": "1.0.0",
   "description": "raxy",
   "main": "dist/index.js",
   "scripts": {
-    "build": "tsc; webpack"
+    "declarations:raxy": "tsc --project ./packages/raxy/tsconfig.json --emitDeclarationOnly",
+    "declarations:raxy-react": "tsc --project ./packages/raxy-react/tsconfig.json --emitDeclarationOnly",
+    "declarations:raxy-vue": "tsc --project ./packages/raxy-vue/tsconfig.json --emitDeclarationOnly",
+    "declarations:all": "npm run declarations:raxy; npm run declarations:raxy-react; npm run declarations:raxy-vue",
+    "clean": "rm -r ./packages/raxy/dist; rm -r ./packages/raxy-react/dist; rm -r ./packages/raxy-vue/dist; ",
+    "webpack": "webpack",
+    "build": "npm run clean; npm run declarations:all; npm run webpack",
+    "publish": "publish.sh"
   },
   "keywords": [
     "raxy",
     "react",
-    "proxy"
+    "proxy",
+    "state",
+    "vue"
   ],
   "author": "Chertorylskiy Ilya Sergeevich",
   "homepage": "https://github.com/Tetragius/raxy",
@@ -20,6 +29,7 @@
   "license": "MIT",
   "devDependencies": {
     "@babel/core": "^7.4.5",
+    "@types/node": "^14.14.22",
     "@babel/plugin-proposal-class-properties": "^7.4.4",
     "@babel/plugin-proposal-decorators": "^7.4.4",
     "@babel/plugin-proposal-nullish-coalescing-operator": "^7.12.1",
@@ -28,8 +38,8 @@
     "@babel/preset-typescript": "^7.3.3",
     "@types/react": "^17.0.0",
     "babel-loader": "^8.0.6",
-    "dts-bundle-webpack": "^1.0.2",
-    "react": "^17.0.1",
+    "react": "^16.14.0",
+    "tsconfig-paths-webpack-plugin": "^3.3.0",
     "tslint": "^5.17.0",
     "tslint-config-prettier": "^1.18.0",
     "tslint-react": "^4.0.0",

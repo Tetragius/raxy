@@ -39,6 +39,7 @@ export const logger = (subscribe: IRaxy<any>['subscribe']) => {
 }
 
 export const connectDevTools = (instanse: IRaxy<any>) => {
+    // @ts-ignore
     dt.devTools = window.__REDUX_DEVTOOLS_EXTENSION__?.connect({});
     dt.devTools?.init(snapshot(instanse.store));
     dt.devTools?.subscribe((data: any) => {

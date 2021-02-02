@@ -1,4 +1,4 @@
-const Symbols = {
+export const Symbols = {
     parent: Symbol('parent'),
     now: Symbol('now'),
 }
