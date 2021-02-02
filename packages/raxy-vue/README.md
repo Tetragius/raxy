@@ -55,7 +55,7 @@ export default {
     countA: 0,
   }),
   beforeCreate() {
-    this.$raxy.filter = (store) => ({ // Функция определяющая, когда обновлять компонет
+    this.$raxy.filter = (store) => ({ // Функция определяющая, когда обновлять компонент
       countA: store.countA,
     });
   },
