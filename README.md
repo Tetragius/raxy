@@ -1,156 +1,96 @@
 [![Build Status](https://travis-ci.org/Tetragius/raxy.svg?branch=master)](https://travis-ci.org/Tetragius/raxy) [![npm version](https://badge.fury.io/js/%40tetragius%2Fraxy.svg)](https://badge.fury.io/js/%40tetragius%2Fraxy) [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-# Raxy
-
-Simple react state manager. You can work with state as with a regular object.
-Can be used with redux-devtools-extension and history. Also works with react hooks.
-
-```typescript
-const initalState = { message: 'Hello' };
-const { subscribe, store } = raxy(initalState); 
-
-subscribe('update', (event) => console.log(event.detail.store)) // output: {message: 'Hellow Raxy'}
-
-store.message = "Hellow raxy"; // update state;
-```
-
-Based on JS Proxy API and works with all browsers that support it.
-
 ![Chrome](https://raw.githubusercontent.com/alrra/browser-logos/master/src/chrome/chrome_48x48.png) | ![Firefox](https://raw.githubusercontent.com/alrra/browser-logos/master/src/firefox/firefox_48x48.png) | ![IE](https://raw.githubusercontent.com/alrra/browser-logos/master/src/edge/edge_48x48.png) | ![Opera](https://raw.githubusercontent.com/alrra/browser-logos/master/src/opera/opera_48x48.png) | ![Opera](https://raw.githubusercontent.com/alrra/browser-logos/master/src/safari/safari_48x48.png) |
 --- | --- | --- | --- | --- |
 49+ ✔ | 18+ ✔ | 18+ ✔ | 36+ ✔ | 10+ ✔ | 
 
+# Raxy
+
+Простой менеджер состояний, для реализации подхода [SSOT](https://en.wikipedia.org/wiki/Single_source_of_truth), может применться [React](https://reactjs.org/) или [Vue](https://vuejs.org/)
+
+Работает на основе Proxy API, во всех поддерживающих его брузерах.
+
+Основное отличие от большинства менеджеров состояний - работа с хранилищем, как с обычным объектом, без использования сложных механизмов событий и селекторов.
+
+Поддерживает отладку [`Redux dev-tools`](https://chrome.google.com/webstore/detail/redux-devtools/lmhkpmbekcpmknklioeibfkpmmfibljd?hl=ru)
+
 ---
-Navigation
-- [Demo](#demo)
-- [Installation](#installation)
-- [Simple usage](#simple-usage)
-- [Transactions](#transactions)
-- [API](#api)
+Оглавление:
+- [Установка](#demo)
+- [Демонстрация](#simple-usage)
+- [API](#installation)
+- Фреймворки
+  - [React](https://github.com/Tetragius/raxy/tree/master/packages/raxy-react)
+  - [Vue](https://github.com/Tetragius/raxy/tree/master/packages/raxy-vue)
 
-## Demo
 
-- [DEMO: Todo list](https://codesandbox.io/s/raxy-demo-3mur7)
-- [DEMO: Todo list - complex](https://codesandbox.io/s/raxy-demo-complex-5syo0)
-
-## Installation
+# Установка
 
 ```sh
 npm install --save @tetragius/raxy
 ```
 
-## Simple usage
+## Для React
 
-```javascript
-import { raxy } from '@tetragius/raxy';
+```sh
+npm install --save @tetragius/raxy-react
 ```
 
-#### Create store
+## Для Vue
 
-```javascript
-// store.js
-import { raxy } from '@tetragius/raxy';
-// import { raxyReact } from '@tetragius/raxy'; -> for better typescript with react
-
-// initial app state
-const initStore = { message: 'Hello' }
-
-// create new store
-export const instanse = raxy(initStore); // or raxyReact(initStore)
-// instanse = {store, transaction, subscribe, unsubscribe}
-
-// instanse = {store, transaction, subscribe, unsubscribe, useRaxy} for raxyReact
-// export const {store, transaction, subscribe, unsubscribe, useRaxy} = instanse; for export useRaxy
+```sh
+npm install --save @tetragius/raxy @tetragius/raxy-vue
 ```
 
-#### Usage in react
+# Демонстрация
 
-```javascript
-// component.jsx
-import React from 'react';
-import { Raxy, useRaxy } from '@tetragius/raxy';
-// import { useRaxy } from './store' if you use raxyReact
-import { instanse } from './store';
+- React
+  - [DEMO: Todo list](https://codesandbox.io/s/raxy-demo-3mur7)
+  - [DEMO: Todo list - complex](https://codesandbox.io/s/raxy-demo-complex-5syo0)
+- Vue
+  - [DEMO: Todo list - complex](https://codesandbox.io/s/raxy-demo-complex-5syo0)
 
-function Component() {
-  const { state } = useRaxy((state: any) => ({ // return {state, store, transaction}
-    message: state.message,
-  }));
 
-  return <div>{state.message}</div>;
-}
+# API
 
-export default function App() {
-  return (
-    <Raxy value={instanse}>
-      <Component />
-    </Raxy>
-  );
-}
-```
-
-#### Transactions
-
-You can create transaction for combine multiple operations at one.
-
-```javascript
-const initalState = { 
-    a: 1,
-    b: 2, 
-    array: [1, 2, 3, 4],
-    nested: { c: 3, nested: { d: 4 } }, 
-};
-
-const { transaction, store, subscribe } = raxy(initalState); 
-
-subscribe("update", console.log);
-subscribe("transactionstart", console.log);
-subscribe("transactionend", console.log);
-
-transaction("transaction name", (store) => {
-    store.array.push(5);
-    store.a = 2;
-    store.nested.c = 4;
-    return true; // if false transaction will rollback
-});
-```
-
-## API
-
-#### raxy
+## raxy
 
 ```javascript
 raxy(initState)
 ```
 
-return object with fields
-- store - store for update and other operations
-- transaction - method for create bulk operations
-- subscribe - subscribe to store change (on `update`, `transactionstart`, `transactionend`)
-- unsubscribe - subscribe from store change
+Возвращает объект с полями:
+- `store` - проксированое хранилище
+- `transaction` - метод для проведения транзакций
+- `subscribe` - метод для подписки на события изменения хранилища (`update`, `transactionstart`, `transactionend`)
+- `unsubscribe` - метод отмены подписки на события обновления хранилища
 
-#### raxyReact
-
-```javascript
-raxyReact(initState)
-```
-
-return object with fields
-- store - store for update and other operations
-- transaction - method for create bulk operations
-- subscribe - subscribe to store change (on `update`, `transactionstart`, `transactionend`)
-- unsubscribe - subscribe from store change
-- useRaxy - useRaxy + typescript support for store;
-
-#### transaction
+## transaction
 
 ```typescript
 transaction<Store>(name: string, async (store: Store)) => boolean
 ```
 
-create bulk operation, you can chain transaction by use `then`. If transaction return false it well rollback;
+Создает транзакцию для изменения нескольких значений хранилища, в случае если транзакция не успешна (если фунция возвращает `false`) - все действия будут отменены.
 
-#### subscribe/unsobscribe
+Транзакции ставятся в очередь и выполняются строго в порядке вызова.
+
+Транзакции являются `Promise`-функциями и могут быть объединены в цепочку.
+
+```typescript
+transaction('transaction A', updater_A).then(transaction('transaction B', updater_B));
+
+// или
+
+await transaction('transaction A', updater_A);
+await transaction('transaction B', updater_B);
+```
+
+Успешно выполненная транзакция возвращает - `true`.
+
+Имя транзакции носит чисто иннформативный характер и может быть выбрано на усмотрение разработчика.
+
+## subscribe/unsobscribe
 
 ```typescript
 export interface IDetail<S> {
@@ -161,46 +101,93 @@ export interface IDetail<S> {
 subscribe(on: 'update'|'transactionstart'|'transactionend', (event: CustomEvent<IDetail>) => void)
 ```
 
-subscribe to store changes. event has field `detail` with typeof `IDetail`
+Подписывается или отменяет подписку на обновление хранилища. 
 
-#### useRaxy
+Объект `event` содержит поле `detail` интерфейса `IDetail`.
+
+- `update` - Любое обновление хранилища.
+- `transactionstart` - Транзакция начата.
+- `transactionend` - Транзакция завершена.
+
+Для `transactionstart` и `transactionend` задаются дополнительно поля:
+- `name` - имя транзакции
+- `complete` - статус транзакции (`true` - завершена)
+
+## connect
 
 ```typescript
-type Filter<Store = typeof context, State = any> = (sotre: Store) => State;
+connect: <Store = any, State = any>(instanse: IRaxy<Store>, updateCallback: (state: State) => void, filter?: Filter<Store, State>, options?: IConnectorOptions<any> & Options<State>) => IConnector<Store, State>;
 
-useRaxy<Store, State>(filter: Filter<Store, State>, options?): { state: State, store: Store, transaction: Transaction<Store> }
+type Connector<S> = <State = any>(updateCallback: (state: State) => void, filter?: Filter<S, State>, options?: IConnectorOptions & Options<State>) => IConnector<S, State>;
 ```
 
-hook for react - rerender component when store is updated
+Создает подключение к хранилищу
 
-- options - can be used for optimisation
-
-example 
+- `instanse` - экземпляр созданный вызовом метода `raxy`
+- `updateCallback` - функция которая будет вызываться каждый раз при изменении состояния
+- `filter` - функция которая определяет при изменении каких частей хранилища вызывать `updateCallback`
+- `options` - набор опций для оптимизации работы
 
 ```typescript
-const { state } = useRaxy(
+type Options<State = any> = {
+    [P in keyof State]?: {
+        ignoreTimeStamp?: boolean;
+    };
+};
+interface IConnectorOptions<T = any> {
+    elementRef?: RefObj<T>;
+}
+```
+
+Пример опций
+
+```typescript
+connect(
     (store) => ({
-      todos: store.todos,
-      length: store.todos.length // rerender if change todos count
+      todos: store.todos, /
+      length: store.todos.length 
     }),
     {
-      todos: { ignoreTimeStamp: true } // rerender if changes object link
-      // elementRef: ref - if you want rerender if element in viewport (ref: React.RefObj)
+      todos: { ignoreTimeStamp: true } // рендер не учитывает изменения состояния дочерних элеиентов
+      elementRef: element // ссылка на DOM ноду для оптимизации вызова updateCallback
     }
   );
 ```
 
-#### logger
+При указании `elementRef` - автоматически отключает проверку изменния состояния хранилища, если указанный элемент не виден на странице или в любом вьюпорте.
+
+Метод `connect` возвращает объект с полями
+
+- `state` - ссылка на состояние возвращаемое методом `filter`
+- `store` - ссылка на `store`
+- `transaction` - метод для лсуществления транзакций
+- `mountCallback` - метод который следует вызвать для включения подписки
+- `unmountCallback` - метод который следует вызвать для отключения подписки
+
+## createConnector
+
+```typescript
+createConnector: <Store = any>(initStore: Store) => IRaxyWithConnector<Store>;
+
+interface IRaxyWithConnector<S> extends IRaxy<S> {
+    connect: Connector<S>;
+}
+```
+
+Создает типизированый экземпляр функции `connect` может быть использован вместо вызова `raxy`
+
+## logger
 
 ```typescript
 logger: (subscribe: IRaxy<any>['subscribe']) => void;
 ```
-log changes into console
 
-#### connectDevTools
+Выводит в консоль лог событий `update`, `transactionstart`, `transactionend`;
+
+## connectDevTools
 
 ```typescript
 connectDevTools: (instanse: IRaxy<any>) => void;
 ```
 
-activeate Redux dev-tools
+Активирует поддержку [`Redux dev-tools`](https://chrome.google.com/webstore/detail/redux-devtools/lmhkpmbekcpmknklioeibfkpmmfibljd?hl=ru)
