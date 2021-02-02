@@ -2,7 +2,7 @@
 [Подробное описание](https://github.com/Tetragius/raxy)
 
 # Демонстрация
-   - [DEMO: Todo list - complex](https://codesandbox.io/s/raxy-demo-complex-5syo0)
+   - [DEMO](https://codesandbox.io/s/raxy-vue-example-e74vn)
 
 
 # API

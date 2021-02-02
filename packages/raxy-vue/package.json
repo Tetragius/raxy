@@ -1,6 +1,6 @@
 {
   "name": "@tetragius/raxy-vue",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "raxy-vue",
   "main": "dist/index.js",
   "keywords": [
