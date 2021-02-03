@@ -91,8 +91,8 @@ export const raxy = <Store = any>(initStore: Store, options?: IRaxyOptions): IRa
                 });
             }
 
-            if (!options.disableTimer) {
-                if (timer && !options.disableTimer) {
+            if (!options?.disableTimer) {
+                if (timer) {
                     clearTimeout(timer);
                 }
 
