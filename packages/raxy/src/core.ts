@@ -59,7 +59,6 @@ export const raxy = <Store = any>(initStore: Store, options?: IRaxyOptions): IRa
                 target[prop] = new Proxy(value, hooks);
                 proxier(value);
             } else if (
-                typeof value !== "object" &&
                 value !== target[prop] &&
                 typeof prop !== "symbol"
             ) {
