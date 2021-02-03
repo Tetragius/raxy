@@ -18,10 +18,10 @@
     "experimentalDecorators": true,
     "declaration": true,
     "declarationDir": "dist",
-    "baseUrl": "../../packages",
+    "baseUrl": "..",
     "paths": {
       "@tetragius/raxy": [
-        "raxy/index.ts"
+        "raxy"
       ],
     },
   },
