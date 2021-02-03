@@ -3,6 +3,7 @@
 
 # Демонстрация
    - [DEMO](https://codesandbox.io/s/raxy-vue-example-e74vn)
+   - [DEMO: TODO list](https://codesandbox.io/s/raxy-vue-example-xsrtu)
 
 
 # API
