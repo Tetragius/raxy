@@ -1,3 +1,4 @@
+[![npm version](https://badge.fury.io/js/%40tetragius%2Fraxy-vue.svg)](https://badge.fury.io/js/%40tetragius%2Fraxy-vue)
 
 [Подробное описание](https://github.com/Tetragius/raxy)
 
