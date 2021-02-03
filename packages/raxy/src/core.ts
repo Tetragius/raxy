@@ -76,7 +76,7 @@ export const raxy = <Store = any>(initStore: Store, options?: IRaxyOptions): IRa
             }
 
             if (transactions[0]?.pending) {
-                transactions[0].rollback.push(() => {
+                transactions[0].rollback.unshift(() => {
                     if (oldValue !== undefined) {
                         rec[prop] = oldValue;
                         rec[Symbols.now] = now;
