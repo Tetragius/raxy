@@ -21,13 +21,13 @@
       "baseUrl": "./packages",
       "paths": {
         "@tetragius/raxy": [
-          "raxy"
+          "raxy/index.ts"
         ],
         "@tetragius/raxy-react": [
-          "raxy-react"
+          "raxy-react/index.ts"
         ],
         "@tetragius/raxy-vue": [
-          "raxy-vue"
+          "raxy-vue/index.ts"
         ],
       },
     },

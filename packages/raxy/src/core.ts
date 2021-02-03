@@ -15,6 +15,10 @@ export interface IDetail<S> {
     store: S;
 }
 
+export interface IRaxyOptions {
+    disableTimer?: boolean;
+}
+
 export interface ITransaction<S> {
     pending: boolean;
     rollback: Rollback[];
@@ -30,7 +34,7 @@ export interface IRaxy<S> {
     transaction: Transaction<S>;
 }
 
-export const raxy = <Store = any>(initStore: Store): IRaxy<Store> => {
+export const raxy = <Store = any>(initStore: Store, options?: IRaxyOptions): IRaxy<Store> => {
     const eventTarget = new EventTarget();
     const transactions: ITransaction<Store>[] = [];
     let timer: number = 0;
@@ -87,16 +91,24 @@ export const raxy = <Store = any>(initStore: Store): IRaxy<Store> => {
                 });
             }
 
-            if (timer) {
-                clearTimeout(timer);
-            }
+            if (!options.disableTimer) {
+                if (timer && !options.disableTimer) {
+                    clearTimeout(timer);
+                }
 
-            timer = setTimeout(() => {
+                timer = setTimeout(() => {
+                    now = Date.now();
+                    eventTarget.dispatchEvent(
+                        new CustomEvent("update", { detail: { store: initStore } })
+                    );
+                });
+            }
+            else {
                 now = Date.now();
                 eventTarget.dispatchEvent(
                     new CustomEvent("update", { detail: { store: initStore } })
                 );
-            });
+            }
 
             return true;
         }

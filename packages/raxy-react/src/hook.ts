@@ -8,7 +8,7 @@ import {
     RefObject,
     useRef
 } from "react";
-import { IDetail, IRaxy, Transaction, raxy, Symbols } from "@tetragius/raxy";
+import { IDetail, IRaxy, IRaxyOptions, Transaction, raxy, Symbols } from "@tetragius/raxy";
 
 const context = createContext(null);
 
@@ -121,7 +121,7 @@ interface IRaxyWithHook<S> extends IRaxy<S> {
     useRaxy: Hook<S>;
 }
 
-export const raxyReact = <Store = any>(initStore: Store): IRaxyWithHook<Store> => {
-    const { subscribe, unsubscribe, store, transaction, } = raxy(initStore);
+export const raxyReact = <Store = any>(initStore: Store, options?: IRaxyOptions): IRaxyWithHook<Store> => {
+    const { subscribe, unsubscribe, store, transaction, } = raxy(initStore, options);
     return { subscribe, unsubscribe, store, transaction, useRaxy }
 }

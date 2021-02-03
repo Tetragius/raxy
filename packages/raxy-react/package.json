@@ -1,6 +1,6 @@
 {
   "name": "@tetragius/raxy-react",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "raxy-react",
   "main": "dist/index.js",
   "keywords": [

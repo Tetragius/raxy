@@ -1,4 +1,4 @@
-import { IDetail, IRaxy, Transaction, raxy } from "./core";
+import { IDetail, IRaxy, Transaction, raxy, IRaxyOptions } from "./core";
 
 import Symbols from './symbols';
 
@@ -131,7 +131,7 @@ const carryInstanse = <S>(instanse: IRaxy<S>): Connector<S> => {
     return (...args) => connect(instanse, ...args);
 }
 
-export const createConnector = <Store = any>(initStore: Store): IRaxyWithConnector<Store> => {
-    const instanse = raxy(initStore);
+export const createConnector = <Store = any>(initStore: Store, options?: IRaxyOptions): IRaxyWithConnector<Store> => {
+    const instanse = raxy(initStore, options);
     return { ...instanse, connect: carryInstanse(instanse) }
 }
