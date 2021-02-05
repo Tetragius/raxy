@@ -1,6 +1,6 @@
 {
   "name": "@tetragius/raxy-react",
-  "version": "1.0.7",
+  "version": "1.0.8",
   "description": "raxy-react",
   "main": "dist/index.js",
   "keywords": [
@@ -10,7 +10,7 @@
     "state"
   ],
   "author": "Chertorylskiy Ilya Sergeevich",
-  "homepage": "https://github.com/Tetragius/tree/master/packages/raxy-react",
+  "homepage": "https://github.com/Tetragius/raxy/tree/master/packages/raxy-react",
   "repository": {
     "type": "git",
     "url": "https://github.com/Tetragius/raxy.git"
