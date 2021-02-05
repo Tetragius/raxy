@@ -1,6 +1,6 @@
 {
   "name": "@tetragius/raxy-react",
-  "version": "1.0.8",
+  "version": "1.0.9",
   "description": "raxy-react",
   "main": "dist/index.js",
   "keywords": [
@@ -17,6 +17,6 @@
   },
   "license": "MIT",
   "dependencies": {
-    "@tetragius/raxy": "^3.0.0"
+    "@tetragius/raxy": "^3.0.12"
   }
 }
