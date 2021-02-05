@@ -10,6 +10,8 @@
 
 Работает на основе Proxy API, во всех поддерживающих его браузерах.
 
+В **IE** может работать с использованием полифилов для `Proxy`, `Promise`, `CustomEvent`, `Symbol` и `IntersectionObserver`
+ 
 Основное отличие от большинства менеджеров состояний - работа с хранилищем, как с обычным объектом, без использования сложных механизмов событий и селекторов.
 
 Поддерживает отладку [`Redux dev-tools`](https://chrome.google.com/webstore/detail/redux-devtools/lmhkpmbekcpmknklioeibfkpmmfibljd?hl=ru)
