@@ -6,45 +6,45 @@
 
 # Raxy
 
-Простой менеджер состояний, для реализации подхода [SSOT](https://en.wikipedia.org/wiki/Single_source_of_truth), может применяться c [React](https://reactjs.org/) или [Vue](https://vuejs.org/)
+A simple state manager to implement the [SSOT](https://en.wikipedia.org/wiki/Single_source_of_truth) approach , can be used with [React](https://reactjs.org/) or [Vue](https://vuejs.org/)
 
-Работает на основе Proxy API, во всех поддерживающих его браузерах.
+Works on the basis of the Proxy API in all browsers that support it.
 
-В **IE** может работать с использованием полифилов для `Proxy`, `Promise`, `CustomEvent`, `Symbol` и `IntersectionObserver`
+Can work in **IE** using polyfills for `Proxy`, `Promise`, `CustomEvent`, `Symbol` and `IntersectionObserver`
  
-Основное отличие от большинства менеджеров состояний - работа с хранилищем, как с обычным объектом, без использования сложных механизмов событий и селекторов.
+The main difference from most state managers is to work with the storage as with an ordinary object, without using complex event mechanisms and selectors.
 
-Поддерживает отладку [`Redux dev-tools`](https://chrome.google.com/webstore/detail/redux-devtools/lmhkpmbekcpmknklioeibfkpmmfibljd?hl=ru)
+Supports debugging with [`Redux dev-tools`](https://chrome.google.com/webstore/detail/redux-devtools/lmhkpmbekcpmknklioeibfkpmmfibljd?hl=ru)
 
 ---
-Оглавление:
-- [Установка](#demo)
-- [Демонстрация](#simple-usage)
-- [API](#installation)
-- Фреймворки
+Table of contents::
+- [Installation](#installation)
+- [Demo](#demo)
+- [API](#api)
+- Frameworks
   - [React](https://github.com/Tetragius/raxy/tree/master/packages/raxy-react)
   - [Vue](https://github.com/Tetragius/raxy/tree/master/packages/raxy-vue)
 
 
-# Установка
+# Installation
 
 ```sh
 npm install --save @tetragius/raxy
 ```
 
-## Для React
+## For React
 
 ```sh
 npm install --save @tetragius/raxy-react
 ```
 
-## Для Vue
+## For Vue
 
 ```sh
 npm install --save @tetragius/raxy @tetragius/raxy-vue
 ```
 
-# Демонстрация
+# Demo
 
 - React
   - [DEMO: Todo list](https://codesandbox.io/s/raxy-demo-3mur7)
@@ -63,11 +63,11 @@ npm install --save @tetragius/raxy @tetragius/raxy-vue
 raxy(initState)
 ```
 
-Возвращает объект с полями:
-- `store` - проксированное хранилище
-- `transaction` - метод для проведения транзакций
-- `subscribe` - метод для подписки на события изменения хранилища (`update`, `transactionstart`, `transactionend`)
-- `unsubscribe` - метод отмены подписки на события обновления хранилища
+Returns an object with fields:
+- `store` - proxied store
+- `transaction` - method for conducting transactions
+- `subscribe` - method for subscribing to store change events (`update`, `transactionstart`, `transactionend`)
+- `unsubscribe` - method for unsubscribing storage update events
 
 ## transaction
 
@@ -75,11 +75,11 @@ raxy(initState)
 transaction<Store>(name: string, async (store: Store)) => boolean
 ```
 
-Создает транзакцию для изменения нескольких значений хранилища, в случае если транзакция не успешна (если функция возвращает `false`) - все действия будут отменены.
+Creates a transaction to change several values ​​of the storage, if the transaction is not successful (if the function returns `false`) - all actions will be canceled.
 
-Транзакции ставятся в очередь и выполняются строго в порядке вызова.
+Transactions are queued and executed strictly in the order they are called.
 
-Транзакции являются `Promise`-функциями и могут быть объединены в цепочку.
+Transactions are `Promise` functions and can be chained.
 
 ```typescript
 transaction('transaction A', updater_A).then(transaction('transaction B', updater_B));
@@ -90,9 +90,9 @@ await transaction('transaction A', updater_A);
 await transaction('transaction B', updater_B);
 ```
 
-Успешно выполненная транзакция возвращает - `true`.
+A successful transaction returns - `true`.
 
-Имя транзакции носит чисто информативный  характер и может быть выбрано на усмотрение разработчика.
+The name of the transaction is for informational purposes only and can be chosen at the discretion of the developer.
 
 ## subscribe/unsubscribe
 
@@ -105,17 +105,17 @@ export interface IDetail<S> {
 subscribe(on: 'update'|'transactionstart'|'transactionend', (event: CustomEvent<IDetail>) => void)
 ```
 
-Подписывается или отменяет подписку на обновление хранилища. 
+Subscribes to or unsubscribes from a repository update.
 
-Объект `event` содержит поле `detail` интерфейса `IDetail`.
+The `event` object contains the `detail` field of the `IDetail` interface.
 
-- `update` - Любое обновление хранилища.
-- `transactionstart` - Транзакция начата.
-- `transactionend` - Транзакция завершена.
+- `update` - Any update to the repository.
+- `transactionstart` - Transaction started.
+- `transactionend` - Transaction completed.
 
-Для `transactionstart` и `transactionend` задаются дополнительно поля:
-- `name` - имя транзакции
-- `complete` - статус транзакции (`true` - завершена)
+Additional fields are specified for `transactionstart` and `transactionend`:
+- `name` - the name of the transaction
+- `complete` - transaction status ( `true` - completed)
 
 ## connect
 
@@ -125,12 +125,12 @@ connect: <Store = any, State = any>(instanse: IRaxy<Store>, updateCallback: (sta
 type Connector<S> = <State = any>(updateCallback: (state: State) => void, filter?: Filter<S, State>, options?: IConnectorOptions & Options<State>) => IConnector<S, State>;
 ```
 
-Создает подключение к хранилищу
+Creates a connection to the repository
 
-- `instanse` - экземпляр созданный вызовом метода `raxy`
-- `updateCallback` - функция которая будет вызываться каждый раз при изменении состояния
-- `filter` - функция которая определяет при изменении каких частей хранилища вызывать `updateCallback`
-- `options` - набор опций для оптимизации работы
+- `instanse` - an instance created by calling the `raxy` method
+- `updateCallback` - a function that will be called every time the state changes
+- `filter` - a function that determines when changing which parts of the storage to call `updateCallback`
+- `options` - a set of options to optimize work
 
 ```typescript
 type Options<State = any> = {
@@ -158,15 +158,15 @@ connect(
   );
 ```
 
-При указании `elementRef` - автоматически отключает проверку изменния состояния хранилища, если указанный элемент не виден на странице или в любом вьюпорте.
+When `elementRef` is specified, it automatically disables checking the storage state change if the specified element is not visible on the page or in any viewport.
 
-Метод `connect` возвращает объект с полями
+The `connect` method returns an object with fields
 
-- `state` - ссылка на состояние возвращаемое методом `filter`
-- `store` - ссылка на `store`
-- `transaction` - метод для осуществления транзакций
-- `mountCallback` - метод который следует вызвать для включения подписки
-- `unmountCallback` - метод который следует вызвать для отключения подписки
+- `state` - reference to the state returned by the `filter` method
+- `store` - link to `store`
+- `transaction` - a method for making transactions
+- `mountCallback` - the method that should be called to enable the subscription
+- `unmountCallback` - the method that should be called to disable the subscription
 
 ## createConnector
 
@@ -178,7 +178,7 @@ interface IRaxyWithConnector<S> extends IRaxy<S> {
 }
 ```
 
-Создает типизированный экземпляр функции `connect` может быть использован вместо вызова `raxy`
+Creates a typed instance of the `connect` function can be used instead of calling `raxy`
 
 ## logger
 
@@ -186,7 +186,7 @@ interface IRaxyWithConnector<S> extends IRaxy<S> {
 logger: (subscribe: IRaxy<any>['subscribe']) => void;
 ```
 
-Выводит в консоль лог событий `update`, `transactionstart`, `transactionend`;
+Displays the event log `update`, `transactionstart`, `transactionend` to the console;
 
 ## connectDevTools
 
@@ -194,4 +194,4 @@ logger: (subscribe: IRaxy<any>['subscribe']) => void;
 connectDevTools: (instanse: IRaxy<any>) => void;
 ```
 
-Активирует поддержку [`Redux dev-tools`](https://chrome.google.com/webstore/detail/redux-devtools/lmhkpmbekcpmknklioeibfkpmmfibljd?hl=ru)
+Enables support for [`Redux dev-tools`](https://chrome.google.com/webstore/detail/redux-devtools/lmhkpmbekcpmknklioeibfkpmmfibljd?hl=ru)

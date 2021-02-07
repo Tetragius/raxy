@@ -26,7 +26,7 @@ export default function App() {
 }
 ```
 
-Провайдер для использование хука `useRaxy`
+Provider for using the `useRaxy` hook
 
 ## useRaxy
 
@@ -36,10 +36,10 @@ type Filter<Store = typeof context, State = any> = (sotre: Store) => State;
 useRaxy<Store, State>(filter: Filter<Store, State>, options?): { state: State, store: Store, transaction: Transaction<Store> }
 ```
 
-Создает подключение к хранилищу
+Creates a connection to the repository
 
-- `filter` - функция которая определяет при изменении каких частей хранилища вызывать перерисовку компонента
-- `options` - набор опций для оптимизации работы
+- `filter` - a function that determines when changing which parts of the storage to call the component redrawing
+- `options` - a set of options to optimize work
 
 ```typescript
 type Options<State = any> = {
@@ -61,19 +61,19 @@ useRaxy(
       length: store.todos.length 
     }),
     {
-      todos: { ignoreTimeStamp: true } // рендер не учитывает изменения состояния дочерних элеиентов
-      elementRef: element // ссылка на DOM ноду для оптимизации вызова updateCallback
+      todos: { ignoreTimeStamp: true } // render does not take into account changes in the state of child elements
+      elementRef: element // reference to the DOM node to optimize the updateCallback call
     }
   );
 ```
 
-При указании `elementRef` - автоматически отключает проверку изменения состояния хранилища, если указанный элемент не виден на странице или в любом вьюпорте.
+When `elementRef` is specified, it automatically disables checking the storage state change if the specified element is not visible on the page or in any viewport.
 
-Метод `connect` возвращает объект с полями
+The `connect` method returns an object with fields
 
-- `state` - ссылка на состояние возвращаемое методом `filter`
-- `store` - ссылка на `store`
-- `transaction` - метод для осуществления транзакций
+- `state` - reference to the state returned by the `filter` method
+- `store` - link to `store`
+- `transaction` - a method for making transactions
 
 ## raxyReact
 
@@ -83,4 +83,4 @@ interface IRaxyWithHook<S> extends IRaxy<S> {
 }
 raxyReact: <Store = any>(initStore: Store) => IRaxyWithHook<Store>;
 ```
-Создает типизированный экземпляр функции `useRaxy` может быть использован вместо вызова `raxy`
+Creates a typed instance of the `useRaxy` function can be used instead of calling `raxy`

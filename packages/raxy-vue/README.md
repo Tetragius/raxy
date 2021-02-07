@@ -33,10 +33,10 @@ import { instanse } from "./store";
 
 Vue.config.productionTip = false;
 
-Vue.use(Raxy); // Подключаем Raxy
+Vue.use(Raxy); // Connecting Raxy
 
 new Vue({
-  raxy: instanse, // Передаем экземпляр IRaxy
+  raxy: instanse, // Pass the IRaxy instance
   render: (h) => h(App)
 }).$mount("#app");
 
@@ -57,7 +57,7 @@ export default {
     countA: 0,
   }),
   beforeCreate() {
-    this.$raxy.filter = (store) => ({ // Функция определяющая, когда обновлять компонент
+    this.$raxy.filter = (store) => ({ // A function that determines when to update a component
       countA: store.countA,
     });
   },
@@ -77,7 +77,7 @@ export default {
 export default {
   methods: {
     incrementA() {
-      this.$raxy.store.countA = this.$raxy.store.countA + 1; // Обновляем значение хранилища
+      this.$raxy.store.countA = this.$raxy.store.countA + 1; // Updating the store value
     },
     incrementB() {
       this.$raxy.store.countB = this.$raxy.store.countB + 1;

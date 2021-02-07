@@ -10,3 +10,5 @@ coverage
 next
 **/dist
 **/*.d.ts
+.nyc_output
+coverage
