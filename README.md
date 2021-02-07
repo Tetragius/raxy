@@ -152,8 +152,8 @@ connect(
       length: store.todos.length 
     }),
     {
-      todos: { ignoreTimeStamp: true } // рендер не учитывает изменения состояния дочерних элеиентов
-      elementRef: element // ссылка на DOM ноду для оптимизации вызова updateCallback
+      todos: { ignoreTimeStamp: true } // render does not take into account changes in the state of child elements
+      elementRef: element // reference to the DOM node to optimize the updateCallback call
     }
   );
 ```
