@@ -6,6 +6,8 @@
 
 # Raxy
 
+![Flow](/flow.png)
+
 A simple state manager to implement the [SSOT](https://en.wikipedia.org/wiki/Single_source_of_truth) approach , can be used with [React](https://reactjs.org/) or [Vue](https://vuejs.org/)
 
 Works on the basis of the Proxy API in all browsers that support it.
