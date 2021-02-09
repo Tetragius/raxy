@@ -1,8 +1,8 @@
 [![npm version](https://badge.fury.io/js/%40tetragius%2Fraxy-react.svg)](https://badge.fury.io/js/%40tetragius%2Fraxy-react)
 
-[Подробное описание](https://github.com/Tetragius/raxy)
+[Main](https://github.com/Tetragius/raxy)
 
-# Демонстрация
+# Demo
   - [DEMO: Todo list](https://codesandbox.io/s/raxy-demo-3mur7)
   - [DEMO: Todo list - complex](https://codesandbox.io/s/raxy-demo-complex-5syo0)
   - [DEMO: Todo list - long](https://codesandbox.io/s/raxy-demo-longlist-cl837)
