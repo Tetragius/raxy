@@ -1,8 +1,8 @@
 [![npm version](https://badge.fury.io/js/%40tetragius%2Fraxy-vue.svg)](https://badge.fury.io/js/%40tetragius%2Fraxy-vue)
 
-[Подробное описание](https://github.com/Tetragius/raxy)
+[Main](https://github.com/Tetragius/raxy)
 
-# Демонстрация
+# Demo
    - [DEMO](https://codesandbox.io/s/raxy-vue-example-e74vn)
    - [DEMO: TODO list](https://codesandbox.io/s/raxy-vue-example-xsrtu)
 
