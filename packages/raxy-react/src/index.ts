@@ -122,7 +122,7 @@ export interface IRaxyWithHook<S> extends IRaxy<S> {
 }
 
 export const raxyReact = <Store = any>(initStore: Store, options?: IRaxyOptions): IRaxyWithHook<Store> => {
-    const { subscribe, unsubscribe, store, transaction, } = raxy(initStore, options);
-    return { subscribe, unsubscribe, store, transaction, useRaxy }
+    const { subscribe, unsubscribe, store, transaction, transactions } = raxy(initStore, options);
+    return { subscribe, unsubscribe, store, transaction, transactions, useRaxy }
 }
 export { connectDevTools, logger } from "@tetragius/raxy";

@@ -1,19 +1,23 @@
 import Symbols from './symbols';
 
-export interface ITransact<S> { name: string, complete: boolean, store: S }
+export interface ITransact<S> { name: string, complete: boolean, store: S, aborted?: { status: any } }
+export type Abort = (status: any) => void;
+export type Progress = (n: number) => void;
 export type Rollback = () => void;
-export type Updater<S> = (store: S) => Promise<boolean>;
+export type Updater<S> = (store: S, progress: Progress) => Promise<boolean>;
 export type Resolver<S> = (data: ITransact<S>) => void;
 export type Transaction<S> = (name: string, updater: Updater<S>) => Promise<ITransact<S>>
 export type EventHandler<S> = (event: CustomEvent<IDetail<S>>) => void;
 
-export type EventTypes = 'update' | 'transactionstart' | 'transactionend' | 'addtransaction';
+export type EventTypes = 'update' | 'transactionstart' | 'transactionend' | 'addtransaction' | 'transactionaborted' | 'transactionprogress' | 'connected';
 
 export interface IDetail<S> {
     name?: string;
-    complete?: string;
+    complete?: boolean;
     store: S;
-    transactions?: ITransaction<S>;
+    transactions?: ITransaction<S>[];
+    progress?: number;
+    value?: any;
 }
 
 export interface IRaxyOptions {
@@ -26,6 +30,8 @@ export interface ITransaction<S> {
     name: string;
     updater: Updater<S>;
     resolve: Resolver<S>
+    progress: number;
+    abort: Abort;
 }
 
 export interface IRaxy<S> {
@@ -33,6 +39,7 @@ export interface IRaxy<S> {
     unsubscribe(on: EventTypes, subscriber: EventHandler<S>): void;
     store: S;
     transaction: Transaction<S>;
+    transactions: ITransaction<S>[]
 }
 
 export const raxy = <Store = any>(initStore: Store, options?: IRaxyOptions): IRaxy<Store> => {
@@ -96,14 +103,20 @@ export const raxy = <Store = any>(initStore: Store, options?: IRaxyOptions): IRa
                 timer = setTimeout(() => {
                     now = Date.now();
                     eventTarget.dispatchEvent(
-                        new CustomEvent("update", { detail: { store: initStore } })
+                        new CustomEvent<IDetail<Store>>("update", { detail: { store: initStore } })
                     );
                 });
             }
             else {
                 now = Date.now();
                 eventTarget.dispatchEvent(
-                    new CustomEvent("update", { detail: { store: initStore } })
+                    new CustomEvent<IDetail<Store>>("update", { detail: { store: initStore } })
+                );
+            }
+
+            if (target[Symbols.root]) {
+                eventTarget.dispatchEvent(
+                    new CustomEvent<IDetail<Store>>("connected", { detail: { store: initStore, value } })
                 );
             }
 
@@ -129,6 +142,7 @@ export const raxy = <Store = any>(initStore: Store, options?: IRaxyOptions): IRa
         }
     };
 
+    initStore[Symbols.root] = true;
     const store: Store = new Proxy(initStore, hooks);
     proxier(initStore);
 
@@ -141,24 +155,34 @@ export const raxy = <Store = any>(initStore: Store, options?: IRaxyOptions): IRa
             const transaction = transactions[0];
 
             eventTarget.dispatchEvent(
-                new CustomEvent("transactionstart", {
-                    detail: { name: transaction.name, store }
+                new CustomEvent<IDetail<Store>>("transactionstart", {
+                    detail: { name: transaction.name, store, progress: transaction.progress }
                 })
             );
 
+            const progressCallback = (n: number) => {
+                transaction.progress = n;
+                eventTarget.dispatchEvent(
+                    new CustomEvent<IDetail<Store>>("transactionprogress", { detail: { name: transaction.name, complete, store, progress: transaction.progress } })
+                );
+            }
+
             transaction.pending = true;
-            const complete = await transaction.updater(store);
+            const complete = await transaction.updater(store, progressCallback);
             transaction.pending = false;
 
             if (!complete) {
+                eventTarget.dispatchEvent(
+                    new CustomEvent<IDetail<Store>>("transactionaborted", { detail: { name: transaction.name, complete, store, progress: transaction.progress } })
+                );
                 transaction.rollback.forEach((rb: Rollback) => rb());
             }
 
             transaction.resolve({ name: transaction.name, complete, store });
 
             eventTarget.dispatchEvent(
-                new CustomEvent("transactionend", {
-                    detail: { name: transaction.name, complete, store }
+                new CustomEvent<IDetail<Store>>("transactionend", {
+                    detail: { name: transaction.name, complete, store, progress: transaction.progress }
                 })
             );
 
@@ -167,11 +191,29 @@ export const raxy = <Store = any>(initStore: Store, options?: IRaxyOptions): IRa
         };
 
         return new Promise((resolve) => {
-            transactions.push({ name, updater, resolve, rollback: [], pending: false });
+
+            const transaction = { name, updater, resolve, rollback: [], pending: false, progress: 0, abort: null };
+
+            const abort = (status: any) => {
+                resolve({ name, complete: false, store, aborted: { status } });
+                const idx = transactions.findIndex(t => t === transaction);
+
+                eventTarget.dispatchEvent(
+                    new CustomEvent<IDetail<Store>>("transactionaborted", { detail: { name: transaction.name, complete: false, store, progress: transaction.progress } })
+                );
+
+                transaction.rollback.forEach((rb: Rollback) => rb());
+                transactions.splice(idx, 1);
+                doTransaction();
+            }
+
+            transaction.abort = abort;
+
+            transactions.push(transaction);
 
             eventTarget.dispatchEvent(
-                new CustomEvent("addtransaction", {
-                    detail: { name: name, complete: false, store, transactions }
+                new CustomEvent<IDetail<Store>>("addtransaction", {
+                    detail: { name: name, complete: false, store, transactions, progress: 0 }
                 })
             );
 
@@ -185,7 +227,7 @@ export const raxy = <Store = any>(initStore: Store, options?: IRaxyOptions): IRa
     const unsubscribe = (on: string, subscriber: EventHandler<Store>) =>
         eventTarget.removeEventListener(on, subscriber);
 
-    return { subscribe, unsubscribe, store, transaction };
+    return { subscribe, unsubscribe, store, transaction, transactions };
 };
 
 export default raxy;

@@ -72,11 +72,14 @@ Returns an object with fields:
 - `transaction` - method for conducting transactions
 - `subscribe` - method for subscribing to store change events (`update`, `transactionstart`, `transactionend`)
 - `unsubscribe` - method for unsubscribing storage update events
+- `transactions` - transaction queue
+
+Each transaction in the `queue` has an abort method that aborts the current transaction and moves on to the next.
 
 ## transaction
 
 ```typescript
-transaction<Store>(name: string, async (store: Store)) => boolean
+transaction<Store>(name: string, async (store: Store, progress: (n: number) => void))) => boolean
 ```
 
 Creates a transaction to change several values ​​of the storage, if the transaction is not successful (if the function returns `false`) - all actions will be canceled.
@@ -98,6 +101,8 @@ A successful transaction returns - `true`.
 
 The name of the transaction is for informational purposes only and can be chosen at the discretion of the developer.
 
+The `progress` method - takes a number and sets the progress, also raises the `transactionprogress` event
+
 ## subscribe/unsubscribe
 
 ```typescript
@@ -116,10 +121,23 @@ The `event` object contains the `detail` field of the `IDetail` interface.
 - `update` - Any update to the repository.
 - `transactionstart` - Transaction started.
 - `transactionend` - Transaction completed.
+- `addtransaction` - Transaction added to the queue
+- `transactionaborted` - Transaction canceled
+- `transactionprogress` - Transaction progress
+- `connected`- A new object is connected to the storage
 
-Additional fields are specified for `transactionstart` and `transactionend`:
+Additional fields are specified for `transactionstart` and` transactionend`:
 - `name` - the name of the transaction
-- `complete` - transaction status ( `true` - completed)
+- `complete` - transaction status (` true` - completed)
+
+Additional fields are specified for `transactionaborted`:
+- `aborted` - {status: any} - an object describing the reason for the cancellation
+
+Additional fields are specified for `transactionaborted`:
+- `progress` - Percentage of progress, set by the user - type `number`
+
+Additional fields are specified for `connected`:
+- `value` - Link to the new connected storage
 
 ## connect
 

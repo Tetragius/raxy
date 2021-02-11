@@ -70,11 +70,14 @@ raxy(initState)
 - `transaction` - метод для проведения транзакций
 - `subscribe` - метод для подписки на события изменения хранилища (`update`, `transactionstart`, `transactionend`)
 - `unsubscribe` - метод отмены подписки на события обновления хранилища
+- `transactions` - очередь транзакций
+
+Каждая транзакция в очереди имеет метод `abort`, который прерывает транзакцию и переходит к следующей.
 
 ## transaction
 
 ```typescript
-transaction<Store>(name: string, async (store: Store)) => boolean
+transaction<Store>(name: string, async (store: Store, progress: (n: number) => void)) => boolean
 ```
 
 Создает транзакцию для изменения нескольких значений хранилища, в случае если транзакция не успешна (если функция возвращает `false`) - все действия будут отменены.
@@ -96,6 +99,8 @@ await transaction('transaction B', updater_B);
 
 Имя транзакции носит чисто информативный  характер и может быть выбрано на усмотрение разработчика.
 
+Метод `progress` - принимает число и задает прогресс выполнения, также вызывает событие `transactionprogress`
+
 ## subscribe/unsubscribe
 
 ```typescript
@@ -104,7 +109,7 @@ export interface IDetail<S> {
     complete?: string;
     store: S;
 }
-subscribe(on: 'update'|'transactionstart'|'transactionend', (event: CustomEvent<IDetail>) => void)
+subscribe(on: 'update'|'transactionstart'|'transactionend'|'addtransaction'|'transactionaborted'|'transactionprogress'|'connected', (event: CustomEvent<IDetail>) => void)
 ```
 
 Подписывается или отменяет подписку на обновление хранилища. 
@@ -114,10 +119,23 @@ subscribe(on: 'update'|'transactionstart'|'transactionend', (event: CustomEvent<
 - `update` - Любое обновление хранилища.
 - `transactionstart` - Транзакция начата.
 - `transactionend` - Транзакция завершена.
+- `addtransaction` - Транзакция добавлена в очередь
+- `transactionaborted` - Транзакция отменена
+- `transactionprogress` - Прогресс выполнения транзакции
+- `connected`- К хранилищу подключен новый объект
 
 Для `transactionstart` и `transactionend` задаются дополнительно поля:
 - `name` - имя транзакции
 - `complete` - статус транзакции (`true` - завершена)
+
+Для `transactionaborted` задаются дополнительно поля:
+- `aborted` - {status: any} - объект описывающий причину отмены
+
+Для `transactionaborted` задаются дополнительно поля:
+- `progress` - Процент выполнения, задается пользователем - тип число
+
+Для `connected` задаются дополнительно поля:
+- `value` - Ссылка на новое подключенное хранилище
 
 ## connect
 
