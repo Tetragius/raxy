@@ -7,6 +7,7 @@ module.exports = () => ({
         "raxy/dist/index": ["./packages/raxy"],
         "raxy-react/dist/index": ["./packages/raxy-react"],
         "raxy-vue/dist/index": ["./packages/raxy-vue"],
+        "raxy-polyfill/dist/index": ["./packages/raxy-polyfill"],
     },
     resolve: {
         extensions: [".ts"],

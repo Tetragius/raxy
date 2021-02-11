@@ -4,13 +4,13 @@
 --- | --- | --- | --- | --- |
 49+ ✔ | 18+ ✔ | 18+ ✔ | 36+ ✔ | 10+ ✔ | 
 
+Can work in **IE** using polyfill `@tetragius/raxy-polyfill`
+
 # Raxy
 
 A simple state manager to implement the [SSOT](https://en.wikipedia.org/wiki/Single_source_of_truth) approach , can be used with [React](https://reactjs.org/) or [Vue](https://vuejs.org/)
 
 Works on the basis of the Proxy API in all browsers that support it.
-
-Can work in **IE** using polyfills for `Proxy`, `Promise`, `CustomEvent`, `Symbol` and `IntersectionObserver`
  
 The main difference from most state managers is to work with the storage as with an ordinary object, without using complex event mechanisms and selectors.
 

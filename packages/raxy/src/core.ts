@@ -7,12 +7,13 @@ type Resolver<S> = (data: ITransact<S>) => void;
 export type Transaction<S> = (name: string, updater: Updater<S>) => Promise<ITransact<S>>
 export type EventHandler<S> = (event: CustomEvent<IDetail<S>>) => void;
 
-type EventTypes = 'update' | 'transactionstart' | 'transactionend';
+type EventTypes = 'update' | 'transactionstart' | 'transactionend' | 'addtransaction';
 
 export interface IDetail<S> {
     name?: string;
     complete?: string;
     store: S;
+    transactions?: ITransaction<S>;
 }
 
 export interface IRaxyOptions {
@@ -167,6 +168,13 @@ export const raxy = <Store = any>(initStore: Store, options?: IRaxyOptions): IRa
 
         return new Promise((resolve) => {
             transactions.push({ name, updater, resolve, rollback: [], pending: false });
+
+            eventTarget.dispatchEvent(
+                new CustomEvent("addtransaction", {
+                    detail: { name: name, complete: false, store, transactions }
+                })
+            );
+
             doTransaction();
         });
     };
