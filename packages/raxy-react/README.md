@@ -53,7 +53,7 @@ interface IConnectorOptions<T = any> {
 }
 ```
 
-Пример опций
+options
 
 ```typescript
 useRaxy(
