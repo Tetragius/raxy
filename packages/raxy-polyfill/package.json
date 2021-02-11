@@ -4,16 +4,16 @@
     "description": "raxy-polyfill",
     "main": "dist/index.js",
     "keywords": [
-      "raxy",
-      "react",
-      "proxy",
-      "state"
+        "raxy",
+        "react",
+        "proxy",
+        "state"
     ],
     "author": "Chertorylskiy Ilya Sergeevich",
     "homepage": "https://github.com/Tetragius/raxy/tree/master/packages/raxy-polyfill",
     "repository": {
-      "type": "git",
-      "url": "https://github.com/Tetragius/raxy.git"
+        "type": "git",
+        "url": "https://github.com/Tetragius/raxy.git"
     },
     "license": "MIT",
     "dependencies": {
@@ -21,4 +21,4 @@
         "custom-event-polyfill": "^1.0.7",
         "es6-proxy-polyfill": "^2.1.0"
     }
-  }
+}

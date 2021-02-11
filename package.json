@@ -11,7 +11,7 @@
     "declarations:all": "npm run declarations:raxy; npm run declarations:raxy-react; npm run declarations:raxy-vue; npm run declarations:raxy-polyfill",
     "clean": "rm -r ./packages/raxy/dist; rm -r ./packages/raxy-react/dist; rm -r ./packages/raxy-vue/dist; rm -r ./packages/raxy-plyfill/dist; ",
     "webpack": "webpack",
-    "build": "npm run clean; npm run declarations:all; npm run webpack",
+    "build": "build.sh",
     "publish": "publish.sh",
     "test": "mocha"
   },
