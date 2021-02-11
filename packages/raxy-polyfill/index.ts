@@ -1,12 +1,5 @@
-import 'custom-event-polyfill';
+import { polyfill } from './src';
 
-const EventTargetPolyfill = require('@ungap/event-target');
-const ProxyPolyfillBuilder = require('es6-proxy-polyfill').default;
+import { polyfillIE } from './src';
 
-if (!window.EventTarget) {
-    window.EventTarget = EventTargetPolyfill;
-}
-
-if (!window.Proxy) {
-    window.Proxy = ProxyPolyfillBuilder;
-}
+polyfillIE();

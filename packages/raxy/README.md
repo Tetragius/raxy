@@ -4,14 +4,16 @@
 --- | --- | --- | --- | --- |
 49+ ✔ | 18+ ✔ | 18+ ✔ | 36+ ✔ | 10+ ✔ | 
 
-Can work in **IE** using polyfill `@tetragius/raxy-polyfill`
+Can work in **IE** using polyfill [`@tetragius/raxy-polyfill`](https://github.com/Tetragius/raxy/tree/master/packages/raxy-polyfill)
 
 # Raxy
+
+![Flow](/flow.png)
 
 A simple state manager to implement the [SSOT](https://en.wikipedia.org/wiki/Single_source_of_truth) approach , can be used with [React](https://reactjs.org/) or [Vue](https://vuejs.org/)
 
 Works on the basis of the Proxy API in all browsers that support it.
- 
+
 The main difference from most state managers is to work with the storage as with an ordinary object, without using complex event mechanisms and selectors.
 
 Supports debugging with [`Redux dev-tools`](https://chrome.google.com/webstore/detail/redux-devtools/lmhkpmbekcpmknklioeibfkpmmfibljd?hl=ru)
@@ -21,6 +23,7 @@ Table of contents::
 - [Installation](#installation)
 - [Demo](#demo)
 - [API](#api)
+- [Polyfill](#polyfill)
 - Frameworks
   - [React](https://github.com/Tetragius/raxy/tree/master/packages/raxy-react)
   - [Vue](https://github.com/Tetragius/raxy/tree/master/packages/raxy-vue)
@@ -50,6 +53,7 @@ npm install --save @tetragius/raxy @tetragius/raxy-vue
   - [DEMO: Todo list](https://codesandbox.io/s/raxy-demo-3mur7)
   - [DEMO: Todo list - complex](https://codesandbox.io/s/raxy-demo-complex-5syo0)
   - [DEMO: Todo list - long](https://codesandbox.io/s/raxy-demo-longlist-cl837)
+  - [DEMO: Arkanoid](https://codesandbox.io/s/raxy-demo-arkanoid-kwrfm)
 - Vue
   - [DEMO](https://codesandbox.io/s/raxy-vue-example-e74vn)
   - [DEMO: TODO list](https://codesandbox.io/s/raxy-vue-example-xsrtu)
@@ -195,3 +199,16 @@ connectDevTools: (instanse: IRaxy<any>) => void;
 ```
 
 Enables support for [`Redux dev-tools`](https://chrome.google.com/webstore/detail/redux-devtools/lmhkpmbekcpmknklioeibfkpmmfibljd?hl=ru)
+
+
+## Polyfill
+
+```typescript
+// Add to the beginning of the first file in the assembly
+import "@babel/polyfill";
+import '@tetragius/raxy-polyfill';
+```
+
+IE has some limitations
+- Mutations do not work correctly - changes must be immutable
+- It is necessary to subscribe to the property being changed, since the subscription to the object does not work

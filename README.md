@@ -4,7 +4,7 @@
 --- | --- | --- | --- | --- |
 49+ ✔ | 18+ ✔ | 18+ ✔ | 36+ ✔ | 10+ ✔ | 
 
-Can work in **IE** using polyfill `@tetragius/raxy-polyfill`
+Can work in **IE** using polyfill [`@tetragius/raxy-polyfill`](https://github.com/Tetragius/raxy/tree/master/packages/raxy-polyfill)
 
 # Raxy
 
@@ -23,6 +23,7 @@ Table of contents::
 - [Installation](#installation)
 - [Demo](#demo)
 - [API](#api)
+- [Polyfill](#polyfill)
 - Frameworks
   - [React](https://github.com/Tetragius/raxy/tree/master/packages/raxy-react)
   - [Vue](https://github.com/Tetragius/raxy/tree/master/packages/raxy-vue)
@@ -198,3 +199,16 @@ connectDevTools: (instanse: IRaxy<any>) => void;
 ```
 
 Enables support for [`Redux dev-tools`](https://chrome.google.com/webstore/detail/redux-devtools/lmhkpmbekcpmknklioeibfkpmmfibljd?hl=ru)
+
+
+## Polyfill
+
+```typescript
+// Add to the beginning of the first file in the assembly
+import "@babel/polyfill";
+import '@tetragius/raxy-polyfill';
+```
+
+IE has some limitations
+- Mutations do not work correctly - changes must be immutable
+- It is necessary to subscribe to the property being changed, since the subscription to the object does not work

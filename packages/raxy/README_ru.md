@@ -4,7 +4,8 @@
 --- | --- | --- | --- | --- |
 49+ ✔ | 18+ ✔ | 18+ ✔ | 36+ ✔ | 10+ ✔ | 
 
-В **IE** может работать с использованием полифила `@tetragius/raxy-polyfill`
+
+В **IE** может работать с использованием полифила [`@tetragius/raxy-polyfill`](https://github.com/Tetragius/raxy/tree/master/packages/raxy-polyfill)
 
 # Raxy
 
@@ -21,6 +22,7 @@
 - [Установка](#установка)
 - [Демонстрация](#демонстрация)
 - [API](#api)
+- [Polyfill](#polyfill)
 - Фреймворки
   - [React](https://github.com/Tetragius/raxy/tree/master/packages/raxy-react)
   - [Vue](https://github.com/Tetragius/raxy/tree/master/packages/raxy-vue)
@@ -195,3 +197,15 @@ connectDevTools: (instanse: IRaxy<any>) => void;
 ```
 
 Активирует поддержку [`Redux dev-tools`](https://chrome.google.com/webstore/detail/redux-devtools/lmhkpmbekcpmknklioeibfkpmmfibljd?hl=ru)
+
+## Polyfill
+
+```typescript
+// Добавьте в начало первого файла в сборке
+import "@babel/polyfill";
+import '@tetragius/raxy-polyfill';
+```
+
+В IE есть ряд ограничений
+- Не корректно работают мутации - изменения должны быть имутабельны
+- Надо подписываться на изменяемое свойство, так как не работает подписка на оюъект
