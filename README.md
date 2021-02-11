@@ -54,6 +54,7 @@ npm install --save @tetragius/raxy @tetragius/raxy-vue
   - [DEMO: Todo list - complex](https://codesandbox.io/s/raxy-demo-complex-5syo0)
   - [DEMO: Todo list - long](https://codesandbox.io/s/raxy-demo-longlist-cl837)
   - [DEMO: Arkanoid](https://codesandbox.io/s/raxy-demo-arkanoid-kwrfm)
+  - [DEMO: Arkanoid - IE 11](https://qs1u4.sse.codesandbox.io/) - [sandbox](https://codesandbox.io/s/my-webpack-project-qs1u4)
 - Vue
   - [DEMO](https://codesandbox.io/s/raxy-vue-example-e74vn)
   - [DEMO: TODO list](https://codesandbox.io/s/raxy-vue-example-xsrtu)
