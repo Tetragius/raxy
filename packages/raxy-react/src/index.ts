@@ -12,13 +12,13 @@ import { IDetail, IRaxy, IRaxyOptions, Transaction, raxy, Symbols } from "@tetra
 
 const context = createContext(null);
 
-type Filter<Store = typeof context, State = any> = (sotre: Store) => State;
+export type Filter<Store = typeof context, State = any> = (sotre: Store) => State;
 
-type Options<State = any> = {
+export type Options<State = any> = {
     [P in keyof State]?: { ignoreTimeStamp?: boolean };
 }
 
-interface IOptions {
+export interface IOptions {
     elementRef?: RefObject<any>;
 }
 
@@ -115,9 +115,9 @@ export const useRaxy = <Store = any, State = any>(filter?: Filter<Store, State>,
     return { state, store: instanse.store, transaction: instanse.transaction };
 };
 
-type Hook<S> = <State = any>(filter?: Filter<S, State>, options?: IOptions & Options<State>) => { state: State, store: S, transaction: Transaction<S> }
+export type Hook<S> = <State = any>(filter?: Filter<S, State>, options?: IOptions & Options<State>) => { state: State, store: S, transaction: Transaction<S> }
 
-interface IRaxyWithHook<S> extends IRaxy<S> {
+export interface IRaxyWithHook<S> extends IRaxy<S> {
     useRaxy: Hook<S>;
 }
 

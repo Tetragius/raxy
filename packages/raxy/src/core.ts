@@ -1,13 +1,13 @@
 import Symbols from './symbols';
 
-interface ITransact<S> { name: string, complete: boolean, store: S }
-type Rollback = () => void;
-type Updater<S> = (store: S) => Promise<boolean>;
-type Resolver<S> = (data: ITransact<S>) => void;
+export interface ITransact<S> { name: string, complete: boolean, store: S }
+export type Rollback = () => void;
+export type Updater<S> = (store: S) => Promise<boolean>;
+export type Resolver<S> = (data: ITransact<S>) => void;
 export type Transaction<S> = (name: string, updater: Updater<S>) => Promise<ITransact<S>>
 export type EventHandler<S> = (event: CustomEvent<IDetail<S>>) => void;
 
-type EventTypes = 'update' | 'transactionstart' | 'transactionend' | 'addtransaction';
+export type EventTypes = 'update' | 'transactionstart' | 'transactionend' | 'addtransaction';
 
 export interface IDetail<S> {
     name?: string;

@@ -2,19 +2,19 @@ import { IDetail, IRaxy, Transaction, raxy, IRaxyOptions } from "./core";
 
 import Symbols from './symbols';
 
-type Filter<Store = any, State = any> = (sotre: Store) => State;
+export type Filter<Store = any, State = any> = (sotre: Store) => State;
 
-type Options<State = any> = {
+export type Options<State = any> = {
     [P in keyof State]?: { ignoreTimeStamp?: boolean };
 }
 
-type RefObj<T = any> = { current: T } | (() => T)
+export type RefObj<T = any> = { current: T } | (() => T)
 
-interface IConnectorOptions<T = any> {
+export interface IConnectorOptions<T = any> {
     elementRef?: RefObj<T>;
 }
 
-interface IConnector<Store, State> {
+export interface IConnector<Store, State> {
     state: State;
     store: Store;
     transaction: Transaction<Store>;
@@ -120,9 +120,9 @@ export const connect = <Store = any, State = any>(instanse: IRaxy<Store>, update
     return { state, store: instanse.store, transaction: instanse.transaction, mountCallback, unmountCallback };
 };
 
-type Connector<S> = <State = any>(updateCallback: (state: State) => void, filter?: Filter<S, State>, options?: IConnectorOptions & Options<State>) => IConnector<S, State>
+export type Connector<S> = <State = any>(updateCallback: (state: State) => void, filter?: Filter<S, State>, options?: IConnectorOptions & Options<State>) => IConnector<S, State>
 
-interface IRaxyWithConnector<S> extends IRaxy<S> {
+export interface IRaxyWithConnector<S> extends IRaxy<S> {
     connect: Connector<S>;
 }
 
