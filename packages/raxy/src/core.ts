@@ -1,22 +1,22 @@
 import Symbols from './symbols';
 
-export interface ITransact<S> { name: string, complete: boolean, store: S, aborted?: { status: any } }
 export type Abort = (status: any) => void;
-export type Progress = (n: number) => void;
+export type Progress<S> = {
+    (n: number): void;
+    target: ITransaction<S>;
+}
 export type Rollback = () => void;
-export type Updater<S> = (store: S, progress: Progress) => Promise<boolean>;
-export type Resolver<S> = (data: ITransact<S>) => void;
-export type Transaction<S> = (name: string, updater: Updater<S>) => Promise<ITransact<S>>
+export type Updater<S> = (store: S, progress: Progress<S>) => Promise<boolean>;
+export type Resolver<S> = (data: ITransaction<S>) => void;
+export type Transaction<S> = (name: string, updater: Updater<S>) => Promise<ITransaction<S>>
 export type EventHandler<S> = (event: CustomEvent<IDetail<S>>) => void;
 
 export type EventTypes = 'update' | 'transactionstart' | 'transactionend' | 'addtransaction' | 'transactionaborted' | 'transactionprogress' | 'connected';
 
 export interface IDetail<S> {
-    name?: string;
-    complete?: boolean;
     store: S;
     transactions?: ITransaction<S>[];
-    progress?: number;
+    transaction?: ITransaction<S>;
     value?: any;
 }
 
@@ -25,21 +25,23 @@ export interface IRaxyOptions {
 }
 
 export interface ITransaction<S> {
-    pending: boolean;
-    rollback: Rollback[];
     name: string;
-    updater: Updater<S>;
-    resolve: Resolver<S>
+    pending: boolean;
+    aborted?: any;
     progress: number;
+    rollback: Rollback[];
+    store: S;
+    updater: Updater<S>;
+    resolve?: Resolver<S>
     abort: Abort;
 }
 
 export interface IRaxy<S> {
+    store: S;
+    transactions: ITransaction<S>[]
     subscribe(on: EventTypes, subscriber: EventHandler<S>): void;
     unsubscribe(on: EventTypes, subscriber: EventHandler<S>): void;
-    store: S;
     transaction: Transaction<S>;
-    transactions: ITransaction<S>[]
 }
 
 export const raxy = <Store = any>(initStore: Store, options?: IRaxyOptions): IRaxy<Store> => {
@@ -146,7 +148,10 @@ export const raxy = <Store = any>(initStore: Store, options?: IRaxyOptions): IRa
     const store: Store = new Proxy(initStore, hooks);
     proxier(initStore);
 
-    const transaction = async (name: string, updater: Updater<Store>): Promise<ITransact<Store>> => {
+    const transaction = async (name: string, updater: Updater<Store>): Promise<ITransaction<Store>> => {
+
+        const transaction: ITransaction<Store> = { name, pending: false, aborted: false, progress: 0, rollback: [], store, updater, abort: null, resolve: null };
+
         const doTransaction = async () => {
             if (transactions[0]?.pending || !transactions.length) {
                 return;
@@ -156,50 +161,65 @@ export const raxy = <Store = any>(initStore: Store, options?: IRaxyOptions): IRa
 
             eventTarget.dispatchEvent(
                 new CustomEvent<IDetail<Store>>("transactionstart", {
-                    detail: { name: transaction.name, store, progress: transaction.progress }
+                    detail: { store, transaction }
                 })
             );
 
             const progressCallback = (n: number) => {
                 transaction.progress = n;
                 eventTarget.dispatchEvent(
-                    new CustomEvent<IDetail<Store>>("transactionprogress", { detail: { name: transaction.name, complete, store, progress: transaction.progress } })
+                    new CustomEvent<IDetail<Store>>("transactionprogress", { detail: { store, transaction } })
                 );
             }
+
+            progressCallback.target = transaction;
 
             transaction.pending = true;
-            const complete = await transaction.updater(store, progressCallback);
-            transaction.pending = false;
+            try {
+                const complete = await transaction.updater(transaction.store, progressCallback);
+                transaction.pending = false;
 
-            if (!complete) {
-                eventTarget.dispatchEvent(
-                    new CustomEvent<IDetail<Store>>("transactionaborted", { detail: { name: transaction.name, complete, store, progress: transaction.progress } })
-                );
-                transaction.rollback.forEach((rb: Rollback) => rb());
+                if (!complete && !transaction.aborted) {
+                    eventTarget.dispatchEvent(
+                        new CustomEvent<IDetail<Store>>("transactionaborted", { detail: { store, transaction } })
+                    );
+                    transaction.rollback.forEach((rb: Rollback) => rb());
+                }
+
+                if (!transaction.aborted) {
+                    transaction.resolve(transaction);
+
+                    eventTarget.dispatchEvent(
+                        new CustomEvent<IDetail<Store>>("transactionend", {
+                            detail: { store, transaction }
+                        })
+                    );
+                }
+            }
+            catch {
+                // abort
+            }
+            finally {
+                if (!transaction.pending) {
+                    transactions.shift();
+                    doTransaction();
+                }
             }
 
-            transaction.resolve({ name: transaction.name, complete, store });
-
-            eventTarget.dispatchEvent(
-                new CustomEvent<IDetail<Store>>("transactionend", {
-                    detail: { name: transaction.name, complete, store, progress: transaction.progress }
-                })
-            );
-
-            transactions.shift();
-            doTransaction();
         };
 
         return new Promise((resolve) => {
 
-            const transaction = { name, updater, resolve, rollback: [], pending: false, progress: 0, abort: null };
+            transaction.resolve = resolve;
 
             const abort = (status: any) => {
-                resolve({ name, complete: false, store, aborted: { status } });
+                transaction.store = undefined;
+                transaction.aborted = status;
+                resolve(transaction);
                 const idx = transactions.findIndex(t => t === transaction);
 
                 eventTarget.dispatchEvent(
-                    new CustomEvent<IDetail<Store>>("transactionaborted", { detail: { name: transaction.name, complete: false, store, progress: transaction.progress } })
+                    new CustomEvent<IDetail<Store>>("transactionaborted", { detail: { store, transaction } })
                 );
 
                 transaction.rollback.forEach((rb: Rollback) => rb());
@@ -213,7 +233,7 @@ export const raxy = <Store = any>(initStore: Store, options?: IRaxyOptions): IRa
 
             eventTarget.dispatchEvent(
                 new CustomEvent<IDetail<Store>>("addtransaction", {
-                    detail: { name: name, complete: false, store, transactions, progress: 0 }
+                    detail: { store, transaction }
                 })
             );
 

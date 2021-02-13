@@ -2,9 +2,13 @@ import { IRaxy } from "./core";
 
 export const snapshot = (data: any) => JSON.parse(JSON.stringify(data))
 
-const dt = { devTools: null, disableLogger: false }
+const dt = { devTools: null, disableLogger: false, logger: false }
 
 export const logger = (subscribe: IRaxy<any>['subscribe']) => {
+    if (dt.logger) {
+        return;
+    }
+    dt.logger = true;
     subscribe("update", (e) => {
         const snap = snapshot(e.detail);
         console.log(
@@ -32,13 +36,16 @@ export const logger = (subscribe: IRaxy<any>['subscribe']) => {
             "color: white; background-color: #5b7add; padding: 4px; border-radius: 4px; text-align: center;",
             snap
         );
-        if (e.detail.name !== "DEV-TOOLS") {
-            dt.devTools?.send(`transaction change: ${e.detail.name}`, snap.store);
+        if (e.detail.transaction?.name !== "DEV-TOOLS") {
+            dt.devTools?.send(`transaction change: ${e.detail.transaction?.name}`, snap.store);
         }
     });
 }
 
 export const connectDevTools = (instanse: IRaxy<any>) => {
+    if (!dt.logger) {
+        logger(instanse.subscribe)
+    }
     // @ts-ignore
     dt.devTools = window.__REDUX_DEVTOOLS_EXTENSION__?.connect({});
     dt.devTools?.init(snapshot(instanse.store));
