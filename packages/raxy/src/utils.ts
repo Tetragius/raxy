@@ -40,6 +40,39 @@ export const logger = (subscribe: IRaxy<any>['subscribe']) => {
             dt.devTools?.send(`transaction change: ${e.detail.transaction?.name}`, snap.store);
         }
     });
+    // no dev-tool
+    subscribe("addtransaction", (e) => {
+        const snap = snapshot(e.detail);
+        console.log(
+            "🐶 %cadd transaction: ",
+            "color: white; background-color: #5b7add; padding: 4px; border-radius: 4px; text-align: center;",
+            snap
+        );
+    });
+    subscribe("transactionaborted", (e) => {
+        const snap = snapshot(e.detail);
+        console.log(
+            "🐶 %cabort transaction: ",
+            "color: white; background-color: #dd5b5b; padding: 4px; border-radius: 4px; text-align: center;",
+            snap
+        );
+    });
+    subscribe("transactionprogress", (e) => {
+        const snap = snapshot(e.detail);
+        console.log(
+            "🐶 %ctransaction in progress: ",
+            "color: white; background-color: #5b7add; padding: 4px; border-radius: 4px; text-align: center;",
+            snap
+        );
+    });
+    subscribe("connected", (e) => {
+        const snap = snapshot(e.detail);
+        console.log(
+            "🐶 %cconnect new store: ",
+            "color: white; background-color: #5b7add; padding: 4px; border-radius: 4px; text-align: center;",
+            snap
+        );
+    });
 }
 
 export const connectDevTools = (instanse: IRaxy<any>) => {

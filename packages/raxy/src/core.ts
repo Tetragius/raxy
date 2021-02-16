@@ -130,10 +130,7 @@ export const raxy = <Store = any>(initStore: Store, options?: IRaxyOptions): IRa
         for (const key in obj) {
             let sub = obj[key];
             if (sub && typeof sub === "object" && typeof key !== "symbol") {
-                if (sub[Symbols.parent]) {
-                    sub[Symbols.parent] = obj;
-                }
-                else {
+                if (!sub[Symbols.parent]) {
                     sub[Symbols.now] = now;
                     sub[Symbols.parent] = obj;
                     const proxy = new Proxy(sub, hooks);
@@ -208,36 +205,41 @@ export const raxy = <Store = any>(initStore: Store, options?: IRaxyOptions): IRa
 
         };
 
-        return new Promise((resolve) => {
+        return new Promise((resolve, reject) => {
 
             transaction.resolve = resolve;
 
-            const abort = (status: any) => {
-                transaction.store = undefined;
-                transaction.aborted = status;
-                resolve(transaction);
-                const idx = transactions.findIndex(t => t === transaction);
+            try {
+                const abort = (status: any) => {
+                    transaction.store = undefined;
+                    transaction.aborted = status;
+                    resolve(transaction);
+                    const idx = transactions.findIndex(t => t === transaction);
+
+                    eventTarget.dispatchEvent(
+                        new CustomEvent<IDetail<Store>>("transactionaborted", { detail: { store, transaction } })
+                    );
+
+                    transaction.rollback.forEach((rb: Rollback) => rb());
+                    transactions.splice(idx, 1);
+                    doTransaction();
+                }
+
+                transaction.abort = abort;
+
+                transactions.push(transaction);
 
                 eventTarget.dispatchEvent(
-                    new CustomEvent<IDetail<Store>>("transactionaborted", { detail: { store, transaction } })
+                    new CustomEvent<IDetail<Store>>("addtransaction", {
+                        detail: { store, transaction }
+                    })
                 );
 
-                transaction.rollback.forEach((rb: Rollback) => rb());
-                transactions.splice(idx, 1);
                 doTransaction();
             }
-
-            transaction.abort = abort;
-
-            transactions.push(transaction);
-
-            eventTarget.dispatchEvent(
-                new CustomEvent<IDetail<Store>>("addtransaction", {
-                    detail: { store, transaction }
-                })
-            );
-
-            doTransaction();
+            catch (e) {
+                reject(transaction);
+            }
         });
     };
 
