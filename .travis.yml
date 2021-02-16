@@ -4,4 +4,4 @@ cache: npm
 before_script:
   - npm install
 script: 
-  - npm run build
+  - build.sh
