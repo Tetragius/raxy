@@ -231,7 +231,7 @@ export const raxy = <Store = any>(initStore: Store, options?: IRaxyOptions): IRa
 
                 eventTarget.dispatchEvent(
                     new CustomEvent<IDetail<Store>>("addtransaction", {
-                        detail: { store, transaction }
+                        detail: { store, transaction, transactions }
                     })
                 );
 
