@@ -54,7 +54,6 @@ npm install --save @tetragius/raxy @tetragius/raxy-vue
   - [DEMO: Todo list - complex](https://codesandbox.io/s/raxy-demo-complex-5syo0)
   - [DEMO: Todo list - long](https://codesandbox.io/s/raxy-demo-longlist-cl837)
   - [DEMO: Arkanoid](https://codesandbox.io/s/raxy-demo-arkanoid-kwrfm)
-  - [DEMO: Arkanoid - IE 11](https://bzcis.sse.codesandbox.io/) - [sandbox](https://codesandbox.io/s/my-webpack-project-qs1u4)
 - Vue
   - [DEMO](https://codesandbox.io/s/raxy-vue-example-e74vn)
   - [DEMO: TODO list](https://codesandbox.io/s/raxy-vue-example-xsrtu)
@@ -103,6 +102,22 @@ A successful transaction returns - `true`.
 The name of the transaction is for informational purposes only and can be chosen at the discretion of the developer.
 
 The `progress` method - takes a number and sets the progress, also raises the `transactionprogress` event
+
+The `progress` method contains a `progress.target` field of type `ITransaction`
+
+```typescript
+interface ITransaction <S> {
+    name: string; // transaction name
+    pending: logical; // execution status
+    interrupted?: any; // reason for abort
+    progress: number; // execution stage
+    rollback: rollback []; // array of inverse operations
+    the shops; // link to storage
+    updater: Updater <S>; // storage update method
+    solve?: Resolver <S> // array of inverse operations
+    abort: Abort; // method for completing the transaction - starts the rollback
+}
+```
 
 ## subscribe/unsubscribe
 
@@ -209,7 +224,7 @@ Creates a typed instance of the `connect` function can be used instead of callin
 logger: (subscribe: IRaxy<any>['subscribe']) => void;
 ```
 
-Displays the event log `update`, `transactionstart`, `transactionend` to the console;
+Displays the event log `update`, `transactionstart`, `transactionend`, `addtransaction`, `transactionaborted`, `transactionprogress`, `connected` to the console;
 
 ## connectDevTools
 

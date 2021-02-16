@@ -103,6 +103,22 @@ The name of the transaction is for informational purposes only and can be chosen
 
 The `progress` method - takes a number and sets the progress, also raises the `transactionprogress` event
 
+The `progress` method contains a `progress.target` field of type `ITransaction`
+
+```typescript
+interface ITransaction <S> {
+    name: string; // transaction name
+    pending: logical; // execution status
+    interrupted?: any; // reason for abort
+    progress: number; // execution stage
+    rollback: rollback []; // array of inverse operations
+    the shops; // link to storage
+    updater: Updater <S>; // storage update method
+    solve?: Resolver <S> // array of inverse operations
+    abort: Abort; // method for completing the transaction - starts the rollback
+}
+```
+
 ## subscribe/unsubscribe
 
 ```typescript
@@ -208,7 +224,7 @@ Creates a typed instance of the `connect` function can be used instead of callin
 logger: (subscribe: IRaxy<any>['subscribe']) => void;
 ```
 
-Displays the event log `update`, `transactionstart`, `transactionend` to the console;
+Displays the event log `update`, `transactionstart`, `transactionend`, `addtransaction`, `transactionaborted`, `transactionprogress`, `connected` to the console;
 
 ## connectDevTools
 

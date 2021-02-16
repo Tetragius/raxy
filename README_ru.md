@@ -101,6 +101,22 @@ await transaction('transaction B', updater_B);
 
 Метод `progress` - принимает число и задает прогресс выполнения, также вызывает событие `transactionprogress`
 
+Метод `progress` содержит поле `progress.target` с типом `ITransaction`
+
+```typescript
+interface ITransaction<S> {
+    name: string; // имя транзакции
+    pending: boolean; // статус выполнения
+    aborted?: any; // причина прерывания
+    progress: number; // этап выполнения
+    rollback: Rollback[]; // массив обратных операций
+    store: S; // ссылка на хранилище
+    updater: Updater<S>; // метод обновления хранилища
+    resolve?: Resolver<S> // массив обратных операций
+    abort: Abort; // метод для завершения транзакции - завпускает процедуру отката
+}
+```
+
 ## subscribe/unsubscribe
 
 ```typescript
@@ -206,7 +222,7 @@ interface IRaxyWithConnector<S> extends IRaxy<S> {
 logger: (subscribe: IRaxy<any>['subscribe']) => void;
 ```
 
-Выводит в консоль лог событий `update`, `transactionstart`, `transactionend`;
+Выводит в консоль лог событий `update`, `transactionstart`, `transactionend`, `addtransaction`, `transactionaborted`, `transactionprogress`, `connected`;
 
 ## connectDevTools
 

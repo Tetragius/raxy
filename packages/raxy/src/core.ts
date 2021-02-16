@@ -116,7 +116,7 @@ export const raxy = <Store = any>(initStore: Store, options?: IRaxyOptions): IRa
                 );
             }
 
-            if (target[Symbols.root]) {
+            if (target[Symbols.root] && typeof value === 'object') {
                 eventTarget.dispatchEvent(
                     new CustomEvent<IDetail<Store>>("connected", { detail: { store: initStore, value } })
                 );
