@@ -55,6 +55,7 @@ npm install --save @tetragius/raxy @tetragius/raxy-vue
   - [DEMO: Todo list - long](https://codesandbox.io/s/raxy-demo-longlist-cl837)
   - [DEMO: Arkanoid](https://codesandbox.io/s/raxy-demo-arkanoid-kwrfm)
   - [DEMO: Arkanoid - IE](https://bzcis.sse.codesandbox.io/)
+    - [repo](https://github.com/Tetragius/raxy-demo-arkanoid)
 - Vue
   - [DEMO](https://codesandbox.io/s/raxy-vue-example-e74vn)
   - [DEMO: TODO list](https://codesandbox.io/s/raxy-vue-example-xsrtu)
