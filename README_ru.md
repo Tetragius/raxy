@@ -104,7 +104,9 @@ await transaction('transaction B', updater_B);
 
 Метод `progress` - принимает число и задает прогресс выполнения, также вызывает событие `transactionprogress`
 
-Метод `progress` содержит поле `progress.target` с типом `ITransaction`
+Метод `progress` содержит:
+ - поле `progress.target` с типом `ITransaction`
+ - поле `progress.prev` с типом `ITransaction` - результат предыдущей транзакции
 
 ```typescript
 interface ITransaction<S> {

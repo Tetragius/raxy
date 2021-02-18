@@ -4,6 +4,7 @@ export type Abort = (status: any) => void;
 export type Progress<S> = {
     (n: number): void;
     target: ITransaction<S>;
+    prev: ITransaction<S>;
 }
 export type Rollback = () => void;
 export type Updater<S> = (store: S, progress: Progress<S>) => Promise<boolean>;
@@ -149,7 +150,7 @@ export const raxy = <Store = any>(initStore: Store, options?: IRaxyOptions): IRa
 
         const transaction: ITransaction<Store> = { name, pending: false, aborted: false, progress: 0, rollback: [], store, updater, abort: null, resolve: null };
 
-        const doTransaction = async () => {
+        const doTransaction = async (prevTransaction: ITransaction<Store>) => {
             if (transactions[0]?.pending || !transactions.length) {
                 return;
             }
@@ -170,6 +171,7 @@ export const raxy = <Store = any>(initStore: Store, options?: IRaxyOptions): IRa
             }
 
             progressCallback.target = transaction;
+            progressCallback.prev = prevTransaction;
 
             transaction.pending = true;
             try {
@@ -199,7 +201,7 @@ export const raxy = <Store = any>(initStore: Store, options?: IRaxyOptions): IRa
             finally {
                 if (!transaction.pending) {
                     transactions.shift();
-                    doTransaction();
+                    doTransaction(transaction);
                 }
             }
 
@@ -222,7 +224,7 @@ export const raxy = <Store = any>(initStore: Store, options?: IRaxyOptions): IRa
 
                     transaction.rollback.forEach((rb: Rollback) => rb());
                     transactions.splice(idx, 1);
-                    doTransaction();
+                    doTransaction(transaction);
                 }
 
                 transaction.abort = abort;
@@ -235,7 +237,7 @@ export const raxy = <Store = any>(initStore: Store, options?: IRaxyOptions): IRa
                     })
                 );
 
-                doTransaction();
+                doTransaction(transaction);
             }
             catch (e) {
                 reject(transaction);

@@ -103,7 +103,9 @@ The name of the transaction is for informational purposes only and can be chosen
 
 The `progress` method - takes a number and sets the progress, also raises the `transactionprogress` event
 
-The `progress` method contains a `progress.target` field of type `ITransaction`
+The `progress` method contains:
+ - field `progress.target` with type `ITransaction`
+ - field `progress.prev` of type `ITransaction` - result of the previous transaction
 
 ```typescript
 interface ITransaction <S> {
