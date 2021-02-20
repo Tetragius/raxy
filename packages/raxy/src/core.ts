@@ -134,6 +134,7 @@ export const raxy = <Store = any>(initStore: Store, options?: IRaxyOptions): IRa
                 if (!sub[Symbols.parent]) {
                     sub[Symbols.now] = now;
                     sub[Symbols.parent] = obj;
+                    sub[Symbols.original] = sub;
                     const proxy = new Proxy(sub, hooks);
                     obj[key] = proxy;
                     proxier(sub);

@@ -34,8 +34,8 @@
     "include": [
       "packages/raxy/**/*",
       "packages/raxy-react/**/*",
-      "packages/raxy-vue/**/*"
-    ],
+      "packages/raxy-vue/**/*", 
+      "cypress/spec"],
     "exclude": [
       "node_modules",
       "**/*.test.ts"
