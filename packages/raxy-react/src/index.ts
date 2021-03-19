@@ -68,6 +68,13 @@ export const useRaxy = <Store = any, State = any>(filter?: Filter<Store, State>,
                     setState(saveNow(newState));
                     break;
                 }
+                if (!option?.ignoreTimeStamp && !nowMap.has(state[key])) {
+                    setState(saveNow(newState));
+                    break;
+                }
+                if (!nowMap.has(state[key])) {
+                    saveNow(newState);
+                }
             }
         }
     };

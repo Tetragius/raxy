@@ -48,7 +48,6 @@ export const connect = <Store = any, State = any>(instanse: IRaxy<Store>, update
     const saveNow =
         (state) => {
             if (state) {
-
                 const descriptors = Object.getOwnPropertyDescriptors(state);
                 Object.keys(descriptors)
                     .filter(key => descriptors[key].get)
@@ -75,6 +74,13 @@ export const connect = <Store = any, State = any>(instanse: IRaxy<Store>, update
                 ) {
                     updateState(newState);
                     break;
+                }
+                if (!option?.ignoreTimeStamp && !nowMap.has(state[key])) {
+                    updateState(newState);
+                    break;
+                }
+                if (!nowMap.has(state[key])) {
+                    saveNow(newState);
                 }
             }
         }
@@ -126,9 +132,8 @@ export interface IRaxyWithConnector<S> extends IRaxy<S> {
     connect: Connector<S>;
 }
 
-
 const carryInstanse = <S>(instanse: IRaxy<S>): Connector<S> => {
-    return (...args) => connect(instanse, ...args);
+    return (callback, filter, options) => connect(instanse, callback, filter, options);
 }
 
 export const createConnector = <Store = any>(initStore: Store, options?: IRaxyOptions): IRaxyWithConnector<Store> => {
