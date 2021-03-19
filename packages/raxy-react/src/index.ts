@@ -37,7 +37,7 @@ export const useRaxy = <Store = any, State = any>(filter?: Filter<Store, State>,
         (state) => {
             if (state) {
                 for (const key in state) {
-                    const value = state[key]
+                    const value = state[key];
                     if (value && typeof value === 'object' && value[Symbols.now]) {
                         nowMap.set(value, value[Symbols.now]);
                     }
@@ -63,7 +63,7 @@ export const useRaxy = <Store = any, State = any>(filter?: Filter<Store, State>,
                     break;
                 }
                 if (value && typeof value === 'object') {
-                    if (!option?.ignoreTimeStamp && nowMap.has(value) && nowMap.get(value) !== newValue[Symbols.now]) {
+                    if ((!option?.ignoreTimeStamp && nowMap.has(value)) && nowMap.get(value) !== newValue[Symbols.now]) {
                         setState(saveNow(newState));
                         break;
                     }

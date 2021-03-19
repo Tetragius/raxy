@@ -71,7 +71,7 @@ export const connect = <Store = any, State = any>(instanse: IRaxy<Store>, update
                     break;
                 }
                 if (value && typeof value === 'object') {
-                    if (!option?.ignoreTimeStamp && nowMap.has(value) && nowMap.get(value) !== newValue[Symbols.now]) {
+                    if ((!option?.ignoreTimeStamp && nowMap.has(value)) && nowMap.get(value) !== newValue[Symbols.now]) {
                         updateState(newState);
                         break;
                     }
