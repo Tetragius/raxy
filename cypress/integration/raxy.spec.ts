@@ -190,6 +190,17 @@ describe('Raxy', function () {
             });
         });
 
+        it('Object and Array + primitive', function () {
+            const cb = cy.spy();
+            const instanse = createConnector({ a: {}, b: [], c: null });
+            const connector = instanse.connect(cb, (store) => ({ b: store.b }));
+            connector.mountCallback();
+            instanse.store.b.push({ id: 1 });
+            cy.wait(1).then(() => {
+                expect(cb).has.been.calledOnce;
+            });
+        });
+
         it('Object and Array with optimisation not.called', function () {
             const cb = cy.spy();
             const { connect } = createConnector({ obj: {}, arr: [] });
@@ -206,20 +217,47 @@ describe('Raxy', function () {
             });
         });
 
-
-        it('Object and Array with optimisation called', function () {
+        it('Object and Array with optimisation called for Array', function () {
             const cb = cy.spy();
             const { connect } = createConnector({ obj: {}, arr: [] });
             const { mountCallback, store } = connect(
                 cb,
-                (store) => ({ arr: store.arr, length: store.arr.length }),
+                (store) => ({ arr: store.arr, len: store.arr.length }),
                 {
                     arr: { ignoreTimeStamp: true }
                 });
             mountCallback();
             store.arr.push({ id: 1 });
-            cy.wait(1).then(() => {
+            setTimeout(() => {
+                store.arr[0].id = 2;
+            }, 10);
+            setTimeout(() => {
+                store.arr[0].id = 3;
+            }, 20);
+            cy.wait(100).then(() => {
                 expect(cb).has.been.calledOnce;
+            });
+        });
+
+        it('Object and Array with optimisation called for Object', function () {
+            const cb = cy.spy();
+            const { connect } = createConnector({ obj: { a: 1 }, arr: [] });
+            const { mountCallback, store } = connect(
+                cb,
+                (store) => ({ arr: store.arr, a: store.obj.a }),
+                {
+                    arr: { ignoreTimeStamp: true }
+                });
+            mountCallback();
+            store.arr.push({ id: 1 });
+            setTimeout(() => {
+                store.arr[0].id = 2;
+            }, 10);
+            setTimeout(() => {
+                store.arr[0].id = 3;
+            }, 20);
+            cy.wait(100).then(() => {
+                expect(cb).has.not.called;
             });
         });
     });

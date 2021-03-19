@@ -36,15 +36,10 @@ export const useRaxy = <Store = any, State = any>(filter?: Filter<Store, State>,
     const saveNow = useCallback(
         (state) => {
             if (state) {
-
-                const descriptors = Object.getOwnPropertyDescriptors(state);
-                Object.keys(descriptors)
-                    .filter(key => descriptors[key].get)
-                    .forEach(key => Object.defineProperty(state, key, { value: state[key] }));
-
                 for (const key in state) {
-                    if (state[key] && state[key][Symbols.now]) {
-                        nowMap.set(state[key], state[key][Symbols.now]);
+                    const value = state[key]
+                    if (value && typeof value === 'object' && value[Symbols.now]) {
+                        nowMap.set(value, value[Symbols.now]);
                     }
                 }
             }
@@ -61,19 +56,24 @@ export const useRaxy = <Store = any, State = any>(filter?: Filter<Store, State>,
         if (newState) {
             for (const key in state) {
                 const option = options && options[key];
-                if (
-                    state[key] !== newState[key] ||
-                    (!option?.ignoreTimeStamp && nowMap.has(state[key]) && nowMap.get(state[key]) !== newState[key][Symbols.now])
-                ) {
+                const value = state[key];
+                const newValue = newState[key];
+                if (value !== newValue) {
                     setState(saveNow(newState));
                     break;
                 }
-                if (!option?.ignoreTimeStamp && !nowMap.has(state[key])) {
-                    setState(saveNow(newState));
-                    break;
-                }
-                if (!nowMap.has(state[key])) {
-                    saveNow(newState);
+                if (value && typeof value === 'object') {
+                    if (!option?.ignoreTimeStamp && nowMap.has(value) && nowMap.get(value) !== newValue[Symbols.now]) {
+                        setState(saveNow(newState));
+                        break;
+                    }
+                    if (!option?.ignoreTimeStamp && !nowMap.has(value)) {
+                        setState(saveNow(newState));
+                        break;
+                    }
+                    if (!nowMap.has(value)) {
+                        saveNow(newState);
+                    }
                 }
             }
         }
