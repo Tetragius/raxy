@@ -38,8 +38,12 @@ export const useRaxy = <Store = any, State = any>(filter?: Filter<Store, State>,
             if (state) {
                 for (const key in state) {
                     const value = state[key];
+                    const getter = Object.getOwnPropertyDescriptor(state, key).get;
                     if (value && typeof value === 'object' && value[Symbols.now]) {
                         nowMap.set(value, value[Symbols.now]);
+                    }
+                    if (getter) {
+                        nowMap.set(getter, getter());
                     }
                 }
             }
@@ -58,6 +62,11 @@ export const useRaxy = <Store = any, State = any>(filter?: Filter<Store, State>,
                 const option = options && options[key];
                 const value = state[key];
                 const newValue = newState[key];
+                const getter = Object.getOwnPropertyDescriptor(state, key).get;
+                if (getter && nowMap.get(getter) !== newValue) {
+                    setState(saveNow(newState));
+                    break;
+                }
                 if (value !== newValue) {
                     setState(saveNow(newState));
                     break;

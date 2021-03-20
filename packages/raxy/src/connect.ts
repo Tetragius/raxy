@@ -49,9 +49,13 @@ export const connect = <Store = any, State = any>(instanse: IRaxy<Store>, update
         (state) => {
             if (state) {
                 for (const key in state) {
-                    const value = state[key]
+                    const value = state[key];
+                    const getter = Object.getOwnPropertyDescriptor(state, key).get;
                     if (value && typeof value === 'object' && value[Symbols.now]) {
                         nowMap.set(value, value[Symbols.now]);
+                    }
+                    if (getter) {
+                        nowMap.set(getter, getter());
                     }
                 }
             }
@@ -66,6 +70,11 @@ export const connect = <Store = any, State = any>(instanse: IRaxy<Store>, update
                 const option = options && options[key];
                 const value = state[key];
                 const newValue = newState[key];
+                const getter = Object.getOwnPropertyDescriptor(state, key).get;
+                if (getter && nowMap.get(getter) !== newValue) {
+                    updateState(newState);
+                    break;
+                }
                 if (value !== newValue) {
                     updateState(newState);
                     break;
