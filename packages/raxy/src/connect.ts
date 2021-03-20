@@ -55,7 +55,7 @@ export const connect = <Store = any, State = any>(instanse: IRaxy<Store>, update
                         nowMap.set(value, value[Symbols.now]);
                     }
                     if (getter) {
-                        nowMap.set(getter, getter());
+                        nowMap.set(getter, value);
                     }
                 }
             }

@@ -282,5 +282,33 @@ describe('Raxy', function () {
                 expect(cb).has.been.calledTwice;
             });
         });
+
+        it('Object and Array with optimisation called for Array with getter', function () {
+            const cb = cy.spy();
+            const { connect } = createConnector({ obj: { a: 1 }, arr: [] });
+            const { mountCallback, store } = connect(
+                cb,
+                (store) => ({ arr: store.arr, get len() { return this?.arr?.length; } }),
+                {
+                    arr: { ignoreTimeStamp: true }
+                });
+            mountCallback();
+            store.arr.push({ id: 1 });
+            setTimeout(() => {
+                store.arr[0].id = 2;
+            }, 10);
+            setTimeout(() => {
+                store.arr.push({ id: 2 });
+            }, 20);
+            setTimeout(() => {
+                store.obj.a = 2;
+            }, 30);
+            setTimeout(() => {
+                store.obj.a = 3;
+            }, 40);
+            cy.wait(100).then(() => {
+                expect(cb).has.been.calledTwice;
+            });
+        });
     });
 });

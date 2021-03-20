@@ -43,7 +43,7 @@ export const useRaxy = <Store = any, State = any>(filter?: Filter<Store, State>,
                         nowMap.set(value, value[Symbols.now]);
                     }
                     if (getter) {
-                        nowMap.set(getter, getter());
+                        nowMap.set(getter, value);
                     }
                 }
             }
