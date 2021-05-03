@@ -49,7 +49,7 @@ export const raxy = <Store = any>(initStore: Store, options?: IRaxyOptions): IRa
     const eventTarget = new EventTarget();
     const transactions: ITransaction<Store>[] = [];
     let timer: number = 0;
-    let now = Date.now();
+    let now = performance.now();
 
     const updateParents = (obj: any) => {
         const parent = obj && obj[Symbols.parent];
@@ -104,14 +104,14 @@ export const raxy = <Store = any>(initStore: Store, options?: IRaxyOptions): IRa
                 }
 
                 timer = setTimeout(() => {
-                    now = Date.now();
+                    now = performance.now();
                     eventTarget.dispatchEvent(
                         new CustomEvent<IDetail<Store>>("update", { detail: { store: initStore } })
                     );
                 });
             }
             else {
-                now = Date.now();
+                now = performance.now();
                 eventTarget.dispatchEvent(
                     new CustomEvent<IDetail<Store>>("update", { detail: { store: initStore } })
                 );
@@ -143,9 +143,12 @@ export const raxy = <Store = any>(initStore: Store, options?: IRaxyOptions): IRa
         }
     };
 
+    // init
     initStore[Symbols.root] = true;
     const store: Store = new Proxy(initStore, hooks);
     proxier(initStore);
+    now = performance.now();
+    //init end
 
     const transaction = async (name: string, updater: Updater<Store>): Promise<ITransaction<Store>> => {
 
