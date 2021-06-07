@@ -75,6 +75,7 @@ The `connect` method returns an object with fields
 - `state` - reference to the state returned by the `filter` method
 - `store` - link to `store`
 - `transaction` - a method for making transactions
+- `updateState` - a method for update state synchronously. It is mainly needed to correctly display the cursor in the `input` and `textarea` components when using the `value` property. See demo for more details. **(>= ver: 1.2.12)**
 
 ## raxyReact
 

@@ -22,13 +22,20 @@ export interface IOptions {
     elementRef?: RefObject<any>;
 }
 
+export interface IUseRaxy<Store, State> {
+    state: State,
+    store: Store,
+    transaction: Transaction<Store>,
+    updateState(key: keyof State, value: State[typeof key], updateStore: (store: Store) => void): void
+}
+
 export const Raxy = context.Provider;
 
-export const useRaxy = <Store = any, State = any>(filter?: Filter<Store, State>, options?: IOptions & Options<State>): { state: State, store: Store, transaction: Transaction<Store> } => {
+export const useRaxy = <Store = any, State = any>(filter?: Filter<Store, State>, options?: IOptions & Options<State>): IUseRaxy<Store, State> => {
     const instanse: IRaxy<Store> = useContext(context);
 
     if (!instanse) {
-        return { state: null, store: null, transaction: null };
+        return { state: null, store: null, transaction: null, updateState: null };
     }
 
     const nowMap = useMemo(() => new WeakMap(), []);
@@ -128,10 +135,16 @@ export const useRaxy = <Store = any, State = any>(filter?: Filter<Store, State>,
         return null
     }, []);
 
-    return { state, store: instanse.store, transaction: instanse.transaction };
+    const updateState = useCallback((key: keyof State, value: State[typeof key], updateStore: (store: Store) => void): void => {
+        state[key] = value;
+        setState({...state});
+        updateStore(instanse.store);
+    }, [state, instanse.store]);
+
+    return { state, store: instanse.store, transaction: instanse.transaction, updateState };
 };
 
-export type Hook<S> = <State = any>(filter?: Filter<S, State>, options?: IOptions & Options<State>) => { state: State, store: S, transaction: Transaction<S> }
+export type Hook<S> = <State = any>(filter?: Filter<S, State>, options?: IOptions & Options<State>) => IUseRaxy<S, State>
 
 export interface IRaxyWithHook<S> extends IRaxy<S> {
     useRaxy: Hook<S>;
