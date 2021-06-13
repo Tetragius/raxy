@@ -111,7 +111,7 @@ The `progress` method contains:
 interface ITransaction <S> {
     name: string; // transaction name
     pending: logical; // execution status
-    interrupted?: any; // reason for abort
+    aborted?: any; // reason for abort
     progress: number; // execution stage
     rollback: rollback []; // array of inverse operations
     store: S; // link to storage
