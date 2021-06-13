@@ -114,9 +114,9 @@ interface ITransaction <S> {
     interrupted?: any; // reason for abort
     progress: number; // execution stage
     rollback: rollback []; // array of inverse operations
-    the shops; // link to storage
+    store: S; // link to storage
     updater: Updater <S>; // storage update method
-    solve?: Resolver <S> // array of inverse operations
+    resolve?: Resolver <S> // array of inverse operations
     abort: Abort; // method for completing the transaction - starts the rollback
 }
 ```
