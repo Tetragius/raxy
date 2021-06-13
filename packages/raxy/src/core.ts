@@ -48,7 +48,7 @@ export interface IRaxy<S> {
 export const raxy = <Store = any>(initStore: Store, options?: IRaxyOptions): IRaxy<Store> => {
     const eventTarget = new EventTarget();
     const transactions: ITransaction<Store>[] = [];
-    let timer: NodeJS.Timeout = null;
+    let timer: number = null;
     let now = performance.now();
 
     const updateParents = (obj: any) => {
@@ -108,7 +108,7 @@ export const raxy = <Store = any>(initStore: Store, options?: IRaxyOptions): IRa
                     eventTarget.dispatchEvent(
                         new CustomEvent<IDetail<Store>>("update", { detail: { store: initStore } })
                     );
-                }, 30);
+                });
             }
             else {
                 now = performance.now();
