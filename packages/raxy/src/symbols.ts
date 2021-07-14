@@ -1,8 +1,8 @@
 export const Symbols = {
-    parent: Symbol('parent'),
-    now: Symbol('now'),
-    root: Symbol('root'),
-    original: Symbol('original'),
+    parent: Symbol.for('@@raxy:parent'),
+    now: Symbol.for('@@raxy:now'),
+    root: Symbol.for('@@raxy:root'),
+    original: Symbol.for('@@raxy:original'),
 }
 
 export default Symbols;
